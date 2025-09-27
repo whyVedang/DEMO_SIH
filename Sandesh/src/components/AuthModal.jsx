@@ -45,14 +45,14 @@ export const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md bg-gradient-card border-border">
+      <DialogContent className="sm:max-w-md bg-white border-sage-200">
         <DialogHeader className="text-center">
           <div className="flex justify-center mb-2">
-            <div className="p-3 bg-primary/10 rounded-full">
-              <Sprout className="h-8 w-8 text-primary" />
+            <div className="p-3 bg-sage-100 rounded-full">
+              <Sprout className="h-8 w-8 text-sage-600" />
             </div>
           </div>
-          <DialogTitle className="text-2xl font-bold text-foreground">
+          <DialogTitle className="text-2xl font-bold text-gray-900">
             Welcome to HerbiProof
           </DialogTitle>
         </DialogHeader>
@@ -66,40 +66,40 @@ export const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
           <TabsContent value="login">
             <form onSubmit={handleLogin} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="login-email">Email</Label>
+                <Label htmlFor="login-email" className="text-gray-700">Email</Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                   <Input
                     id="login-email"
                     type="email"
                     placeholder="Enter your email"
-                    className="pl-10"
+                    className="pl-10 border-gray-200 focus:border-sage-500 focus:ring-sage-500"
                     required
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="login-password">Password</Label>
+                <Label htmlFor="login-password" className="text-gray-700">Password</Label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                   <Input
                     id="login-password"
                     type="password"
                     placeholder="Enter your password"
-                    className="pl-10"
+                    className="pl-10 border-gray-200 focus:border-sage-500 focus:ring-sage-500"
                     required
                   />
                 </div>
               </div>
 
-              <Button 
+              <button 
                 type="submit" 
-                className="w-full bg-gradient-primary hover:opacity-90 transition-smooth"
+                className="w-full btn-primary"
                 disabled={isLoading}
               >
                 {isLoading ? "Signing In..." : "Sign In"}
-              </Button>
+              </button>
             </form>
           </TabsContent>
 
@@ -161,13 +161,13 @@ export const AuthModal = ({ isOpen, onClose, onAuthSuccess }) => {
                 </div>
               </div>
 
-              <Button 
+              <button 
                 type="submit" 
-                className="w-full bg-gradient-primary hover:opacity-90 transition-smooth"
+                className="w-full btn-primary"
                 disabled={isLoading}
               >
                 {isLoading ? "Creating Account..." : "Create Account"}
-              </Button>
+              </button>
             </form>
           </TabsContent>
         </Tabs>

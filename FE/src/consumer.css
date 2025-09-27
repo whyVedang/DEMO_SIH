@@ -961,6 +961,14 @@ code {
   font-weight: 500;
 }
 
+/* Full Screen Components Styling */
+.full-screen-section {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  padding-left: calc(50vw - 50%);
+  padding-right: calc(50vw - 50%);
+}
+
 /* Enhanced Search Bar */
 .search-bar-enhanced {
   position: relative;

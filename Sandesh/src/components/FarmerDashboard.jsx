@@ -52,13 +52,13 @@ export const FarmerDashboard = ({ onLogout }) => {
   }
 
   return (
-    <div className="min-h-screen bg-muted/20 py-6">
+    <div className="min-h-screen bg-sage-50 py-6">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-foreground mb-2">Farmer Dashboard</h1>
-            <p className="text-muted-foreground">Welcome back, manage your farm operations</p>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Farmer Dashboard</h1>
+            <p className="text-gray-600">Welcome back, manage your farm operations</p>
           </div>
           <div className="flex gap-3 mt-4 md:mt-0">
             <Button 
@@ -80,54 +80,54 @@ export const FarmerDashboard = ({ onLogout }) => {
 
         {/* Stats Overview */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card className="bg-gradient-card border-border shadow-soft">
+          <Card className="feature-card">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">Total Batches</CardTitle>
-              <Package className="h-4 w-4 text-primary" />
+              <CardTitle className="text-sm font-medium text-gray-600">Total Batches</CardTitle>
+              <Package className="h-4 w-4 text-sage-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-foreground">{stats.totalBatches}</div>
-              <p className="text-xs text-success">+2 from last month</p>
+              <div className="text-2xl font-bold text-gray-900">{stats.totalBatches}</div>
+              <p className="text-xs text-sage-600">+2 from last month</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-card border-border shadow-soft">
+          <Card className="feature-card">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">Active Orders</CardTitle>
-              <ShoppingCart className="h-4 w-4 text-success" />
+              <CardTitle className="text-sm font-medium text-gray-600">Active Orders</CardTitle>
+              <ShoppingCart className="h-4 w-4 text-sage-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-foreground">{stats.activeOrders}</div>
-              <p className="text-xs text-success">+3 new this week</p>
+              <div className="text-2xl font-bold text-gray-900">{stats.activeOrders}</div>
+              <p className="text-xs text-sage-600">+3 new this week</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-card border-border shadow-soft">
+          <Card className="feature-card">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">Average Rating</CardTitle>
-              <Star className="h-4 w-4 text-warning" />
+              <CardTitle className="text-sm font-medium text-gray-600">Average Rating</CardTitle>
+              <Star className="h-4 w-4 text-sage-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-foreground">{stats.rating}</div>
+              <div className="text-2xl font-bold text-gray-900">{stats.rating}</div>
               <div className="flex items-center">
                 <div className="flex">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-3 w-3 fill-warning text-warning" />
+                    <Star key={i} className="h-3 w-3 fill-sage-500 text-sage-500" />
                   ))}
                 </div>
-                <span className="text-xs text-muted-foreground ml-2">(24 reviews)</span>
+                <span className="text-xs text-gray-600 ml-2">(24 reviews)</span>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-card border-border shadow-soft">
+          <Card className="feature-card">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">This Month Earnings</CardTitle>
-              <TrendingUp className="h-4 w-4 text-success" />
+              <CardTitle className="text-sm font-medium text-gray-600">This Month Earnings</CardTitle>
+              <TrendingUp className="h-4 w-4 text-sage-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-foreground">₹{stats.earnings.toLocaleString()}</div>
-              <p className="text-xs text-success">+12% from last month</p>
+              <div className="text-2xl font-bold text-gray-900">₹{stats.earnings.toLocaleString()}</div>
+              <p className="text-xs text-sage-600">+12% from last month</p>
             </CardContent>
           </Card>
         </div>
@@ -144,21 +144,21 @@ export const FarmerDashboard = ({ onLogout }) => {
           <TabsContent value="overview" className="space-y-6">
             <div className="grid lg:grid-cols-2 gap-6">
               {/* Quick Actions */}
-              <Card className="bg-gradient-card border-border shadow-medium">
+              <Card className="feature-card">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-foreground">
-                    <Leaf className="h-5 w-5 text-primary" />
+                  <CardTitle className="flex items-center gap-2 text-gray-900">
+                    <Leaf className="h-5 w-5 text-sage-600" />
                     Quick Actions
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <Button 
+                  <button 
                     onClick={() => setShowBatchForm(true)}
-                    className="w-full justify-start bg-gradient-primary hover:opacity-90 transition-smooth"
+                    className="w-full justify-start btn-primary"
                   >
                     <Plus className="h-4 w-4 mr-2" />
                     Add New Batch
-                  </Button>
+                  </button>
                   <Button variant="outline" className="w-full justify-start">
                     <Eye className="h-4 w-4 mr-2" />
                     View All Orders
@@ -171,19 +171,19 @@ export const FarmerDashboard = ({ onLogout }) => {
               </Card>
 
               {/* Recent Activity */}
-              <Card className="bg-gradient-card border-border shadow-medium">
+              <Card className="feature-card">
                 <CardHeader>
-                  <CardTitle className="text-foreground">Recent Activity</CardTitle>
+                  <CardTitle className="text-gray-900">Recent Activity</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     <div className="flex items-center space-x-3">
-                      <div className="w-2 h-2 bg-success rounded-full" />
+                      <div className="w-2 h-2 bg-sage-500 rounded-full" />
                       <div className="flex-1">
-                        <p className="text-sm font-medium text-foreground">New order received</p>
-                        <p className="text-xs text-muted-foreground">Fresh Mart - 100kg Tomatoes</p>
+                        <p className="text-sm font-medium text-gray-900">New order received</p>
+                        <p className="text-xs text-gray-600">Fresh Mart - 100kg Tomatoes</p>
                       </div>
-                      <span className="text-xs text-muted-foreground">2h ago</span>
+                      <span className="text-xs text-gray-600">2h ago</span>
                     </div>
                     <div className="flex items-center space-x-3">
                       <div className="w-2 h-2 bg-warning rounded-full" />

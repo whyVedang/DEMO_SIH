@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   QrCode, 
   Search, 
@@ -21,111 +21,204 @@ import {
   ChevronRight,
   Gift,
   Zap,
-  ShoppingCart
+  ShoppingCart,
+  Plus,
+  Minus,
+  Trash2
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+
+// Sample product data
+const featuredProducts = [
+  {
+    id: 1,
+    name: "Organic Tomato Sauce",
+    brand: "FreshPure",
+    price: "₹185",
+    originalPrice: "₹220",
+    rating: 4.5,
+    reviewCount: 234,
+    image: "🍅",
+    verified: true,
+    inStock: true
+  },
+  {
+    id: 2,
+    name: "Cold-Pressed Coconut Oil",
+    brand: "PureHarvest", 
+    price: "₹450",
+    rating: 4.8,
+    reviewCount: 189,
+    image: "🥥",
+    verified: true,
+    inStock: true
+  },
+  {
+    id: 3,
+    name: "Organic Honey",
+    brand: "GoldenBee",
+    price: "₹320",
+    originalPrice: "₹380",
+    rating: 4.6,
+    reviewCount: 156,
+    image: "🍯",
+    verified: true,
+    inStock: true
+  },
+  {
+    id: 4,
+    name: "Quinoa Flour",
+    brand: "HealthyGrains",
+    price: "₹280",
+    rating: 4.3,
+    reviewCount: 98,
+    image: "🌾",
+    verified: true,
+    inStock: true
+  },
+  {
+    id: 5,
+    name: "Organic Green Tea",
+    brand: "PureTea",
+    price: "₹150",
+    originalPrice: "₹180",
+    rating: 4.7,
+    reviewCount: 203,
+    image: "🍃",
+    verified: true,
+    inStock: true
+  },
+  {
+    id: 6,
+    name: "Almond Butter",
+    brand: "NutriSpread",
+    price: "₹520",
+    rating: 4.4,
+    reviewCount: 145,
+    image: "🥜",
+    verified: true,
+    inStock: true
+  },
+  {
+    id: 7,
+    name: "Turmeric Powder",
+    brand: "SpiceGarden",
+    price: "₹120",
+    originalPrice: "₹140",
+    rating: 4.8,
+    reviewCount: 267,
+    image: "🧄",
+    verified: true,
+    inStock: true
+  },
+  {
+    id: 8,
+    name: "Organic Rice",
+    brand: "PureGrains",
+    price: "₹180",
+    rating: 4.5,
+    reviewCount: 189,
+    image: "🍚",
+    verified: true,
+    inStock: true
+  }
+];
 
 const WorkingConsumerPortal = () => {
   const navigate = useNavigate();
   const [showQRScanner, setShowQRScanner] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredProducts, setFilteredProducts] = useState(featuredProducts);
+  const [cart, setCart] = useState([]);
+  const [showCart, setShowCart] = useState(false);
 
-  // Sample product data
-  const featuredProducts = [
-    {
-      id: 1,
-      name: "Organic Tomato Sauce",
-      brand: "FreshPure",
-      price: "₹185",
-      originalPrice: "₹220",
-      rating: 4.5,
-      reviewCount: 234,
-      image: "🍅",
-      verified: true,
-      inStock: true
-    },
-    {
-      id: 2,
-      name: "Cold-Pressed Coconut Oil",
-      brand: "PureHarvest", 
-      price: "₹450",
-      rating: 4.8,
-      reviewCount: 189,
-      image: "🥥",
-      verified: true,
-      inStock: true
-    },
-    {
-      id: 3,
-      name: "Organic Honey",
-      brand: "GoldenBee",
-      price: "₹320",
-      originalPrice: "₹380",
-      rating: 4.6,
-      reviewCount: 156,
-      image: "🍯",
-      verified: true,
-      inStock: true
-    },
-    {
-      id: 4,
-      name: "Quinoa Flour",
-      brand: "HealthyGrains",
-      price: "₹280",
-      rating: 4.3,
-      reviewCount: 98,
-      image: "🌾",
-      verified: true,
-      inStock: true
-    },
-    {
-      id: 5,
-      name: "Organic Green Tea",
-      brand: "PureTea",
-      price: "₹150",
-      originalPrice: "₹180",
-      rating: 4.7,
-      reviewCount: 203,
-      image: "🍃",
-      verified: true,
-      inStock: true
-    },
-    {
-      id: 6,
-      name: "Almond Butter",
-      brand: "NutriSpread",
-      price: "₹520",
-      rating: 4.4,
-      reviewCount: 145,
-      image: "🥜",
-      verified: true,
-      inStock: true
-    },
-    {
-      id: 7,
-      name: "Turmeric Powder",
-      brand: "SpiceGarden",
-      price: "₹120",
-      originalPrice: "₹140",
-      rating: 4.8,
-      reviewCount: 267,
-      image: "🧄",
-      verified: true,
-      inStock: true
-    },
-    {
-      id: 8,
-      name: "Organic Rice",
-      brand: "PureGrains",
-      price: "₹180",
-      rating: 4.5,
-      reviewCount: 189,
-      image: "🍚",
-      verified: true,
-      inStock: true
+  // Cart functions
+  const addToCart = (product) => {
+    setCart(prevCart => {
+      const existingItem = prevCart.find(item => item.id === product.id);
+      if (existingItem) {
+        return prevCart.map(item => 
+          item.id === product.id 
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      } else {
+        return [...prevCart, { ...product, quantity: 1 }];
+      }
+    });
+  };
+
+  const removeFromCart = (productId) => {
+    setCart(prevCart => prevCart.filter(item => item.id !== productId));
+  };
+
+  const updateQuantity = (productId, newQuantity) => {
+    if (newQuantity <= 0) {
+      removeFromCart(productId);
+    } else {
+      setCart(prevCart => 
+        prevCart.map(item => 
+          item.id === productId 
+            ? { ...item, quantity: newQuantity }
+            : item
+        )
+      );
     }
-  ];
+  };
+
+  const getTotalItems = () => {
+    return cart.reduce((total, item) => total + item.quantity, 0);
+  };
+
+  const getTotalPrice = () => {
+    return cart.reduce((total, item) => {
+      const price = parseFloat(item.price.replace('₹', '').replace(',', ''));
+      return total + (price * item.quantity);
+    }, 0);
+  };
+
+
+  // Search functionality
+  useEffect(() => {
+    if (searchQuery.trim() === '') {
+      setFilteredProducts(featuredProducts);
+    } else {
+      const filtered = featuredProducts.filter(product => 
+        product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product.brand.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredProducts(filtered);
+    }
+    
+    // Auto-scroll to products when user is actively searching
+    let timeoutId;
+    if (searchQuery.trim().length >= 2) {
+      timeoutId = setTimeout(() => {
+        const productsSection = document.getElementById('featured-products');
+        if (productsSection) {
+          productsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 500); // Debounce scrolling
+    }
+    
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [searchQuery]);
+
+  const handleSearch = () => {
+    // Immediate scroll when search button is clicked or Enter is pressed
+    if (searchQuery.trim()) {
+      const productsSection = document.getElementById('featured-products');
+      if (productsSection) {
+        productsSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
 
   const categories = [
     { id: 'organic-foods', name: 'Organic Foods', featured: true, productCount: 245 },
@@ -181,12 +274,19 @@ const WorkingConsumerPortal = () => {
 
         {/* Desktop Navigation */}
         <nav className="desktop-nav">
-          <a href="#products" className="nav-link">Products</a>
-          <a href="#why-choose-us" className="nav-link">Why Choose Us</a>
-          <a href="#traceability" className="nav-link">Traceability</a>
-          <a href="#about" className="nav-link">About</a>
           <button 
-            onClick={() => navigate('/auth/login')}
+            onClick={() => {
+              const productsSection = document.getElementById('featured-products');
+              if (productsSection) {
+                productsSection.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+            className="nav-link"
+          >
+            Products
+          </button>
+          <button 
+            onClick={() => window.open('http://localhost:3002?auth=true', '_blank')}
             className="nav-link bg-sage-500 text-white px-4 py-2 rounded-lg hover:bg-sage-600 transition-colors"
           >
             SELL PRODUCTS
@@ -201,8 +301,20 @@ const WorkingConsumerPortal = () => {
               type="text" 
               placeholder="Search for organic tomatoes, cold-pressed oils..."
               className="search-input"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
             />
-            <button className="search-btn">
+            {searchQuery && (
+              <button 
+                className="absolute right-12 top-1/2 transform -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 transition-colors z-10"
+                onClick={() => setSearchQuery('')}
+                title="Clear search"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
+            <button className="search-btn" onClick={handleSearch}>
               <Search className="w-4 h-4 text-white" />
             </button>
           </div>
@@ -213,9 +325,9 @@ const WorkingConsumerPortal = () => {
           <button className="action-btn">
             <Heart className="w-5 h-5 text-gray-600" />
           </button>
-          <button className="action-btn">
+          <button className="action-btn" onClick={() => setShowCart(true)}>
             <ShoppingCart className="w-5 h-5 text-gray-600" />
-            <span className="cart-badge">0</span>
+            <span className="cart-badge">{getTotalItems()}</span>
           </button>
           <button className="action-btn">
             <User className="w-5 h-5 text-gray-600" />
@@ -297,7 +409,7 @@ const WorkingConsumerPortal = () => {
             Scan Product
           </button>
           <button
-            onClick={() => navigate('/auth/login')}
+            onClick={() => window.open('http://localhost:3002?auth=true', '_blank')}
             className="btn-secondary bg-sage-600 text-white border-sage-600 hover:bg-sage-700"
           >
             <Users className="w-5 h-5" />
@@ -353,7 +465,7 @@ const WorkingConsumerPortal = () => {
   const ProductCard = ({ product }) => (
     <div 
       className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-2 border border-sage-100"
-      onClick={() => navigate(`/product/${product.id}`)}
+      onClick={() => navigate('/product/' + product.id)}
     >
       <div className="text-6xl text-center mb-4 bg-sage-50 rounded-xl py-8">
         {product.image}
@@ -377,7 +489,13 @@ const WorkingConsumerPortal = () => {
           <span className="text-sm text-gray-600">{product.rating}</span>
           <span className="text-sm text-gray-400">({product.reviewCount})</span>
         </div>
-        <button className="w-full mt-4 bg-sage-500 text-white py-2 px-4 rounded-lg hover:bg-sage-600 transition-colors">
+        <button 
+          className="w-full mt-4 bg-sage-500 text-white py-2 px-4 rounded-lg hover:bg-sage-600 transition-colors"
+          onClick={(e) => {
+            e.stopPropagation();
+            addToCart(product);
+          }}
+        >
           Add to Cart
         </button>
       </div>
@@ -386,8 +504,8 @@ const WorkingConsumerPortal = () => {
 
   // Categories Section
   const CategoriesSection = () => (
-    <section className="py-20 bg-gradient-to-br from-sage-50 to-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-20 bg-gradient-to-br from-sage-50 to-white w-screen">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8"> {/* Removed max-w-full */}
         <div className="text-center mb-16">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -418,10 +536,12 @@ const WorkingConsumerPortal = () => {
               transition={{ delay: index * 0.1 }}
               whileHover={{ y: -8, scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => navigate(`/category/${category.id}`)}
+              onClick={() => navigate('/category/' + category.id)}
               className="group bg-white rounded-3xl p-8 text-center shadow-xl hover:shadow-2xl transition-all duration-500 border border-sage-100 relative overflow-hidden"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-sage-100/50 to-sage-200/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"></div>
+              <div 
+                className="absolute inset-0 bg-gradient-to-br from-sage-100 to-sage-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"
+              ></div>
               
               <div className="relative z-10">
                 <div className="w-20 h-20 bg-gradient-to-br from-sage-400 to-sage-600 rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
@@ -435,7 +555,7 @@ const WorkingConsumerPortal = () => {
                 </p>
               </div>
               
-              <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-sage-300/20 to-transparent rounded-bl-full"></div>
+              <div className="absolute top-0 right-0 w-16 h-16 rounded-bl-full bg-gradient-to-bl from-sage-300 to-transparent"></div>
             </motion.button>
           ))}
         </div>
@@ -444,13 +564,20 @@ const WorkingConsumerPortal = () => {
   );
 
   // Featured Products Section
-  const FeaturedProductsSection = () => (
-    <section id="featured-products" className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+const FeaturedProductsSection = () => (
+    <section id="featured-products" className="py-20 bg-white w-screen">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8"> {/* Removed max-w-full */}
         <div className="flex items-center justify-between mb-12">
           <div>
-            <h2 className="text-4xl font-bold text-gray-900 mb-2">Featured Products</h2>
-            <p className="text-xl text-gray-600">Handpicked premium products from our best farmers</p>
+            <h2 className="text-4xl font-bold text-gray-900 mb-2">
+              {searchQuery ? `Search Results (${filteredProducts.length})` : 'Featured Products'}
+            </h2>
+            <p className="text-xl text-gray-600">
+              {searchQuery 
+                ? `Showing results for "${searchQuery}"` 
+                : 'Handpicked premium products from our best farmers'
+              }
+            </p>
           </div>
           <button
             onClick={() => navigate('/products')}
@@ -462,7 +589,7 @@ const WorkingConsumerPortal = () => {
         </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {featuredProducts.slice(0, 8).map((product, index) => (
+          {filteredProducts.map((product, index) => (
             <motion.div
               key={product.id}
               initial={{ opacity: 0, y: 30 }}
@@ -474,14 +601,24 @@ const WorkingConsumerPortal = () => {
             </motion.div>
           ))}
         </div>
+  
+        {/* No results message */}
+        {searchQuery && filteredProducts.length === 0 && (
+          <div className="text-center py-16">
+            <Search className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">No products found</h3>
+            <p className="text-gray-600">Try searching with different keywords</p>
+          </div>
+        )}
       </div>
     </section>
   );
+  
 
   // Why Choose Us Section
   const WhyChooseUsSection = () => (
-    <section className="py-20 bg-sage-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-20 bg-sage-50 w-screen"> {/* Added w-screen */}
+      <div className="mx-auto px-4 sm:px-6 lg:px-8"> {/* Removed max-w-7xl */}
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">Why Choose HerbiProof?</h2>
           <p className="text-xl text-gray-600">The future of food transparency is here</p>
@@ -538,24 +675,98 @@ const WorkingConsumerPortal = () => {
       </div>
     </section>
   );
+  
+
+  // Cart Modal Component
+  const CartModal = () => (
+    <div className="fixed inset-0 backdrop-blur-sm z-50 flex items-center justify-center p-4" style={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}>
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        className="bg-white rounded-2xl p-6 max-w-md w-full max-h-[80vh] overflow-y-auto"
+      >
+        <div className="flex justify-between items-center mb-6">
+          <h3 className="text-xl font-bold text-gray-900">Shopping Cart</h3>
+          <button
+            onClick={() => setShowCart(false)}
+            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+        
+        {cart.length === 0 ? (
+          <div className="text-center py-8">
+            <ShoppingCart className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+            <p className="text-gray-600">Your cart is empty</p>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {cart.map((item) => (
+              <div key={item.id} className="flex items-center space-x-4 bg-sage-50 p-4 rounded-xl">
+                <div className="text-3xl">{item.image}</div>
+                <div className="flex-1">
+                  <h4 className="font-semibold text-gray-900">{item.name}</h4>
+                  <p className="text-sm text-gray-600">{item.brand}</p>
+                  <p className="text-sage-600 font-bold">{item.price}</p>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                    className="p-1 hover:bg-gray-200 rounded transition-colors"
+                  >
+                    <Minus className="w-4 h-4" />
+                  </button>
+                  <span className="w-8 text-center font-semibold">{item.quantity}</span>
+                  <button
+                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                    className="p-1 hover:bg-gray-200 rounded transition-colors"
+                  >
+                    <Plus className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => removeFromCart(item.id)}
+                    className="p-1 hover:bg-red-100 text-red-600 rounded transition-colors ml-2"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            ))}
+            
+            <div className="border-t pt-4">
+              <div className="flex justify-between items-center mb-4">
+                <span className="text-lg font-semibold">Total: ₹{getTotalPrice().toLocaleString()}</span>
+                <span className="text-sm text-gray-600">{getTotalItems()} items</span>
+              </div>
+              <button className="w-full bg-sage-500 text-white py-3 rounded-xl hover:bg-sage-600 transition-colors font-semibold">
+                Proceed to Checkout
+              </button>
+            </div>
+          </div>
+        )}
+      </motion.div>
+    </div>
+  );
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white w-full overflow-x-hidden">
       {/* Modern Header */}
       <ModernHeader />
       
       {/* Main Content */}
-      <main>
+      <main className="w-full">
         <HeroSection />
         <CategoriesSection />
         <FeaturedProductsSection />
-        <WhyChooseUsSection />
       </main>
 
       {/* QR Scanner Modal */}
       {showQRScanner && (
         <div
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          style={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}
           onClick={() => setShowQRScanner(false)}
         >
           <motion.div
@@ -602,20 +813,8 @@ const WorkingConsumerPortal = () => {
         </div>
       )}
 
-      {/* Floating QR Scan Button */}
-      <motion.div 
-        className="floating-qr"
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ delay: 1.5, type: "spring" }}
-      >
-        <button
-          onClick={() => setShowQRScanner(true)}
-          className="w-full h-full flex items-center justify-center"
-        >
-          <QrCode className="w-6 h-6 text-white" />
-        </button>
-      </motion.div>
+      {/* Cart Modal */}
+      {showCart && <CartModal />}
     </div>
   );
 };

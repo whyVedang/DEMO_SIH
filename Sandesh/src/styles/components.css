@@ -1,0 +1,141 @@
+/* // Example usage of agricultural-themed Tailwind utilities */
+
+/* Landing Page Hero Section */
+.hero-section {
+  @apply bg-gradient-hero text-primary-foreground section-spacing;
+}
+
+.hero-title {
+  @apply text-responsive-3xl font-bold mb-6 animate-fade-in;
+}
+
+.hero-subtitle {
+  @apply text-responsive-lg opacity-90 mb-8 animate-slide-in;
+}
+
+/* Feature Cards */
+.feature-card {
+  @apply card-agricultural card-hover-effect;
+}
+
+.feature-icon {
+  @apply w-12 h-12 bg-primary/10 rounded-lg flex-center mb-4 hover-grow;
+}
+
+/* Buttons */
+.btn-primary {
+  @apply btn-primary-agricultural focus-agricultural px-8 py-3 rounded-lg;
+}
+
+.btn-secondary {
+  @apply btn-secondary-agricultural focus-agricultural px-8 py-3 rounded-lg;
+}
+
+/* Form Elements */
+.form-input {
+  @apply w-full px-4 py-2 border border-border rounded-md focus-agricultural bg-background;
+}
+
+.form-label {
+  @apply block text-sm font-medium text-foreground mb-2;
+}
+
+/* Navigation */
+.nav-link {
+  @apply text-muted-foreground hover:text-primary transition-smooth;
+}
+
+/* Content Sections */
+.content-section {
+  @apply section-spacing container-padding content-max-width;
+}
+
+.section-title {
+  @apply text-responsive-2xl font-bold text-center mb-4;
+}
+
+.section-subtitle {
+  @apply text-responsive-base text-muted-foreground text-center max-w-2xl mx-auto mb-12;
+}
+
+/* Grid Layouts */
+.features-grid {
+  @apply grid-agricultural;
+}
+
+.testimonials-grid {
+  @apply grid-agricultural-2;
+}
+
+.stats-grid {
+  @apply grid-agricultural-4;
+}
+
+/* Footer */
+.footer-section {
+  @apply bg-primary text-primary-foreground py-12;
+}
+
+.footer-links {
+  @apply space-y-2;
+}
+
+.footer-link {
+  @apply text-primary-foreground/80 hover:text-accent transition-smooth;
+}
+
+/* Loading States */
+.loading-card {
+  @apply loading-pulse h-40 rounded-lg;
+}
+
+.loading-text {
+  @apply loading-pulse h-4 rounded mb-2;
+}
+
+/* Responsive Utilities */
+@screen sm {
+  .hero-buttons {
+    @apply flex-row gap-4;
+  }
+}
+
+@screen lg {
+  .features-grid {
+    @apply grid-cols-3;
+  }
+}
+
+/* Dark Mode Specific */
+@media (prefers-color-scheme: dark) {
+  .card-agricultural {
+    @apply shadow-strong;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .hero-section {
+    @apply bg-none text-foreground;
+  }
+  
+  .feature-card {
+    @apply shadow-none border border-foreground;
+  }
+}
+
+/* High Contrast */
+@media (prefers-contrast: high) {
+  .btn-primary {
+    @apply border-2 border-foreground;
+  }
+  
+  .nav-link {
+    @apply font-semibold;
+  }
+}
+
+/* Focus Visible for Better Accessibility */
+.focus-visible\:ring-agricultural:focus-visible {
+  @apply ring-2 ring-primary ring-offset-2 ring-offset-background;
+}

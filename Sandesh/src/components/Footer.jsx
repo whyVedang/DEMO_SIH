@@ -7,7 +7,7 @@ export const Footer = () => {
   const { t } = useLanguage();
 
   return (
-    <footer className="bg-gradient-to-br from-sage-800 via-sage-900 to-sage-950 text-white relative overflow-hidden">
+    <footer className="relative overflow-hidden text-white bg-gradient-to-br from-sage-800 via-sage-900 to-sage-950">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{
@@ -15,45 +15,44 @@ export const Footer = () => {
         }}></div>
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
+      <div className="container relative z-10 px-4 py-16 mx-auto sm:px-6 lg:px-8">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+        <div className="grid grid-cols-1 gap-12 mb-16 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand Section */}
-          <div className="lg:col-span-1 space-y-6">
+          <div className="space-y-6 lg:col-span-1">
             <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-sage-400 to-sage-500 rounded-xl flex items-center justify-center shadow-lg">
-                <Sprout className="h-6 w-6 text-white" />
+              <div className="flex items-center justify-center w-12 h-12 shadow-lg bg-gradient-to-br from-sage-400 to-sage-500 rounded-xl">
+                <Sprout className="w-6 h-6 text-white" />
               </div>
               <div>
-                <span className="text-2xl font-bold bg-gradient-to-r from-white to-sage-200 bg-clip-text text-transparent">HerbiProof</span>
-                <div className="text-xs text-sage-300 font-medium">Smart Agriculture</div>
+                <span className="text-2xl font-bold text-transparent bg-gradient-to-r from-white to-sage-200 bg-clip-text">HerbiProof</span>
+                <div className="text-xs font-medium text-sage-300">Smart Agriculture</div>
               </div>
             </div>
-            <p className="text-sage-100 leading-relaxed text-sm">
-              Empowering farmers with smart technology to connect directly with buyers, 
-              manage crops efficiently, and grow agricultural businesses.
+            <p className="text-sm leading-relaxed text-sage-100">
+              {t("heroDescription")}
             </p>
             <div className="flex space-x-3">
               <Button
                 variant="ghost"
                 size="sm"
-                className="text-sage-200 hover:text-white hover:bg-sage-700/50 p-3 rounded-xl transition-all duration-300"
+                className="p-3 transition-all duration-300 text-sage-200 hover:text-white hover:bg-sage-700/50 rounded-xl"
               >
-                <Facebook className="h-5 w-5" />
+                <Facebook className="w-5 h-5" />
               </Button>
               <Button
                 variant="ghost"
                 size="sm"
-                className="text-sage-200 hover:text-white hover:bg-sage-700/50 p-3 rounded-xl transition-all duration-300"
+                className="p-3 transition-all duration-300 text-sage-200 hover:text-white hover:bg-sage-700/50 rounded-xl"
               >
-                <Twitter className="h-5 w-5" />
+                <Twitter className="w-5 h-5" />
               </Button>
               <Button
                 variant="ghost"
                 size="sm"
-                className="text-sage-200 hover:text-white hover:bg-sage-700/50 p-3 rounded-xl transition-all duration-300"
+                className="p-3 transition-all duration-300 text-sage-200 hover:text-white hover:bg-sage-700/50 rounded-xl"
               >
-                <Instagram className="h-5 w-5" />
+                <Instagram className="w-5 h-5" />
               </Button>
               
             </div>
@@ -66,36 +65,36 @@ export const Footer = () => {
               <li>
                 <a 
                   href="#about" 
-                  className="text-sage-200 hover:text-white transition-colors duration-300 flex items-center group"
+                  className="flex items-center transition-colors duration-300 text-sage-200 hover:text-white group"
                 >
-                  <ArrowRight className="h-3 w-3 mr-2 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-3 h-3 mr-2 transition-transform group-hover:translate-x-1" />
                   About Us
                 </a>
               </li>
               <li>
                 <a 
                   href="#features" 
-                  className="text-sage-200 hover:text-white transition-colors duration-300 flex items-center group"
+                  className="flex items-center transition-colors duration-300 text-sage-200 hover:text-white group"
                 >
-                  <ArrowRight className="h-3 w-3 mr-2 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-3 h-3 mr-2 transition-transform group-hover:translate-x-1" />
                   Features
                 </a>
               </li>
               <li>
                 <a 
                   href="#contact" 
-                  className="text-sage-200 hover:text-white transition-colors duration-300 flex items-center group"
+                  className="flex items-center transition-colors duration-300 text-sage-200 hover:text-white group"
                 >
-                  <ArrowRight className="h-3 w-3 mr-2 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-3 h-3 mr-2 transition-transform group-hover:translate-x-1" />
                   Contact
                 </a>
               </li>
               <li>
                 <a 
                   href="#support" 
-                  className="text-sage-200 hover:text-white transition-colors duration-300 flex items-center group"
+                  className="flex items-center transition-colors duration-300 text-sage-200 hover:text-white group"
                 >
-                  <ArrowRight className="h-3 w-3 mr-2 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-3 h-3 mr-2 transition-transform group-hover:translate-x-1" />
                   Support
                 </a>
               </li>
@@ -106,11 +105,11 @@ export const Footer = () => {
           <div className="space-y-6">
             <h3 className="text-lg font-bold text-white">Our Services</h3>
             <ul className="space-y-3">
-              <li className="text-sage-200 text-sm">Batch Management</li>
-              <li className="text-sage-200 text-sm">KYC Verification</li>
-              <li className="text-sage-200 text-sm">Rating System</li>
-              <li className="text-sage-200 text-sm">Market Analytics</li>
-              <li className="text-sage-200 text-sm">Payment Gateway</li>
+              <li className="text-sm text-sage-200">Batch Management</li>
+              <li className="text-sm text-sage-200">KYC Verification</li>
+              <li className="text-sm text-sage-200">Rating System</li>
+              <li className="text-sm text-sage-200">Market Analytics</li>
+              <li className="text-sm text-sage-200">Payment Gateway</li>
             </ul>
           </div>
 
@@ -120,10 +119,10 @@ export const Footer = () => {
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
                 <div className="w-8 h-8 bg-sage-700/50 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <MapPin className="h-4 w-4 text-sage-300" />
+                  <MapPin className="w-4 h-4 text-sage-300" />
                 </div>
                 <div>
-                  <span className="text-sage-200 text-sm block">
+                  <span className="block text-sm text-sage-200">
                     123 Agriculture Street<br />
                     Bengalurur City, FC 12345<br />
                     India
@@ -131,16 +130,16 @@ export const Footer = () => {
                 </div>
               </div>
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-sage-700/50 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Phone className="h-4 w-4 text-sage-300" />
+                <div className="flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg bg-sage-700/50">
+                  <Phone className="w-4 h-4 text-sage-300" />
                 </div>
-                <span className="text-sage-200 text-sm">+1800 123 4567</span>
+                <span className="text-sm text-sage-200">+1800 123 4567</span>
               </div>
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-sage-700/50 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Mail className="h-4 w-4 text-sage-300" />
+                <div className="flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg bg-sage-700/50">
+                  <Mail className="w-4 h-4 text-sage-300" />
                 </div>
-                <span className="text-sage-200 text-sm">support@herbiproof.com</span>
+                <span className="text-sm text-sage-200">support@herbiproof.com</span>
               </div>
             </div>
           </div>
@@ -148,26 +147,26 @@ export const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-sage-700/50">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="text-sage-300 text-sm text-center md:text-left">
+          <div className="flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0">
+            <div className="text-sm text-center text-sage-300 md:text-left">
               © {currentYear} HerbiProof. All rights reserved. Built with ❤️ for Ecosystem.
             </div>
-            <div className="flex flex-wrap justify-center md:justify-end gap-6 text-sm">
+            <div className="flex flex-wrap justify-center gap-6 text-sm md:justify-end">
               <a 
                 href="#privacy" 
-                className="text-sage-300 hover:text-white transition-colors duration-300"
+                className="transition-colors duration-300 text-sage-300 hover:text-white"
               >
                 Privacy Policy
               </a>
               <a 
                 href="#terms" 
-                className="text-sage-300 hover:text-white transition-colors duration-300"
+                className="transition-colors duration-300 text-sage-300 hover:text-white"
               >
                 Terms of Service
               </a>
               <a 
                 href="#cookies" 
-                className="text-sage-300 hover:text-white transition-colors duration-300"
+                className="transition-colors duration-300 text-sage-300 hover:text-white"
               >
                 Cookie Policy
               </a>

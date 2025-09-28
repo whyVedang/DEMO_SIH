@@ -9,6 +9,7 @@ import { Sprout, Mail, Lock, User, Phone, Leaf, Truck, Store, ArrowLeft, Eye, Ey
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -37,8 +38,8 @@ const Signup = () => {
     setTimeout(() => {
       signup(userData);
       toast({
-        title: "Account Created!",
-        description: `Welcome to HerbiProof as a ${selectedRole}!`,
+        title: t('accountCreated'),
+        description: `${t('welcomeMessage')} ${t(selectedRole)}!`,
       });
       setIsLoading(false);
     }, 2000);
@@ -71,7 +72,7 @@ const Signup = () => {
   console.log('Current selected role:', selectedRole); // Debug log
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sage-50 via-white to-sage-100 relative overflow-hidden">
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-sage-50 via-white to-sage-100">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0" style={{
@@ -79,26 +80,29 @@ const Signup = () => {
         }}></div>
       </div>
 
-      <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
+      <div className="relative z-10 flex items-center justify-center min-h-screen p-4">
         <div className="w-full max-w-lg">
           {/* Header */}
-          <div className="text-center mb-8">
-            <Button
-              variant="ghost"
-              onClick={() => navigate('/')}
-              className="mb-6 text-sage-600 hover:text-sage-700"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              {t('backToHome')}
-            </Button>
+          <div className="mb-8 text-center">
+            <div className="flex items-center justify-between mb-6">
+              <Button
+                variant="ghost"
+                onClick={() => navigate('/')}
+                className="text-sage-600 hover:text-sage-700"
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                {t('backToHome')}
+              </Button>
+              <LanguageSwitcher />
+            </div>
             
             <div className="flex justify-center mb-6">
-              <div className="w-16 h-16 bg-gradient-to-br from-sage-500 to-sage-600 rounded-2xl flex items-center justify-center shadow-xl">
+              <div className="flex items-center justify-center w-16 h-16 shadow-xl bg-gradient-to-br from-sage-500 to-sage-600 rounded-2xl">
                 <Sprout className="w-8 h-8 text-white" />
               </div>
             </div>
             
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            <h1 className="mb-2 text-3xl font-bold text-gray-900">
               {t('signupTitle')}
             </h1>
             <p className="text-gray-600">
@@ -107,11 +111,11 @@ const Signup = () => {
           </div>
 
           {/* Signup Form */}
-          <Card className="bg-white/80 backdrop-blur-lg border-sage-200 shadow-2xl">
+          <Card className="shadow-2xl bg-white/80 backdrop-blur-lg border-sage-200">
             <CardContent className="p-8">
               <form onSubmit={handleSignup} className="space-y-6">
                 <div className="space-y-2">
-                  <Label htmlFor="name" className="text-gray-700 font-medium">
+                  <Label htmlFor="name" className="font-medium text-gray-700">
                     {t('name')}
                   </Label>
                   <div className="relative">
@@ -120,15 +124,15 @@ const Signup = () => {
                       id="name"
                       name="name"
                       type="text"
-                      placeholder="Enter your full name"
-                      className="pl-11 h-12 border-sage-200 focus:border-sage-500 focus:ring-sage-500 bg-white/90"
+                      placeholder={t('enterFullName')}
+                      className="h-12 pl-11 border-sage-200 focus:border-sage-500 focus:ring-sage-500 bg-white/90"
                       required
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="text-gray-700 font-medium">
+                  <Label htmlFor="email" className="font-medium text-gray-700">
                     {t('email')}
                   </Label>
                   <div className="relative">
@@ -137,15 +141,15 @@ const Signup = () => {
                       id="email"
                       name="email"
                       type="email"
-                      placeholder="Enter your email"
-                      className="pl-11 h-12 border-sage-200 focus:border-sage-500 focus:ring-sage-500 bg-white/90"
+                      placeholder={t('enterEmail')}
+                      className="h-12 pl-11 border-sage-200 focus:border-sage-500 focus:ring-sage-500 bg-white/90"
                       required
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="phone" className="text-gray-700 font-medium">
+                  <Label htmlFor="phone" className="font-medium text-gray-700">
                     {t('phone')}
                   </Label>
                   <div className="relative">
@@ -154,15 +158,15 @@ const Signup = () => {
                       id="phone"
                       name="phone"
                       type="tel"
-                      placeholder="Enter your phone number"
-                      className="pl-11 h-12 border-sage-200 focus:border-sage-500 focus:ring-sage-500 bg-white/90"
+                      placeholder={t('enterPhone')}
+                      className="h-12 pl-11 border-sage-200 focus:border-sage-500 focus:ring-sage-500 bg-white/90"
                       required
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="password" className="text-gray-700 font-medium">
+                  <Label htmlFor="password" className="font-medium text-gray-700">
                     {t('password')}
                   </Label>
                   <div className="relative">
@@ -171,14 +175,14 @@ const Signup = () => {
                       id="password"
                       name="password"
                       type={showPassword ? "text" : "password"}
-                      placeholder="Create a password"
-                      className="pl-11 pr-11 h-12 border-sage-200 focus:border-sage-500 focus:ring-sage-500 bg-white/90"
+                      placeholder={t('createPassword')}
+                      className="h-12 pl-11 pr-11 border-sage-200 focus:border-sage-500 focus:ring-sage-500 bg-white/90"
                       required
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-3 text-sage-400 hover:text-sage-600 transition-colors"
+                      className="absolute transition-colors right-3 top-3 text-sage-400 hover:text-sage-600"
                     >
                       {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                     </button>
@@ -186,7 +190,7 @@ const Signup = () => {
                 </div>
 
                 <div className="space-y-4">
-                  <Label className="text-gray-700 font-medium">
+                  <Label className="font-medium text-gray-700">
                     {t('selectRole')}
                   </Label>
                   <div className="space-y-3">
@@ -236,7 +240,7 @@ const Signup = () => {
                   className="w-full h-12 bg-gradient-to-r from-sage-500 to-sage-600 hover:from-sage-600 hover:to-sage-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
                   disabled={isLoading}
                 >
-                  {isLoading ? "Creating Account..." : t('createAccount')}
+                  {isLoading ? t('creatingAccount') : t('createAccount')}
                 </Button>
               </form>
 
@@ -245,7 +249,7 @@ const Signup = () => {
                   {t('alreadyHaveAccount')}{' '}
                   <Link 
                     to="/login" 
-                    className="text-sage-600 hover:text-sage-700 font-semibold transition-colors"
+                    className="font-semibold transition-colors text-sage-600 hover:text-sage-700"
                   >
                     {t('login')}
                   </Link>
@@ -256,18 +260,18 @@ const Signup = () => {
 
           {/* Trust Indicators */}
           <div className="mt-8 text-center">
-            <div className="flex justify-center items-center space-x-8 text-sm text-gray-500">
+            <div className="flex items-center justify-center space-x-8 text-sm text-gray-500">
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                <span>10K+ Farmers</span>
+                <span>{t('tenKFarmers')}</span>
               </div>
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                <span>Verified Platform</span>
+                <span>{t('verifiedPlatform')}</span>
               </div>
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-                <span>24/7 Support</span>
+                <span>{t('support24x7')}</span>
               </div>
             </div>
           </div>

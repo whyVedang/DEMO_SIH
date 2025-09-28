@@ -15,7 +15,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 const RetailerDashboard = () => {
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, currentLanguage } = useLanguage();
   const { user, logout } = useAuth();
   const [activeTab, setActiveTab] = useState("products");
   const [showProfileForm, setShowProfileForm] = useState(false);
@@ -32,23 +32,174 @@ const RetailerDashboard = () => {
     thisMonthSales: 85000,
   };
 
-  const currentProducts = [
-    { id: 1, name: "ऑर्गेनिक टमाटर (Organic Tomatoes)", quantity: "50 किलो", status: "In Stock", price: "₹60/किलो", category: "सब्जियां (Vegetables)", supplier: "ग्रीन वैली फार्म" },
-    { id: 2, name: "कोल्ड-प्रेस्ड नारियल तेल (Cold-Pressed Coconut Oil)", quantity: "25 लीटर", status: "Low Stock", price: "₹450/लीटर", category: "तेल (Oils)", supplier: "प्योर हार्वेस्ट" },
-    { id: 3, name: "हिमालयन गुलाबी नमक (Himalayan Pink Salt)", quantity: "15 किलो", status: "In Stock", price: "₹320/किलो", category: "मसाले (Spices)", supplier: "प्योर मिनरल्स" },
-  ];
+  // Language-aware product data
+  const getProductsData = () => {
+    const baseData = [
+      {
+        id: 1,
+        name: {
+          en: "Organic Tomatoes",
+          hi: "जैविक टमाटर"
+        },
+        quantity: `50 ${t('kg')}`,
+        status: "In Stock",
+        price: `₹60${t('perKg')}`,
+        category: {
+          en: "Vegetables",
+          hi: "सब्जियां"
+        },
+        supplier: {
+          en: "Green Valley Farm",
+          hi: "ग्रीन वैली फार्म"
+        }
+      },
+      {
+        id: 2,
+        name: {
+          en: "Cold-Pressed Coconut Oil",
+          hi: "कोल्ड-प्रेस्ड नारियल तेल"
+        },
+        quantity: `25 ${t('liters')}`,
+        status: "Low Stock",
+        price: `₹450${t('perLiter')}`,
+        category: {
+          en: "Oils",
+          hi: "तेल"
+        },
+        supplier: {
+          en: "Pure Harvest",
+          hi: "प्योर हार्वेस्ट"
+        }
+      },
+      {
+        id: 3,
+        name: {
+          en: "Himalayan Pink Salt",
+          hi: "हिमालयन गुलाबी नमक"
+        },
+        quantity: `15 ${t('kg')}`,
+        status: "In Stock",
+        price: `₹320${t('perKg')}`,
+        category: {
+          en: "Spices",
+          hi: "मसाले"
+        },
+        supplier: {
+          en: "Pure Minerals",
+          hi: "प्योर मिनरल्स"
+        }
+      }
+    ];
 
-  const recentOrders = [
-    { id: 1, customer: "राम कुमार (Ram Kumar)", product: "ऑर्गेनिक टमाटर", quantity: "2 किलो", amount: "₹120", status: "Completed", contact: "9876543210" },
-    { id: 2, customer: "सीता देवी (Sita Devi)", product: "नारियल तेल", quantity: "1 लीटर", amount: "₹450", status: "Processing", contact: "8765432109" },
-    { id: 3, customer: "अमित शर्मा (Amit Sharma)", product: "गुलाबी नमक", quantity: "500 ग्राम", amount: "₹160", status: "Completed", contact: "7654321098" },
-  ];
+    return baseData.map(product => ({
+      ...product,
+      name: product.name[currentLanguage] || product.name.en,
+      category: product.category[currentLanguage] || product.category.en,
+      supplier: product.supplier[currentLanguage] || product.supplier.en
+    }));
+  };
 
-  const topCustomers = [
-    { id: 1, name: "राम कुमार (Ram Kumar)", orders: 15, totalSpent: "₹12,500", rating: 5 },
-    { id: 2, name: "सीता देवी (Sita Devi)", orders: 12, totalSpent: "₹9,800", rating: 4 },
-    { id: 3, name: "अमित शर्मा (Amit Sharma)", orders: 8, totalSpent: "₹6,200", rating: 5 },
-  ];
+  // Language-aware orders data
+  const getOrdersData = () => {
+    const baseData = [
+      {
+        id: 1,
+        customer: {
+          en: "Ram Kumar",
+          hi: "राम कुमार"
+        },
+        product: {
+          en: "Organic Tomatoes",
+          hi: "जैविक टमाटर"
+        },
+        quantity: `2 ${t('kg')}`,
+        amount: "₹120",
+        status: "Completed",
+        contact: "9876543210"
+      },
+      {
+        id: 2,
+        customer: {
+          en: "Sita Devi",
+          hi: "सीता देवी"
+        },
+        product: {
+          en: "Coconut Oil",
+          hi: "नारियल तेल"
+        },
+        quantity: `1 ${t('liters')}`,
+        amount: "₹450",
+        status: "Processing",
+        contact: "8765432109"
+      },
+      {
+        id: 3,
+        customer: {
+          en: "Amit Sharma",
+          hi: "अमित शर्मा"
+        },
+        product: {
+          en: "Pink Salt",
+          hi: "गुलाबी नमक"
+        },
+        quantity: `500 ${t('grams')}`,
+        amount: "₹160",
+        status: "Completed",
+        contact: "7654321098"
+      }
+    ];
+
+    return baseData.map(order => ({
+      ...order,
+      customer: order.customer[currentLanguage] || order.customer.en,
+      product: order.product[currentLanguage] || order.product.en
+    }));
+  };
+
+  // Language-aware customers data
+  const getCustomersData = () => {
+    const baseData = [
+      {
+        id: 1,
+        name: {
+          en: "Ram Kumar",
+          hi: "राम कुमार"
+        },
+        orders: 15,
+        totalSpent: "₹12,500",
+        rating: 5
+      },
+      {
+        id: 2,
+        name: {
+          en: "Sita Devi",
+          hi: "सीता देवी"
+        },
+        orders: 12,
+        totalSpent: "₹9,800",
+        rating: 4
+      },
+      {
+        id: 3,
+        name: {
+          en: "Amit Sharma",
+          hi: "अमित शर्मा"
+        },
+        orders: 8,
+        totalSpent: "₹6,200",
+        rating: 5
+      }
+    ];
+
+    return baseData.map(customer => ({
+      ...customer,
+      name: customer.name[currentLanguage] || customer.name.en
+    }));
+  };
+
+  const currentProducts = getProductsData();
+  const recentOrders = getOrdersData();
+  const topCustomers = getCustomersData();
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -71,6 +222,18 @@ const RetailerDashboard = () => {
       case 'Processing': return <Clock className="w-4 h-4" />;
       case 'Pending': return <Clock className="w-4 h-4" />;
       default: return <Clock className="w-4 h-4" />;
+    }
+  };
+
+  const getStatusText = (status) => {
+    switch (status) {
+      case 'In Stock': return t('inStock');
+      case 'Low Stock': return t('lowStock');
+      case 'Out of Stock': return t('outOfStock');
+      case 'Completed': return t('completed');
+      case 'Processing': return t('processing');
+      case 'Pending': return t('pending');
+      default: return status;
     }
   };
 
@@ -116,7 +279,7 @@ const RetailerDashboard = () => {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-gray-900">{retailerStats.totalProducts}</div>
-                <p className="text-xs text-purple-600">+3 this week</p>
+                <p className="text-xs text-purple-600">{t('threeThisWeek')}</p>
               </CardContent>
             </Card>
 
@@ -127,7 +290,7 @@ const RetailerDashboard = () => {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-gray-900">{retailerStats.activeOrders}</div>
-                <p className="text-xs text-purple-600">+2 new</p>
+                <p className="text-xs text-purple-600">{t('twoNew')}</p>
               </CardContent>
             </Card>
 
@@ -138,7 +301,7 @@ const RetailerDashboard = () => {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-gray-900">{retailerStats.totalCustomers}</div>
-                <p className="text-xs text-purple-600">+8 new</p>
+                <p className="text-xs text-purple-600">{t('eightNew')}</p>
               </CardContent>
             </Card>
 
@@ -149,7 +312,7 @@ const RetailerDashboard = () => {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-gray-900">₹{retailerStats.thisMonthSales.toLocaleString()}</div>
-                <p className="text-xs text-purple-600">+15% from last month</p>
+                <p className="text-xs text-purple-600">{t('fifteenPercentIncrease')}</p>
               </CardContent>
             </Card>
           </div>
@@ -190,12 +353,12 @@ const RetailerDashboard = () => {
                           <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
                             <div>{t('quantity')}: {product.quantity}</div>
                             <div>{t('price')}: {product.price}</div>
-                            <div>Category: {product.category}</div>
-                            <div>Supplier: {product.supplier}</div>
+                            <div>{t('category')}: {product.category}</div>
+                            <div>{t('supplier')}: {product.supplier}</div>
                             <div className="flex items-center gap-2">
                               <Badge className={`${getStatusColor(product.status)} flex items-center gap-1`}>
                                 {getStatusIcon(product.status)}
-                                {product.status}
+                                {getStatusText(product.status)}
                               </Badge>
                             </div>
                           </div>
@@ -220,19 +383,19 @@ const RetailerDashboard = () => {
                         <div className="flex-1">
                           <h4 className="mb-2 text-lg font-semibold text-gray-900">{order.customer}</h4>
                           <div className="grid grid-cols-2 gap-2 mb-2 text-sm text-gray-600">
-                            <div>Product: {order.product}</div>
+                            <div>{t('product')}: {order.product}</div>
                             <div>{t('quantity')}: {order.quantity}</div>
                             <div>{t('amount')}: {order.amount}</div>
                             <div className="flex items-center gap-1">
                               <Phone className="w-3 h-3" />
-                              {order.contact}
+                              {t('contact')}: {order.contact}
                             </div>
                           </div>
                         </div>
                         <div className="flex flex-col items-end space-y-2">
                           <Badge className={`${getStatusColor(order.status)} flex items-center gap-1`}>
                             {getStatusIcon(order.status)}
-                            {order.status}
+                            {getStatusText(order.status)}
                           </Badge>
                           <Button variant="outline" size="sm">
                             {t('call')}
@@ -256,7 +419,7 @@ const RetailerDashboard = () => {
                           <h4 className="mb-2 text-lg font-semibold text-gray-900">{customer.name}</h4>
                           <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
                             <div>{t('orders')}: {customer.orders}</div>
-                            <div>Total Spent: {customer.totalSpent}</div>
+                            <div>{t('totalSpent')}: {customer.totalSpent}</div>
                             <div className="flex items-center gap-1">
                               <Star className="w-4 h-4 text-yellow-500 fill-current" />
                               <span>{customer.rating}/5</span>
@@ -264,7 +427,7 @@ const RetailerDashboard = () => {
                           </div>
                         </div>
                         <Button variant="outline" size="sm">
-                          View Details
+                          {t('viewDetails')}
                         </Button>
                       </div>
                     </CardContent>

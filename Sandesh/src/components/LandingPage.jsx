@@ -30,36 +30,36 @@ export const LandingPage = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative flex items-center justify-center min-h-screen overflow-hidden">
         {/* Simple Background */}
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 bg-center bg-no-repeat bg-cover"
           style={{ backgroundImage: `url(${heroImage})` }}
         >
           <div className="absolute inset-0 bg-gradient-to-br from-sage-900/70 via-sage-800/60 to-sage-700/70" />
         </div>
 
-        <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="container relative z-10 px-4 mx-auto text-center sm:px-6 lg:px-8">
           {/* Simple Badge */}
-          <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-6 py-3 text-white text-sm font-medium mb-8">
-            <Leaf className="h-4 w-4" />
+          <div className="inline-flex items-center gap-2 px-6 py-3 mb-8 text-sm font-medium text-white border rounded-full bg-white/20 backdrop-blur-sm border-white/30">
+            <Leaf className="w-4 h-4" />
             <span>{t('heroSubtitle')}</span>
           </div>
           
           {/* Clean Title */}
           <div className="max-w-4xl mx-auto mb-12">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white leading-tight">
+            <h1 className="mb-6 text-5xl font-bold leading-tight text-white md:text-7xl">
               {t('heroTitle')}
             </h1>
-            <p className="text-xl md:text-2xl text-sage-100 max-w-3xl mx-auto leading-relaxed mb-8">
-              Revolutionizing agriculture with BlockChain technology and Ecosystem Transparent Approach
+            <p className="max-w-3xl mx-auto mb-8 text-xl leading-relaxed md:text-2xl text-sage-100">
+              {t('heroDescription')}
             </p>
           </div>
           
           {/* Simple CTA */}
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <button
-              className="bg-white text-sage-900 font-semibold px-8 py-4 rounded-lg hover:bg-sage-50 transition-colors duration-300 flex items-center gap-2 shadow-lg"
+              className="flex items-center gap-2 px-8 py-4 font-semibold transition-colors duration-300 bg-white rounded-lg shadow-lg text-sage-900 hover:bg-sage-50"
               onClick={handleGetStarted}
             >
               {t('getStarted')}
@@ -67,10 +67,10 @@ export const LandingPage = () => {
             </button>
             
             <button
-              className="border-2 border-white/30 text-white font-medium px-8 py-4 rounded-lg hover:bg-white/10 transition-colors duration-300"
+              className="px-8 py-4 font-medium text-white transition-colors duration-300 border-2 rounded-lg border-white/30 hover:bg-white/10"
               onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              Learn More
+              {t('learnMore')}
             </button>
           </div>
         </div>
@@ -78,94 +78,94 @@ export const LandingPage = () => {
 
       {/* Features Section - Realistic Design */}
       <section id="features" className="py-24 bg-gray-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+        <div className="container px-4 mx-auto sm:px-6 lg:px-8">
+          <div className="mb-16 text-center">
+            <h2 className="mb-4 text-4xl font-bold text-gray-900 md:text-5xl">
               {t('whyChoose')}
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="max-w-3xl mx-auto text-xl text-gray-600">
               {t('whyChooseDesc')}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid max-w-6xl grid-cols-1 gap-8 mx-auto md:grid-cols-3">
             {/* Batch Management */}
-            <div className="bg-white rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
-              <div className="w-16 h-16 bg-sage-100 rounded-lg flex items-center justify-center mb-6">
-                <Package className="h-8 w-8 text-sage-600" />
+            <div className="p-8 transition-shadow duration-300 bg-white border border-gray-100 rounded-lg shadow-lg hover:shadow-xl">
+              <div className="flex items-center justify-center w-16 h-16 mb-6 rounded-lg bg-sage-100">
+                <Package className="w-8 h-8 text-sage-600" />
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900">
+              <h3 className="mb-4 text-2xl font-bold text-gray-900">
                 {t('batchManagement')}
               </h3>
-              <p className="text-gray-600 leading-relaxed mb-6">
+              <p className="mb-6 leading-relaxed text-gray-600">
                 {t('batchManagementDesc')}
               </p>
               <ul className="space-y-2 text-sm text-gray-600">
                 <li className="flex items-center">
-                  <CheckCircle className="w-4 h-4 text-sage-500 mr-2" />
-                  Track crop progress
+                  <CheckCircle className="w-4 h-4 mr-2 text-sage-500" />
+                  {t('trackCropProgress')}
                 </li>
                 <li className="flex items-center">
-                  <CheckCircle className="w-4 h-4 text-sage-500 mr-2" />
-                  Quality monitoring
+                  <CheckCircle className="w-4 h-4 mr-2 text-sage-500" />
+                  {t('qualityMonitoring')}
                 </li>
                 <li className="flex items-center">
-                  <CheckCircle className="w-4 h-4 text-sage-500 mr-2" />
-                  Harvest planning
+                  <CheckCircle className="w-4 h-4 mr-2 text-sage-500" />
+                  {t('harvestPlanning')}
                 </li>
               </ul>
             </div>
 
             {/* Rating System */}
-            <div className="bg-white rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
-              <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
-                <Star className="h-8 w-8 text-blue-600" />
+            <div className="p-8 transition-shadow duration-300 bg-white border border-gray-100 rounded-lg shadow-lg hover:shadow-xl">
+              <div className="flex items-center justify-center w-16 h-16 mb-6 bg-blue-100 rounded-lg">
+                <Star className="w-8 h-8 text-blue-600" />
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900">
+              <h3 className="mb-4 text-2xl font-bold text-gray-900">
                 {t('ratingSystem')}
               </h3>
-              <p className="text-gray-600 leading-relaxed mb-6">
+              <p className="mb-6 leading-relaxed text-gray-600">
                 {t('ratingSystemDesc')}
               </p>
               <ul className="space-y-2 text-sm text-gray-600">
                 <li className="flex items-center">
-                  <CheckCircle className="w-4 h-4 text-blue-500 mr-2" />
-                  Transparent reviews
+                  <CheckCircle className="w-4 h-4 mr-2 text-blue-500" />
+                  {t('transparentReviews')}
                 </li>
                 <li className="flex items-center">
-                  <CheckCircle className="w-4 h-4 text-blue-500 mr-2" />
-                  Build reputation
+                  <CheckCircle className="w-4 h-4 mr-2 text-blue-500" />
+                  {t('buildReputation')}
                 </li>
                 <li className="flex items-center">
-                  <CheckCircle className="w-4 h-4 text-blue-500 mr-2" />
-                  Trust system
+                  <CheckCircle className="w-4 h-4 mr-2 text-blue-500" />
+                  {t('trustSystem')}
                 </li>
               </ul>
             </div>
 
             {/* Sustainable Growth */}
-            <div className="bg-white rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
-              <div className="w-16 h-16 bg-green-100 rounded-lg flex items-center justify-center mb-6">
-                <Leaf className="h-8 w-8 text-green-600" />
+            <div className="p-8 transition-shadow duration-300 bg-white border border-gray-100 rounded-lg shadow-lg hover:shadow-xl">
+              <div className="flex items-center justify-center w-16 h-16 mb-6 bg-green-100 rounded-lg">
+                <Leaf className="w-8 h-8 text-green-600" />
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900">
+              <h3 className="mb-4 text-2xl font-bold text-gray-900">
                 {t('sustainableGrowth')}
               </h3>
-              <p className="text-gray-600 leading-relaxed mb-6">
+              <p className="mb-6 leading-relaxed text-gray-600">
                 {t('sustainableGrowthDesc')}
               </p>
               <ul className="space-y-2 text-sm text-gray-600">
                 <li className="flex items-center">
-                  <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                  Eco-friendly practices
+                  <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
+                  {t('ecoFriendlyPractices')}
                 </li>
                 <li className="flex items-center">
-                  <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                  Certification programs
+                  <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
+                  {t('certificationPrograms')}
                 </li>
                 <li className="flex items-center">
-                  <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                  Environment focus
+                  <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
+                  {t('environmentFocus')}
                 </li>
               </ul>
             </div>
@@ -175,47 +175,47 @@ export const LandingPage = () => {
 
       {/* Simple Stats Section */}
       <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Trusted by Farmers Across India</h2>
-            <p className="text-lg text-gray-600">Join thousands of farmers who are growing their business with us</p>
+        <div className="container px-4 mx-auto sm:px-6 lg:px-8">
+          <div className="mb-12 text-center">
+            <h2 className="mb-4 text-3xl font-bold text-gray-900">{t('trustedByFarmers')}</h2>
+            <p className="text-lg text-gray-600">{t('joinThousandsFarmers')}</p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+          <div className="grid max-w-4xl grid-cols-2 gap-8 mx-auto md:grid-cols-4">
             <div className="text-center">
-              <div className="text-4xl font-bold text-sage-600 mb-2">10K+</div>
-              <div className="text-gray-600">Active Farmers</div>
+              <div className="mb-2 text-4xl font-bold text-sage-600">10K+</div>
+              <div className="text-gray-600">{t('activeFarmers')}</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-sage-600 mb-2">50K+</div>
-              <div className="text-gray-600">Crops Listed</div>
+              <div className="mb-2 text-4xl font-bold text-sage-600">50K+</div>
+              <div className="text-gray-600">{t('cropsListed')}</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-sage-600 mb-2">₹2M+</div>
-              <div className="text-gray-600">Revenue Generated</div>
+              <div className="mb-2 text-4xl font-bold text-sage-600">₹2M+</div>
+              <div className="text-gray-600">{t('revenueGenerated')}</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-sage-600 mb-2">4.8★</div>
-              <div className="text-gray-600">Average Rating</div>
+              <div className="mb-2 text-4xl font-bold text-sage-600">4.8★</div>
+              <div className="text-gray-600">{t('averageRating')}</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Simple CTA Section */}
-      <section id="about" className="py-24 bg-sage-600 text-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section id="about" className="py-24 text-white bg-sage-600">
+        <div className="container px-4 mx-auto text-center sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <h2 className="mb-6 text-4xl font-bold md:text-5xl">
               {t('readyToTransform')}
             </h2>
             
-            <p className="text-xl mb-12 text-sage-100 max-w-3xl mx-auto">
+            <p className="max-w-3xl mx-auto mb-12 text-xl text-sage-100">
               {t('readyToTransformDesc')}
             </p>
             
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
+            <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
               <button 
-                className="bg-white text-sage-600 font-semibold px-8 py-4 rounded-lg hover:bg-sage-50 transition-colors duration-300 flex items-center gap-2"
+                className="flex items-center gap-2 px-8 py-4 font-semibold transition-colors duration-300 bg-white rounded-lg text-sage-600 hover:bg-sage-50"
                 onClick={handleGetStarted}
               >
                 {t('startJourney')}
@@ -223,28 +223,28 @@ export const LandingPage = () => {
               </button>
               
               <button
-                className="border-2 border-white/30 text-white font-semibold px-8 py-4 rounded-lg hover:bg-white/10 transition-colors duration-300"
+                className="px-8 py-4 font-semibold text-white transition-colors duration-300 border-2 rounded-lg border-white/30 hover:bg-white/10"
                 onClick={() => navigate('/login')}
               >
-                Already a Member?
+                {t('alreadyMember')}
               </button>
             </div>
             
-            <div className="mt-16 grid grid-cols-3 gap-8 max-w-2xl mx-auto">
+            <div className="grid max-w-2xl grid-cols-3 gap-8 mx-auto mt-16">
               <div className="text-center">
-                <Star className="w-8 h-8 text-yellow-400 mx-auto mb-2" />
+                <Star className="w-8 h-8 mx-auto mb-2 text-yellow-400" />
                 <div className="text-2xl font-bold">4.8★</div>
-                <div className="text-sage-200 text-sm">User Rating</div>
+                <div className="text-sm text-sage-200">{t('userRating')}</div>
               </div>
               <div className="text-center">
-                <Users className="w-8 h-8 text-sage-200 mx-auto mb-2" />
+                <Users className="w-8 h-8 mx-auto mb-2 text-sage-200" />
                 <div className="text-2xl font-bold">10K+</div>
-                <div className="text-sage-200 text-sm">Farmers</div>
+                <div className="text-sm text-sage-200">{t('farmers')}</div>
               </div>
               <div className="text-center">
-                <Shield className="w-8 h-8 text-sage-200 mx-auto mb-2" />
+                <Shield className="w-8 h-8 mx-auto mb-2 text-sage-200" />
                 <div className="text-2xl font-bold">100%</div>
-                <div className="text-sage-200 text-sm">Secure</div>
+                <div className="text-sm text-sage-200">{t('secure')}</div>
               </div>
             </div>
           </div>

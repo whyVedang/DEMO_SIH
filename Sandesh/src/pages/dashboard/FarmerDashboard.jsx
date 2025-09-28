@@ -30,7 +30,7 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 const FarmerDashboard = () => {
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage(); // Add language here
   const { user, logout } = useAuth();
   const [activeTab, setActiveTab] = useState("overview");
   const [showBatchForm, setShowBatchForm] = useState(false);
@@ -48,71 +48,118 @@ const FarmerDashboard = () => {
     earnings: 12500
   };
 
-  const recentBatches = [
-    { 
-      id: 1, 
-      crop: "टमाटर (Tomatoes)", 
-      quantity: "50 किलो", 
-      status: "Available", 
-      price: "₹40/किलो", 
-      date: "आज (Today)",
-      quality: "A+",
-      location: "खेत नंबर 1"
-    },
-    { 
-      id: 2, 
-      crop: "प्याज (Onions)", 
-      quantity: "100 किलो", 
-      status: "Sold", 
-      price: "₹25/किलो", 
-      date: "कल (Yesterday)",
-      quality: "A",
-      location: "खेत नंबर 2"
-    },
-    { 
-      id: 3, 
-      crop: "आलू (Potatoes)", 
-      quantity: "75 किलो", 
-      status: "Low Stock", 
-      price: "₹30/किलो", 
-      date: "2 दिन पहले",
-      quality: "B+",
-      location: "खेत नंबर 1"
-    },
-  ];
+  // Language-aware batch data
+  const getBatchData = () => {
+    const baseData = [
+      { 
+        id: 1, 
+        crop: {
+          en: "Tomatoes",
+          hi: "टमाटर"
+        },
+        quantity: `50 ${t('kgUnit')}`, 
+        status: "Available", 
+        price: `₹40${t('perKg')}`, 
+        date: t('today'),
+        quality: "A+",
+        location: t('fieldNumber1')
+      },
+      { 
+        id: 2, 
+        crop: {
+          en: "Onions", 
+          hi: "प्याज"
+        },
+        quantity: `100 ${t('kgUnit')}`, 
+        status: "Sold", 
+        price: `₹25${t('perKg')}`, 
+        date: t('yesterday'),
+        quality: "A",
+        location: t('fieldNumber2')
+      },
+      { 
+        id: 3, 
+        crop: {
+          en: "Potatoes",
+          hi: "आलू"
+        },
+        quantity: `75 ${t('kgUnit')}`, 
+        status: "Low Stock", 
+        price: `₹30${t('perKg')}`, 
+        date: t('twoDaysAgo'),
+        quality: "B+",
+        location: t('fieldNumber1')
+      },
+    ];
 
-  const recentOrders = [
-    { 
-      id: 1, 
-      buyer: "राम सब्जी मंडी", 
-      crop: "टमाटर", 
-      quantity: "20 किलो", 
-      amount: "₹800", 
-      status: "Confirmed",
-      date: "आज",
-      phone: "+91 98765 43210"
-    },
-    { 
-      id: 2, 
-      buyer: "ग्रीन स्टोर", 
-      crop: "प्याज", 
-      quantity: "50 किलो", 
-      amount: "₹1,250", 
-      status: "Pending",
-      date: "कल",
-      phone: "+91 98765 43211"
-    },
-    { 
-      id: 3, 
-      buyer: "सिटी मार्केट", 
-      crop: "आलू", 
-      quantity: "30 किलो", 
-      amount: "₹900", 
-      status: "Delivered",
-      date: "3 दिन पहले",
-      phone: "+91 98765 43212"
-    },
-  ];
+    return baseData.map(batch => ({
+      ...batch,
+      crop: batch.crop[language] || batch.crop.en
+    }));
+  };
+
+  // Language-aware orders data
+  const getOrdersData = () => {
+    const baseData = [
+      { 
+        id: 1, 
+        buyer: {
+          en: "Ram Vegetable Market",
+          hi: "राम सब्जी मंडी"
+        },
+        crop: {
+          en: "Tomatoes",
+          hi: "टमाटर"
+        },
+        quantity: `20 ${t('kgUnit')}`, 
+        amount: "₹800", 
+        status: "Confirmed",
+        date: t('today'),
+        phone: "+91 98765 43210"
+      },
+      { 
+        id: 2, 
+        buyer: {
+          en: "Green Store",
+          hi: "ग्रीन स्टोर"
+        },
+        crop: {
+          en: "Onions",
+          hi: "प्याज"
+        },
+        quantity: `50 ${t('kgUnit')}`, 
+        amount: "₹1,250", 
+        status: "Pending",
+        date: t('yesterday'),
+        phone: "+91 98765 43211"
+      },
+      { 
+        id: 3, 
+        buyer: {
+          en: "City Market",
+          hi: "सिटी मार्केट"
+        },
+        crop: {
+          en: "Potatoes",
+          hi: "आलू"
+        },
+        quantity: `30 ${t('kgUnit')}`, 
+        amount: "₹900", 
+        status: "Delivered",
+        date: t('threeDaysAgo'),
+        phone: "+91 98765 43212"
+      },
+    ];
+
+    return baseData.map(order => ({
+      ...order,
+      buyer: order.buyer[language] || order.buyer.en,
+      crop: order.crop[language] || order.crop.en
+    }));
+  };
+
+  const recentBatches = getBatchData();
+  const recentOrders = getOrdersData();
 
   const quickActions = [
     { label: t('addNewCrop'), icon: Plus, action: "addBatch", color: "bg-green-500" },
@@ -169,6 +216,18 @@ const FarmerDashboard = () => {
     }
   };
 
+  const getStatusText = (status) => {
+    switch (status) {
+      case 'Available': return t('available');
+      case 'Sold': return t('sold');
+      case 'Low Stock': return t('lowStock');
+      case 'Confirmed': return t('confirmed');
+      case 'Pending': return t('pending');
+      case 'Delivered': return t('delivered');
+      default: return status;
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="py-6">
@@ -207,7 +266,7 @@ const FarmerDashboard = () => {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-gray-900">{stats.totalBatches}</div>
-                <p className="text-xs text-green-600">+2 this week</p>
+                <p className="text-xs text-green-600">+2 {t('thisWeek')}</p>
               </CardContent>
             </Card>
 
@@ -218,7 +277,7 @@ const FarmerDashboard = () => {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-gray-900">{stats.activeOrders}</div>
-                <p className="text-xs text-green-600">+1 new</p>
+                <p className="text-xs text-green-600">+1 {t('newText')}</p>
               </CardContent>
             </Card>
 
@@ -229,7 +288,7 @@ const FarmerDashboard = () => {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-gray-900">{stats.rating}</div>
-                <p className="text-xs text-green-600">Excellent</p>
+                <p className="text-xs text-green-600">{t('excellent')}</p>
               </CardContent>
             </Card>
 
@@ -240,7 +299,7 @@ const FarmerDashboard = () => {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-gray-900">₹{stats.earnings.toLocaleString()}</div>
-                <p className="text-xs text-green-600">+8% from last month</p>
+                <p className="text-xs text-green-600">+8% {t('fromLastMonth')}</p>
               </CardContent>
             </Card>
           </div>
@@ -297,26 +356,26 @@ const FarmerDashboard = () => {
                       <div className="flex items-center space-x-3">
                         <div className="w-2 h-2 bg-green-500 rounded-full" />
                         <div className="flex-1">
-                          <p className="text-sm font-medium text-gray-900">नया ऑर्डर मिला</p>
-                          <p className="text-xs text-gray-600">राम सब्जी मंडी - 20 किलो टमाटर</p>
+                          <p className="text-sm font-medium text-gray-900">{t('newOrderReceived')}</p>
+                          <p className="text-xs text-gray-600">{t('ramVegetableMarket')} - 20 {t('kgUnit')} {t('tomatoes')}</p>
                         </div>
-                        <span className="text-xs text-gray-600">2 घंटे पहले</span>
+                        <span className="text-xs text-gray-600">2 {t('hoursAgo')}</span>
                       </div>
                       <div className="flex items-center space-x-3">
                         <div className="w-2 h-2 bg-yellow-500 rounded-full" />
                         <div className="flex-1">
-                          <p className="text-sm font-medium text-gray-900">फसल स्थिति अपडेट</p>
-                          <p className="text-xs text-gray-600">आलू - कम स्टॉक</p>
+                          <p className="text-sm font-medium text-gray-900">{t('cropStatusUpdate')}</p>
+                          <p className="text-xs text-gray-600">{t('potatoes')} - {t('lowStock')}</p>
                         </div>
-                        <span className="text-xs text-gray-600">5 घंटे पहले</span>
+                        <span className="text-xs text-gray-600">5 {t('hoursAgo')}</span>
                       </div>
                       <div className="flex items-center space-x-3">
                         <div className="w-2 h-2 bg-blue-500 rounded-full" />
                         <div className="flex-1">
-                          <p className="text-sm font-medium text-gray-900">नई रेटिंग मिली</p>
-                          <p className="text-xs text-gray-600">5 सितारे सिटी मार्केट से</p>
+                          <p className="text-sm font-medium text-gray-900">{t('newRatingReceived')}</p>
+                          <p className="text-xs text-gray-600">{t('fiveStars')} {t('cityMarket')}</p>
                         </div>
-                        <span className="text-xs text-gray-600">1 दिन पहले</span>
+                        <span className="text-xs text-gray-600">1 {t('dayAgo')}</span>
                       </div>
                     </div>
                   </CardContent>
@@ -331,17 +390,17 @@ const FarmerDashboard = () => {
                     <div className="space-y-3">
                       <div className="p-3 rounded-lg bg-green-50">
                         <p className="text-sm text-green-800">
-                          <strong>टिप:</strong> अपनी फसलों की तस्वीरें लें - बेहतर दाम मिलेगा
+                          <strong>{t('tipLabel')}</strong> {t('takeCropPhotos')}
                         </p>
                       </div>
                       <div className="p-3 rounded-lg bg-blue-50">
                         <p className="text-sm text-blue-800">
-                          <strong>सुझाव:</strong> नियमित रूप से कीमत अपडेट करते रहें
+                          <strong>{t('suggestionLabel')}</strong> {t('updatePricesRegularly')}
                         </p>
                       </div>
                       <div className="p-3 rounded-lg bg-yellow-50">
                         <p className="text-sm text-yellow-800">
-                          <strong>याद रखें:</strong> ग्राहकों से अच्छा व्यवहार करें
+                          <strong>{t('rememberLabel')}</strong> {t('treatCustomersWell')}
                         </p>
                       </div>
                     </div>
@@ -380,7 +439,7 @@ const FarmerDashboard = () => {
                         <div className="flex flex-col items-end space-y-2">
                           <Badge className={`${getStatusColor(batch.status)} flex items-center gap-1`}>
                             {getStatusIcon(batch.status)}
-                            {batch.status}
+                            {getStatusText(batch.status)}
                           </Badge>
                           <Button variant="outline" size="sm">
                             {t('edit')}
@@ -417,7 +476,7 @@ const FarmerDashboard = () => {
                         <div className="flex flex-col items-end space-y-2">
                           <Badge className={`${getStatusColor(order.status)} flex items-center gap-1`}>
                             {getStatusIcon(order.status)}
-                            {order.status}
+                            {getStatusText(order.status)}
                           </Badge>
                           <Button variant="outline" size="sm">
                             {t('call')}

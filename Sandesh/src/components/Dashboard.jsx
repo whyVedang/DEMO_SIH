@@ -13,7 +13,6 @@ import {
   Calendar,
   TrendingUp,
   Leaf,
-  MapPin
 } from "lucide-react";
 import { BatchForm } from "./BatchForm";
 import { ProfileForm } from "./ProfileForm";
@@ -52,12 +51,12 @@ export const FarmerDashboard = ({ onLogout }) => {
   }
 
   return (
-    <div className="min-h-screen bg-sage-50 py-6">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-6 bg-sage-50">
+      <div className="container px-4 mx-auto sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+        <div className="flex flex-col items-start justify-between mb-8 md:flex-row md:items-center">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Farmer Dashboard</h1>
+            <h1 className="mb-2 text-3xl font-bold text-gray-900">Farmer Dashboard</h1>
             <p className="text-gray-600">Welcome back, manage your farm operations</p>
           </div>
           <div className="flex gap-3 mt-4 md:mt-0">
@@ -66,7 +65,7 @@ export const FarmerDashboard = ({ onLogout }) => {
               variant="outline"
               className="flex items-center gap-2"
             >
-              <User className="h-4 w-4" />
+              <User className="w-4 h-4" />
               Edit Profile
             </Button>
             <Button 
@@ -79,11 +78,11 @@ export const FarmerDashboard = ({ onLogout }) => {
         </div>
 
         {/* Stats Overview */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2 lg:grid-cols-4">
           <Card className="feature-card">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium text-gray-600">Total Batches</CardTitle>
-              <Package className="h-4 w-4 text-sage-600" />
+              <Package className="w-4 h-4 text-sage-600" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-gray-900">{stats.totalBatches}</div>
@@ -94,7 +93,7 @@ export const FarmerDashboard = ({ onLogout }) => {
           <Card className="feature-card">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium text-gray-600">Active Orders</CardTitle>
-              <ShoppingCart className="h-4 w-4 text-sage-600" />
+              <ShoppingCart className="w-4 h-4 text-sage-600" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-gray-900">{stats.activeOrders}</div>
@@ -105,17 +104,17 @@ export const FarmerDashboard = ({ onLogout }) => {
           <Card className="feature-card">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium text-gray-600">Average Rating</CardTitle>
-              <Star className="h-4 w-4 text-sage-600" />
+              <Star className="w-4 h-4 text-sage-600" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-gray-900">{stats.rating}</div>
               <div className="flex items-center">
                 <div className="flex">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-3 w-3 fill-sage-500 text-sage-500" />
+                    <Star key={i} className="w-3 h-3 fill-sage-500 text-sage-500" />
                   ))}
                 </div>
-                <span className="text-xs text-gray-600 ml-2">(24 reviews)</span>
+                <span className="ml-2 text-xs text-gray-600">(24 reviews)</span>
               </div>
             </CardContent>
           </Card>
@@ -123,7 +122,7 @@ export const FarmerDashboard = ({ onLogout }) => {
           <Card className="feature-card">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium text-gray-600">This Month Earnings</CardTitle>
-              <TrendingUp className="h-4 w-4 text-sage-600" />
+              <TrendingUp className="w-4 h-4 text-sage-600" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-gray-900">₹{stats.earnings.toLocaleString()}</div>
@@ -142,29 +141,29 @@ export const FarmerDashboard = ({ onLogout }) => {
           </TabsList>
 
           <TabsContent value="overview" className="space-y-6">
-            <div className="grid lg:grid-cols-2 gap-6">
+            <div className="grid gap-6 lg:grid-cols-2">
               {/* Quick Actions */}
               <Card className="feature-card">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-gray-900">
-                    <Leaf className="h-5 w-5 text-sage-600" />
+                    <Leaf className="w-5 h-5 text-sage-600" />
                     Quick Actions
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <button 
                     onClick={() => setShowBatchForm(true)}
-                    className="w-full justify-start btn-primary"
+                    className="justify-start w-full btn-primary"
                   >
-                    <Plus className="h-4 w-4 mr-2" />
+                    <Plus className="w-4 h-4 mr-2" />
                     Add New Batch
                   </button>
-                  <Button variant="outline" className="w-full justify-start">
-                    <Eye className="h-4 w-4 mr-2" />
+                  <Button variant="outline" className="justify-start w-full">
+                    <Eye className="w-4 h-4 mr-2" />
                     View All Orders
                   </Button>
-                  <Button variant="outline" className="w-full justify-start">
-                    <Calendar className="h-4 w-4 mr-2" />
+                  <Button variant="outline" className="justify-start w-full">
+                    <Calendar className="w-4 h-4 mr-2" />
                     Schedule Harvest
                   </Button>
                 </CardContent>
@@ -178,7 +177,7 @@ export const FarmerDashboard = ({ onLogout }) => {
                 <CardContent>
                   <div className="space-y-4">
                     <div className="flex items-center space-x-3">
-                      <div className="w-2 h-2 bg-sage-500 rounded-full" />
+                      <div className="w-2 h-2 rounded-full bg-sage-500" />
                       <div className="flex-1">
                         <p className="text-sm font-medium text-gray-900">New order received</p>
                         <p className="text-xs text-gray-600">Fresh Mart - 100kg Tomatoes</p>
@@ -186,7 +185,7 @@ export const FarmerDashboard = ({ onLogout }) => {
                       <span className="text-xs text-gray-600">2h ago</span>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <div className="w-2 h-2 bg-warning rounded-full" />
+                      <div className="w-2 h-2 rounded-full bg-warning" />
                       <div className="flex-1">
                         <p className="text-sm font-medium text-foreground">Batch status updated</p>
                         <p className="text-xs text-muted-foreground">Sweet Corn - Low Stock</p>
@@ -194,7 +193,7 @@ export const FarmerDashboard = ({ onLogout }) => {
                       <span className="text-xs text-muted-foreground">5h ago</span>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <div className="w-2 h-2 bg-primary rounded-full" />
+                      <div className="w-2 h-2 rounded-full bg-primary" />
                       <div className="flex-1">
                         <p className="text-sm font-medium text-foreground">New rating received</p>
                         <p className="text-xs text-muted-foreground">5 stars from City Supermarket</p>
@@ -208,13 +207,13 @@ export const FarmerDashboard = ({ onLogout }) => {
           </TabsContent>
 
           <TabsContent value="batches" className="space-y-6">
-            <div className="flex justify-between items-center">
+            <div className="flex items-center justify-between">
               <h3 className="text-xl font-semibold text-foreground">My Crop Batches</h3>
               <Button 
                 onClick={() => setShowBatchForm(true)}
                 className="bg-gradient-primary hover:opacity-90 transition-smooth"
               >
-                <Plus className="h-4 w-4 mr-2" />
+                <Plus className="w-4 h-4 mr-2" />
                 Add Batch
               </Button>
             </div>
@@ -223,9 +222,9 @@ export const FarmerDashboard = ({ onLogout }) => {
               {recentBatches.map((batch) => (
                 <Card key={batch.id} className="bg-gradient-card border-border shadow-soft">
                   <CardContent className="p-6">
-                    <div className="flex justify-between items-start">
+                    <div className="flex items-start justify-between">
                       <div className="flex-1">
-                        <h4 className="font-semibold text-foreground mb-2">{batch.crop}</h4>
+                        <h4 className="mb-2 font-semibold text-foreground">{batch.crop}</h4>
                         <div className="flex items-center space-x-4 text-sm text-muted-foreground">
                           <span>Quantity: {batch.quantity}</span>
                           <span>Price: {batch.price}</span>
@@ -257,9 +256,9 @@ export const FarmerDashboard = ({ onLogout }) => {
               {recentOrders.map((order) => (
                 <Card key={order.id} className="bg-gradient-card border-border shadow-soft">
                   <CardContent className="p-6">
-                    <div className="flex justify-between items-start">
+                    <div className="flex items-start justify-between">
                       <div className="flex-1">
-                        <h4 className="font-semibold text-foreground mb-2">{order.buyer}</h4>
+                        <h4 className="mb-2 font-semibold text-foreground">{order.buyer}</h4>
                         <div className="flex items-center space-x-4 text-sm text-muted-foreground">
                           <span>{order.crop}</span>
                           <span>{order.quantity}</span>
@@ -280,18 +279,18 @@ export const FarmerDashboard = ({ onLogout }) => {
           </TabsContent>
 
           <TabsContent value="ratings" className="space-y-6">
-            <div className="grid lg:grid-cols-2 gap-6">
+            <div className="grid gap-6 lg:grid-cols-2">
               {/* Rating Summary */}
               <Card className="bg-gradient-card border-border shadow-medium">
                 <CardHeader>
                   <CardTitle className="text-foreground">Rating Summary</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-center mb-6">
-                    <div className="text-4xl font-bold text-foreground mb-2">{stats.rating}</div>
+                  <div className="mb-6 text-center">
+                    <div className="mb-2 text-4xl font-bold text-foreground">{stats.rating}</div>
                     <div className="flex justify-center mb-2">
                       {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="h-5 w-5 fill-warning text-warning" />
+                        <Star key={i} className="w-5 h-5 fill-warning text-warning" />
                       ))}
                     </div>
                     <p className="text-muted-foreground">Based on 24 reviews</p>
@@ -300,14 +299,14 @@ export const FarmerDashboard = ({ onLogout }) => {
                   <div className="space-y-3">
                     {[5, 4, 3, 2, 1].map((stars) => (
                       <div key={stars} className="flex items-center space-x-3">
-                        <span className="text-sm text-muted-foreground w-8">{stars}★</span>
-                        <div className="flex-1 bg-muted rounded-full h-2">
+                        <span className="w-8 text-sm text-muted-foreground">{stars}★</span>
+                        <div className="flex-1 h-2 rounded-full bg-muted">
                           <div 
-                            className="bg-warning h-2 rounded-full" 
+                            className="h-2 rounded-full bg-warning" 
                             style={{ width: stars === 5 ? '70%' : stars === 4 ? '25%' : '5%' }}
                           />
                         </div>
-                        <span className="text-sm text-muted-foreground w-8">
+                        <span className="w-8 text-sm text-muted-foreground">
                           {stars === 5 ? '17' : stars === 4 ? '6' : '1'}
                         </span>
                       </div>
@@ -323,12 +322,12 @@ export const FarmerDashboard = ({ onLogout }) => {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    <div className="border-b border-border pb-4">
+                    <div className="pb-4 border-b border-border">
                       <div className="flex items-center justify-between mb-2">
                         <span className="font-medium text-foreground">Fresh Mart</span>
                         <div className="flex">
                           {[...Array(5)].map((_, i) => (
-                            <Star key={i} className="h-3 w-3 fill-warning text-warning" />
+                            <Star key={i} className="w-3 h-3 fill-warning text-warning" />
                           ))}
                         </div>
                       </div>
@@ -337,14 +336,14 @@ export const FarmerDashboard = ({ onLogout }) => {
                       </p>
                     </div>
                     
-                    <div className="border-b border-border pb-4">
+                    <div className="pb-4 border-b border-border">
                       <div className="flex items-center justify-between mb-2">
                         <span className="font-medium text-foreground">Green Grocers</span>
                         <div className="flex">
                           {[...Array(4)].map((_, i) => (
-                            <Star key={i} className="h-3 w-3 fill-warning text-warning" />
+                            <Star key={i} className="w-3 h-3 fill-warning text-warning" />
                           ))}
-                          <Star className="h-3 w-3 text-muted-foreground" />
+                          <Star className="w-3 h-3 text-muted-foreground" />
                         </div>
                       </div>
                       <p className="text-sm text-muted-foreground">

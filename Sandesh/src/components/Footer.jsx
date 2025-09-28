@@ -1,97 +1,101 @@
-import { Sprout, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import { Sprout, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { t } = useLanguage();
 
   return (
-    <footer className="bg-sage-700 text-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <footer className="bg-gradient-to-br from-sage-800 via-sage-900 to-sage-950 text-white relative overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+        }}></div>
+      </div>
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Brand Section */}
-          <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <Sprout className="h-8 w-8 text-sage-200" />
-              <span className="text-2xl font-bold">HerbiProof</span>
+          <div className="lg:col-span-1 space-y-6">
+            <div className="flex items-center space-x-3">
+              <div className="w-12 h-12 bg-gradient-to-br from-sage-400 to-sage-500 rounded-xl flex items-center justify-center shadow-lg">
+                <Sprout className="h-6 w-6 text-white" />
+              </div>
+              <div>
+                <span className="text-2xl font-bold bg-gradient-to-r from-white to-sage-200 bg-clip-text text-transparent">HerbiProof</span>
+                <div className="text-xs text-sage-300 font-medium">Smart Agriculture</div>
+              </div>
             </div>
-            <p className="text-sage-100 leading-relaxed">
+            <p className="text-sage-100 leading-relaxed text-sm">
               Empowering farmers with smart technology to connect directly with buyers, 
               manage crops efficiently, and grow agricultural businesses.
             </p>
-            <div className="flex space-x-4">
+            <div className="flex space-x-3">
               <Button
                 variant="ghost"
                 size="sm"
-                className="text-primary-foreground/80 hover:text-accent hover:bg-primary-foreground/10 p-2"
+                className="text-sage-200 hover:text-white hover:bg-sage-700/50 p-3 rounded-xl transition-all duration-300"
               >
                 <Facebook className="h-5 w-5" />
               </Button>
               <Button
                 variant="ghost"
                 size="sm"
-                className="text-primary-foreground/80 hover:text-accent hover:bg-primary-foreground/10 p-2"
+                className="text-sage-200 hover:text-white hover:bg-sage-700/50 p-3 rounded-xl transition-all duration-300"
               >
                 <Twitter className="h-5 w-5" />
               </Button>
               <Button
                 variant="ghost"
                 size="sm"
-                className="text-primary-foreground/80 hover:text-accent hover:bg-primary-foreground/10 p-2"
+                className="text-sage-200 hover:text-white hover:bg-sage-700/50 p-3 rounded-xl transition-all duration-300"
               >
                 <Instagram className="h-5 w-5" />
               </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-primary-foreground/80 hover:text-accent hover:bg-primary-foreground/10 p-2"
-              >
-                <Linkedin className="h-5 w-5" />
-              </Button>
+              
             </div>
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-sage-200">Quick Links</h3>
-            <ul className="space-y-2">
+          <div className="space-y-6">
+            <h3 className="text-lg font-bold text-white">Quick Links</h3>
+            <ul className="space-y-3">
               <li>
                 <a 
                   href="#about" 
-                  className="text-sage-100 hover:text-white transition-colors"
+                  className="text-sage-200 hover:text-white transition-colors duration-300 flex items-center group"
                 >
+                  <ArrowRight className="h-3 w-3 mr-2 group-hover:translate-x-1 transition-transform" />
                   About Us
                 </a>
               </li>
               <li>
                 <a 
                   href="#features" 
-                  className="text-primary-foreground/80 hover:text-accent transition-smooth"
+                  className="text-sage-200 hover:text-white transition-colors duration-300 flex items-center group"
                 >
+                  <ArrowRight className="h-3 w-3 mr-2 group-hover:translate-x-1 transition-transform" />
                   Features
                 </a>
               </li>
               <li>
                 <a 
-                  href="#pricing" 
-                  className="text-primary-foreground/80 hover:text-accent transition-smooth"
-                >
-                  Pricing
-                </a>
-              </li>
-              <li>
-                <a 
                   href="#contact" 
-                  className="text-primary-foreground/80 hover:text-accent transition-smooth"
+                  className="text-sage-200 hover:text-white transition-colors duration-300 flex items-center group"
                 >
+                  <ArrowRight className="h-3 w-3 mr-2 group-hover:translate-x-1 transition-transform" />
                   Contact
                 </a>
               </li>
               <li>
                 <a 
                   href="#support" 
-                  className="text-primary-foreground/80 hover:text-accent transition-smooth"
+                  className="text-sage-200 hover:text-white transition-colors duration-300 flex items-center group"
                 >
+                  <ArrowRight className="h-3 w-3 mr-2 group-hover:translate-x-1 transition-transform" />
                   Support
                 </a>
               </li>
@@ -99,91 +103,71 @@ export const Footer = () => {
           </div>
 
           {/* Services */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-sage-200">Our Services</h3>
-            <ul className="space-y-2">
-              <li>
-                <span className="text-sage-100">Batch Management</span>
-              </li>
-              <li>
-                <span className="text-sage-100">KYC Verification</span>
-              </li>
-              <li>
-                <span className="text-sage-100">Rating System</span>
-              </li>
+          <div className="space-y-6">
+            <h3 className="text-lg font-bold text-white">Our Services</h3>
+            <ul className="space-y-3">
+              <li className="text-sage-200 text-sm">Batch Management</li>
+              <li className="text-sage-200 text-sm">KYC Verification</li>
+              <li className="text-sage-200 text-sm">Rating System</li>
+              <li className="text-sage-200 text-sm">Market Analytics</li>
+              <li className="text-sage-200 text-sm">Payment Gateway</li>
             </ul>
           </div>
 
           {/* Contact Info */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-sage-200">Contact Info</h3>
-            <div className="space-y-3">
+          <div className="space-y-6">
+            <h3 className="text-lg font-bold text-white">Contact Info</h3>
+            <div className="space-y-4">
               <div className="flex items-start space-x-3">
-                <MapPin className="h-5 w-5 text-sage-200 mt-0.5 flex-shrink-0" />
-                <span className="text-sage-100 text-sm">
-                  123 Agriculture Street<br />
-                  Farm City, FC 12345<br />
-                  India
-                </span>
+                <div className="w-8 h-8 bg-sage-700/50 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <MapPin className="h-4 w-4 text-sage-300" />
+                </div>
+                <div>
+                  <span className="text-sage-200 text-sm block">
+                    123 Agriculture Street<br />
+                    Bengalurur City, FC 12345<br />
+                    India
+                  </span>
+                </div>
               </div>
               <div className="flex items-center space-x-3">
-                <Phone className="h-5 w-5 text-sage-200 flex-shrink-0" />
-                <span className="text-sage-100 text-sm">+91 98765 43210</span>
+                <div className="w-8 h-8 bg-sage-700/50 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Phone className="h-4 w-4 text-sage-300" />
+                </div>
+                <span className="text-sage-200 text-sm">+1800 123 4567</span>
               </div>
               <div className="flex items-center space-x-3">
-                <Mail className="h-5 w-5 text-sage-200 flex-shrink-0" />
-                <span className="text-sage-100 text-sm">support@herbiproof.com</span>
+                <div className="w-8 h-8 bg-sage-700/50 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Mail className="h-4 w-4 text-sage-300" />
+                </div>
+                <span className="text-sage-200 text-sm">support@herbiproof.com</span>
               </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Newsletter Signup */}
-        <div className="mt-12 pt-8 border-t border-sage-600">
-          <div className="text-center max-w-2xl mx-auto">
-            <h3 className="text-xl font-semibold text-sage-200 mb-2">
-              Stay Updated with Latest Farm Tech
-            </h3>
-            <p className="text-sage-100 mb-6">
-              Subscribe to our newsletter for farming tips, market updates, and platform news.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-2 rounded-md bg-sage-600 border border-sage-500 text-white placeholder:text-sage-200 focus:outline-none focus:ring-2 focus:ring-sage-400 focus:border-transparent"
-              />
-              <button 
-                className="btn-secondary text-sage-600 bg-white hover:bg-sage-50 px-6 py-2 whitespace-nowrap"
-              >
-                Subscribe
-              </button>
             </div>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-sage-600">
+        <div className="pt-8 border-t border-sage-700/50">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="text-sage-100 text-sm text-center md:text-left">
-              © {currentYear} HerbiProof. All rights reserved. Built with ❤️ for farmers.
+            <div className="text-sage-300 text-sm text-center md:text-left">
+              © {currentYear} HerbiProof. All rights reserved. Built with ❤️ for Ecosystem.
             </div>
             <div className="flex flex-wrap justify-center md:justify-end gap-6 text-sm">
               <a 
                 href="#privacy" 
-                className="text-sage-100 hover:text-white transition-colors"
+                className="text-sage-300 hover:text-white transition-colors duration-300"
               >
                 Privacy Policy
               </a>
               <a 
                 href="#terms" 
-                className="text-sage-100 hover:text-white transition-colors"
+                className="text-sage-300 hover:text-white transition-colors duration-300"
               >
                 Terms of Service
               </a>
               <a 
                 href="#cookies" 
-                className="text-sage-100 hover:text-white transition-colors"
+                className="text-sage-300 hover:text-white transition-colors duration-300"
               >
                 Cookie Policy
               </a>

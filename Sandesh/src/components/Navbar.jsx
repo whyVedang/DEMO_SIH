@@ -1,9 +1,17 @@
 import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Sprout, Menu, X } from "lucide-react";
+import { Sprout, Menu, X, LayoutDashboard } from "lucide-react";
 import { AuthModal } from "./AuthModal";
+import { LanguageSwitcher } from "./LanguageSwitcher";
+import { useAuth } from "@/contexts/AuthContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 
-export const Navbar = ({ isAuthenticated, onLogout, onAuthSuccess, autoOpenAuth, setAutoOpenAuth }) => {
+export const Navbar = ({ autoOpenAuth, setAutoOpenAuth }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { isAuthenticated, user, logout } = useAuth();
+  const { t } = useLanguage();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -44,20 +52,29 @@ export const Navbar = ({ isAuthenticated, onLogout, onAuthSuccess, autoOpenAuth,
           {/* Desktop Navigation */}
           <div className="desktop-nav">
             <a href="#features" className="nav-link">
-              Features
+              {t('features')}
             </a>
             <a href="#about" className="nav-link">
-              Contact Us
+              {t('contact')}
             </a>
           </div>
 
           {/* Auth Buttons */}
           <div className="header-actions">
+            <LanguageSwitcher />
             {isAuthenticated ? (
               <div className="flex items-center space-x-4">
-                <span className="text-gray-600">Welcome, Farmer!</span>
-                <Button variant="outline" onClick={onLogout}>
-                  Logout
+                <Button 
+                  variant="outline" 
+                  onClick={() => navigate(`/dashboard/${user?.role}`)}
+                  className="flex items-center gap-2"
+                >
+                  <LayoutDashboard className="w-4 h-4" />
+                  {t('dashboard')}
+                </Button>
+                <span className="text-gray-600">{t('welcome')}, {user?.name || 'User'}!</span>
+                <Button variant="outline" onClick={logout}>
+                  {t('logout')}
                 </Button>
               </div>
             ) : (
@@ -65,7 +82,7 @@ export const Navbar = ({ isAuthenticated, onLogout, onAuthSuccess, autoOpenAuth,
                 onClick={() => setIsAuthModalOpen(true)}
                 className="btn-primary"
               >
-                Login / Sign Up
+                {t('login')}
               </button>
             )}
           </div>
@@ -89,19 +106,33 @@ export const Navbar = ({ isAuthenticated, onLogout, onAuthSuccess, autoOpenAuth,
             className="md:hidden py-4 space-y-4 border-t border-gray-200 transition-all duration-200"
           >
             <a href="#about" className="block nav-link">
-              About
+              {t('contact')}
             </a>
             <a href="#features" className="block nav-link">
-              Features
+              {t('features')}
             </a>
             <a href="/#contact" onClick={handleContactClick} className="block nav-link">
-              Contact
+              {t('contact')}
             </a>
+            <div className="pt-4 border-t border-gray-200">
+              <LanguageSwitcher />
+            </div>
             {isAuthenticated ? (
               <div className="space-y-2 pt-4 border-t border-gray-200">
-                <span className="block text-gray-600">Welcome, Farmer!</span>
-                <Button variant="outline" onClick={onLogout} className="w-full">
-                  Logout
+                <Button 
+                  variant="outline" 
+                  onClick={() => {
+                    navigate(`/dashboard/${user?.role}`);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="w-full flex items-center justify-center gap-2"
+                >
+                  <LayoutDashboard className="w-4 h-4" />
+                  {t('dashboard')}
+                </Button>
+                <span className="block text-gray-600">{t('welcome')}, {user?.name || 'User'}!</span>
+                <Button variant="outline" onClick={logout} className="w-full">
+                  {t('logout')}
                 </Button>
               </div>
             ) : (
@@ -110,7 +141,7 @@ export const Navbar = ({ isAuthenticated, onLogout, onAuthSuccess, autoOpenAuth,
                   onClick={() => setIsAuthModalOpen(true)}
                   className="w-full btn-primary"
                 >
-                  Login / Sign Up
+                  {t('login')}
                 </button>
               </div>
             )}
@@ -121,7 +152,6 @@ export const Navbar = ({ isAuthenticated, onLogout, onAuthSuccess, autoOpenAuth,
       <AuthModal 
         isOpen={isAuthModalOpen} 
         onClose={() => setIsAuthModalOpen(false)}
-        onAuthSuccess={onAuthSuccess}
       />
     </>
   );

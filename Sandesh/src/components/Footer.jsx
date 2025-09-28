@@ -25,7 +25,7 @@ export const Footer = () => {
                 <Sprout className="h-6 w-6 text-white" />
               </div>
               <div>
-                <span className="text-2xl font-bold bg-gradient-to-r from-white to-sage-200 bg-clip-text text-transparent">FarmPortal</span>
+                <span className="text-2xl font-bold bg-gradient-to-r from-white to-sage-200 bg-clip-text text-transparent">HerbiProof</span>
                 <div className="text-xs text-sage-300 font-medium">Smart Agriculture</div>
               </div>
             </div>
@@ -55,13 +55,7 @@ export const Footer = () => {
               >
                 <Instagram className="h-5 w-5" />
               </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-sage-200 hover:text-white hover:bg-sage-700/50 p-3 rounded-xl transition-all duration-300"
-              >
-                <Linkedin className="h-5 w-5" />
-              </Button>
+              
             </div>
           </div>
 
@@ -85,15 +79,6 @@ export const Footer = () => {
                 >
                   <ArrowRight className="h-3 w-3 mr-2 group-hover:translate-x-1 transition-transform" />
                   Features
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="#pricing" 
-                  className="text-sage-200 hover:text-white transition-colors duration-300 flex items-center group"
-                >
-                  <ArrowRight className="h-3 w-3 mr-2 group-hover:translate-x-1 transition-transform" />
-                  Pricing
                 </a>
               </li>
               <li>
@@ -126,7 +111,6 @@ export const Footer = () => {
               <li className="text-sage-200 text-sm">Rating System</li>
               <li className="text-sage-200 text-sm">Market Analytics</li>
               <li className="text-sage-200 text-sm">Payment Gateway</li>
-              <li className="text-sage-200 text-sm">Mobile App</li>
             </ul>
           </div>
 
@@ -141,7 +125,7 @@ export const Footer = () => {
                 <div>
                   <span className="text-sage-200 text-sm block">
                     123 Agriculture Street<br />
-                    Farm City, FC 12345<br />
+                    Bengalurur City, FC 12345<br />
                     India
                   </span>
                 </div>
@@ -150,38 +134,14 @@ export const Footer = () => {
                 <div className="w-8 h-8 bg-sage-700/50 rounded-lg flex items-center justify-center flex-shrink-0">
                   <Phone className="h-4 w-4 text-sage-300" />
                 </div>
-                <span className="text-sage-200 text-sm">+91 98765 43210</span>
+                <span className="text-sage-200 text-sm">+1800 123 4567</span>
               </div>
               <div className="flex items-center space-x-3">
                 <div className="w-8 h-8 bg-sage-700/50 rounded-lg flex items-center justify-center flex-shrink-0">
                   <Mail className="h-4 w-4 text-sage-300" />
                 </div>
-                <span className="text-sage-200 text-sm">support@farmportal.com</span>
+                <span className="text-sage-200 text-sm">support@herbiproof.com</span>
               </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Newsletter Signup */}
-        <div className="bg-gradient-to-r from-sage-700/50 to-sage-600/50 rounded-2xl p-8 mb-12 backdrop-blur-sm border border-sage-600/30">
-          <div className="text-center max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold text-white mb-3">
-              Stay Updated with Latest Farm Tech
-            </h3>
-            <p className="text-sage-200 mb-8">
-              Subscribe to our newsletter for farming tips, market updates, and platform news.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-6 py-3 rounded-xl bg-sage-800/50 border border-sage-600/50 text-white placeholder:text-sage-300 focus:outline-none focus:ring-2 focus:ring-sage-400 focus:border-transparent backdrop-blur-sm"
-              />
-              <button 
-                className="bg-white text-sage-700 hover:bg-sage-50 font-semibold px-8 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
-              >
-                Subscribe
-              </button>
             </div>
           </div>
         </div>
@@ -190,7 +150,7 @@ export const Footer = () => {
         <div className="pt-8 border-t border-sage-700/50">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-sage-300 text-sm text-center md:text-left">
-              © {currentYear} FarmPortal. All rights reserved. Built with ❤️ for farmers.
+              © {currentYear} HerbiProof. All rights reserved. Built with ❤️ for Ecosystem.
             </div>
             <div className="flex flex-wrap justify-center md:justify-end gap-6 text-sm">
               <a 

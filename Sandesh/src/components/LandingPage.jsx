@@ -1,7 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Leaf, Users, TrendingUp, Shield, Star, Package, ArrowRight } from "lucide-react";
+import { 
+  Leaf, 
+  Users, 
+  TrendingUp, 
+  Shield, 
+  Star, 
+  Package, 
+  ArrowRight, 
+  CheckCircle, 
+  Zap, 
+  Globe,
+  BarChart3,
+  Award,
+  Smartphone
+} from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import heroImage from "@/assets/hero-farm.jpg";
 
@@ -10,13 +24,14 @@ export const LandingPage = () => {
   const { t } = useLanguage();
   
   const handleGetStarted = () => {
-    navigate('/login');
+    navigate('/signup');
   };
 
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Simple Background */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${heroImage})` }}
@@ -25,158 +40,212 @@ export const LandingPage = () => {
         </div>
 
         <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          {/* Clean Badge */}
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-6 py-3 text-white text-sm font-medium mb-8">
+          {/* Simple Badge */}
+          <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-6 py-3 text-white text-sm font-medium mb-8">
             <Leaf className="h-4 w-4" />
-            {t('heroSubtitle')}
+            <span>{t('heroSubtitle')}</span>
           </div>
           
-          {/* Sleek Title */}
-          <div className="max-w-5xl mx-auto mb-12">
-            <h1 className="text-6xl md:text-8xl font-black text-white mb-6 tracking-tight leading-none">
-              <span className="block bg-gradient-to-r from-white via-sage-100 to-sage-200 bg-clip-text text-transparent">
-                {t('heroTitle')}
-              </span>
+          {/* Clean Title */}
+          <div className="max-w-4xl mx-auto mb-12">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white leading-tight">
+              {t('heroTitle')}
             </h1>
-            <p className="text-xl md:text-2xl text-sage-100 max-w-3xl mx-auto leading-relaxed font-light">
-              {t('whyChooseDesc')}
+            <p className="text-xl md:text-2xl text-sage-100 max-w-3xl mx-auto leading-relaxed mb-8">
+              Revolutionizing agriculture with BlockChain technology and Ecosystem Transparent Approach
             </p>
           </div>
           
-          {/* Clean CTA */}
-          <div className="flex justify-center items-center">
+          {/* Simple CTA */}
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
             <button
-              className="group inline-flex items-center gap-3 bg-white text-sage-900 font-semibold px-8 py-4 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-3xl"
+              className="bg-white text-sage-900 font-semibold px-8 py-4 rounded-lg hover:bg-sage-50 transition-colors duration-300 flex items-center gap-2 shadow-lg"
               onClick={handleGetStarted}
             >
               {t('getStarted')}
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-5 h-5" />
+            </button>
+            
+            <button
+              className="border-2 border-white/30 text-white font-medium px-8 py-4 rounded-lg hover:bg-white/10 transition-colors duration-300"
+              onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              Learn More
             </button>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="features" className="py-24 bg-gradient-to-b from-sage-50 to-white relative overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23059669' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-          }}></div>
-        </div>
-        
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-20">
-            <div className="inline-flex items-center gap-2 bg-sage-100 text-sage-700 rounded-full px-4 py-2 text-sm font-medium mb-6">
-              <Leaf className="h-4 w-4" />
+      {/* Features Section - Realistic Design */}
+      <section id="features" className="py-24 bg-gray-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
               {t('whyChoose')}
-            </div>
-            <h2 className="text-4xl md:text-6xl font-bold mb-6 text-gray-900 leading-tight">
-              Why Choose <span className="text-sage-600">FarmPortal</span>?
             </h2>
-            <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-              Our platform is designed specifically for farmers, providing all the tools you need to succeed in modern agriculture.
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              {t('whyChooseDesc')}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            <div className="group bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border border-sage-100 hover:-translate-y-3 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-sage-100 to-sage-200 rounded-full -translate-y-16 translate-x-16 opacity-20"></div>
-              <div className="relative z-10">
-                <div className="w-16 h-16 bg-gradient-to-br from-sage-500 to-sage-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                  <Package className="h-8 w-8 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold mb-4 text-gray-900">
-                  {t('batchManagement')}
-                </h3>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  {t('batchManagementDesc')}
-                </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {/* Batch Management */}
+            <div className="bg-white rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+              <div className="w-16 h-16 bg-sage-100 rounded-lg flex items-center justify-center mb-6">
+                <Package className="h-8 w-8 text-sage-600" />
               </div>
+              <h3 className="text-2xl font-bold mb-4 text-gray-900">
+                {t('batchManagement')}
+              </h3>
+              <p className="text-gray-600 leading-relaxed mb-6">
+                {t('batchManagementDesc')}
+              </p>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <li className="flex items-center">
+                  <CheckCircle className="w-4 h-4 text-sage-500 mr-2" />
+                  Track crop progress
+                </li>
+                <li className="flex items-center">
+                  <CheckCircle className="w-4 h-4 text-sage-500 mr-2" />
+                  Quality monitoring
+                </li>
+                <li className="flex items-center">
+                  <CheckCircle className="w-4 h-4 text-sage-500 mr-2" />
+                  Harvest planning
+                </li>
+              </ul>
             </div>
 
-            <div className="group bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border border-sage-100 hover:-translate-y-3 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full -translate-y-16 translate-x-16 opacity-20"></div>
-              <div className="relative z-10">
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                  <Star className="h-8 w-8 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold mb-4 text-gray-900">
-                  {t('ratingSystem')}
-                </h3>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  {t('ratingSystemDesc')}
-                </p>
+            {/* Rating System */}
+            <div className="bg-white rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+              <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
+                <Star className="h-8 w-8 text-blue-600" />
               </div>
+              <h3 className="text-2xl font-bold mb-4 text-gray-900">
+                {t('ratingSystem')}
+              </h3>
+              <p className="text-gray-600 leading-relaxed mb-6">
+                {t('ratingSystemDesc')}
+              </p>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <li className="flex items-center">
+                  <CheckCircle className="w-4 h-4 text-blue-500 mr-2" />
+                  Transparent reviews
+                </li>
+                <li className="flex items-center">
+                  <CheckCircle className="w-4 h-4 text-blue-500 mr-2" />
+                  Build reputation
+                </li>
+                <li className="flex items-center">
+                  <CheckCircle className="w-4 h-4 text-blue-500 mr-2" />
+                  Trust system
+                </li>
+              </ul>
             </div>
 
-            <div className="group bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border border-sage-100 hover:-translate-y-3 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-green-100 to-green-200 rounded-full -translate-y-16 translate-x-16 opacity-20"></div>
-              <div className="relative z-10">
-                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                  <Leaf className="h-8 w-8 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold mb-4 text-gray-900">
-                  {t('sustainableGrowth')}
-                </h3>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  {t('sustainableGrowthDesc')}
-                </p>
+            {/* Sustainable Growth */}
+            <div className="bg-white rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+              <div className="w-16 h-16 bg-green-100 rounded-lg flex items-center justify-center mb-6">
+                <Leaf className="h-8 w-8 text-green-600" />
               </div>
+              <h3 className="text-2xl font-bold mb-4 text-gray-900">
+                {t('sustainableGrowth')}
+              </h3>
+              <p className="text-gray-600 leading-relaxed mb-6">
+                {t('sustainableGrowthDesc')}
+              </p>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <li className="flex items-center">
+                  <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
+                  Eco-friendly practices
+                </li>
+                <li className="flex items-center">
+                  <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
+                  Certification programs
+                </li>
+                <li className="flex items-center">
+                  <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
+                  Environment focus
+                </li>
+              </ul>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
+      {/* Simple Stats Section */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Trusted by Farmers Across India</h2>
+            <p className="text-lg text-gray-600">Join thousands of farmers who are growing their business with us</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-sage-600 mb-2">10K+</div>
-              <div className="text-gray-600 font-medium">Active Farmers</div>
+              <div className="text-4xl font-bold text-sage-600 mb-2">10K+</div>
+              <div className="text-gray-600">Active Farmers</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-sage-600 mb-2">50K+</div>
-              <div className="text-gray-600 font-medium">Crops Listed</div>
+              <div className="text-4xl font-bold text-sage-600 mb-2">50K+</div>
+              <div className="text-gray-600">Crops Listed</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-sage-600 mb-2">₹2M+</div>
-              <div className="text-gray-600 font-medium">Revenue Generated</div>
+              <div className="text-4xl font-bold text-sage-600 mb-2">₹2M+</div>
+              <div className="text-gray-600">Revenue Generated</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-sage-600 mb-2">4.9★</div>
-              <div className="text-gray-600 font-medium">Average Rating</div>
+              <div className="text-4xl font-bold text-sage-600 mb-2">4.8★</div>
+              <div className="text-gray-600">Average Rating</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section id="about" className="py-24 bg-gradient-to-br from-sage-600 via-sage-700 to-sage-800 text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-        }}></div>
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <div className="max-w-5xl mx-auto">
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-6 py-3 text-white text-sm font-medium mb-8">
-              <Leaf className="h-4 w-4" />
-              Join the Revolution
-            </div>
-            <h2 className="text-4xl md:text-6xl font-bold mb-8 leading-tight">
+      {/* Simple CTA Section */}
+      <section id="about" className="py-24 bg-sage-600 text-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
               {t('readyToTransform')}
             </h2>
-            <p className="text-xl md:text-2xl mb-12 opacity-90 max-w-4xl mx-auto leading-relaxed">
+            
+            <p className="text-xl mb-12 text-sage-100 max-w-3xl mx-auto">
               {t('readyToTransformDesc')}
             </p>
-            <div className="flex justify-center items-center">
+            
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
               <button 
-                className="group inline-flex items-center gap-3 bg-white text-sage-700 font-bold px-10 py-5 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-3xl"
+                className="bg-white text-sage-600 font-semibold px-8 py-4 rounded-lg hover:bg-sage-50 transition-colors duration-300 flex items-center gap-2"
                 onClick={handleGetStarted}
               >
                 {t('startJourney')}
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-5 h-5" />
               </button>
+              
+              <button
+                className="border-2 border-white/30 text-white font-semibold px-8 py-4 rounded-lg hover:bg-white/10 transition-colors duration-300"
+                onClick={() => navigate('/login')}
+              >
+                Already a Member?
+              </button>
+            </div>
+            
+            <div className="mt-16 grid grid-cols-3 gap-8 max-w-2xl mx-auto">
+              <div className="text-center">
+                <Star className="w-8 h-8 text-yellow-400 mx-auto mb-2" />
+                <div className="text-2xl font-bold">4.8★</div>
+                <div className="text-sage-200 text-sm">User Rating</div>
+              </div>
+              <div className="text-center">
+                <Users className="w-8 h-8 text-sage-200 mx-auto mb-2" />
+                <div className="text-2xl font-bold">10K+</div>
+                <div className="text-sage-200 text-sm">Farmers</div>
+              </div>
+              <div className="text-center">
+                <Shield className="w-8 h-8 text-sage-200 mx-auto mb-2" />
+                <div className="text-2xl font-bold">100%</div>
+                <div className="text-sage-200 text-sm">Secure</div>
+              </div>
             </div>
           </div>
         </div>

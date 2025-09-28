@@ -60,6 +60,8 @@ export const AuthProvider = ({ children }) => {
       signupTime: new Date().toISOString()
     };
     
+    console.log('Signup user data:', userWithRole); // Debug log
+    
     setUser(userWithRole);
     setIsAuthenticated(true);
     localStorage.setItem('herbiproof_user', JSON.stringify(userWithRole));
@@ -85,17 +87,22 @@ export const AuthProvider = ({ children }) => {
   };
 
   const redirectToRoleDashboard = (role) => {
+    console.log('Redirecting to dashboard for role:', role); // Debug log
     switch (role) {
       case 'farmer':
+        console.log('Navigating to farmer dashboard');
         navigate('/dashboard/farmer');
         break;
       case 'distributor':
+        console.log('Navigating to distributor dashboard');
         navigate('/dashboard/distributor');
         break;
       case 'retailer':
+        console.log('Navigating to retailer dashboard');
         navigate('/dashboard/retailer');
         break;
       default:
+        console.log('Unknown role, redirecting to login');
         navigate('/login');
         break;
     }

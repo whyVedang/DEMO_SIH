@@ -10,7 +10,7 @@ import { Globe, Check } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export const LanguageSwitcher = () => {
-  const { currentLanguage, changeLanguage, availableLanguages, t } = useLanguage();
+  const { currentLanguage, changeLanguage, availableLanguages, t, isLoading } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
 
   const currentLang = availableLanguages.find(lang => lang.code === currentLanguage);
@@ -21,12 +21,13 @@ export const LanguageSwitcher = () => {
         <Button 
           variant="outline" 
           size="sm"
-          className="flex items-center gap-2 min-w-[120px] justify-between"
+          className="flex items-center gap-2 min-w-[140px] justify-between"
+          disabled={isLoading}
         >
           <div className="flex items-center gap-2">
-            <Globe className="w-4 h-4" />
+            <Globe className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
             <span className="text-sm font-medium">
-              {currentLang?.flag} {currentLang?.name}
+              {isLoading ? 'Loading...' : `${currentLang?.flag} ${currentLang?.name}`}
             </span>
           </div>
         </Button>
@@ -35,10 +36,11 @@ export const LanguageSwitcher = () => {
         {availableLanguages.map((language) => (
           <DropdownMenuItem
             key={language.code}
-            onClick={() => {
-              changeLanguage(language.code);
+            onClick={async () => {
+              await changeLanguage(language.code);
               setIsOpen(false);
             }}
+            disabled={isLoading}
             className="flex items-center justify-between cursor-pointer"
           >
             <div className="flex items-center gap-3">

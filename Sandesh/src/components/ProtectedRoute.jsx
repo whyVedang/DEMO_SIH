@@ -5,15 +5,20 @@ const ProtectedRoute = ({ children, requiredRole }) => {
   const { isAuthenticated, user } = useAuth();
   const location = useLocation();
 
+  console.log('ProtectedRoute - isAuthenticated:', isAuthenticated, 'user:', user, 'requiredRole:', requiredRole);
+
   if (!isAuthenticated) {
+    console.log('Not authenticated, redirecting to login');
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
   if (requiredRole && user?.role !== requiredRole) {
+    console.log('Role mismatch, redirecting to correct dashboard');
     // Redirect to the correct dashboard based on user's actual role
     return <Navigate to={`/dashboard/${user?.role}`} replace />;
   }
 
+  console.log('Access granted to protected route');
   return children;
 };
 

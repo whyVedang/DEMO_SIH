@@ -7,10 +7,12 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
-import LoginPage from "./pages/auth/LoginPage";
+import Login from "./pages/auth/Login";
+import Signup from "./pages/auth/Signup";
 import FarmerDashboard from "./pages/dashboard/FarmerDashboard";
 import DistributorDashboard from "./pages/dashboard/DistributorDashboard";
 import RetailerDashboard from "./pages/dashboard/RetailerDashboard";
+import TestDashboard from "./pages/dashboard/TestDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,7 +27,8 @@ const App = () => (
           <AuthProvider>
             <Routes>
               <Route path="/" element={<Index />} />
-              <Route path="/login" element={<LoginPage />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
               <Route 
                 path="/dashboard/farmer" 
                 element={
@@ -47,6 +50,14 @@ const App = () => (
                 element={
                   <ProtectedRoute requiredRole="retailer">
                     <RetailerDashboard />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/dashboard/test" 
+                element={
+                  <ProtectedRoute>
+                    <TestDashboard />
                   </ProtectedRoute>
                 } 
               />

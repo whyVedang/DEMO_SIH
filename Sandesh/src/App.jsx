@@ -12,7 +12,7 @@ import Signup from "./pages/auth/Signup";
 import FarmerDashboard from "./pages/dashboard/FarmerDashboard";
 import DistributorDashboard from "./pages/dashboard/DistributorDashboard";
 import RetailerDashboard from "./pages/dashboard/RetailerDashboard";
-import TestDashboard from "./pages/dashboard/TestDashboard";
+// import TestDashboard from "./pages/dashboard/TestDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -53,14 +53,14 @@ const App = () => (
                   </ProtectedRoute>
                 } 
               />
-              <Route 
+              {/* <Route 
                 path="/dashboard/test" 
                 element={
                   <ProtectedRoute>
                     <TestDashboard />
                   </ProtectedRoute>
                 } 
-              />
+              /> */}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </AuthProvider>

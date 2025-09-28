@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { useAuth } from "@/contexts/AuthContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -18,16 +20,25 @@ import {
   Phone,
   CheckCircle,
   Clock,
-  AlertCircle
+  AlertCircle,
+  Crop,
+  IndianRupee
 } from "lucide-react";
 import { BatchForm } from "@/components/BatchForm";
 import { ProfileForm } from "@/components/ProfileForm";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 const FarmerDashboard = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
+  const { user, logout } = useAuth();
   const [activeTab, setActiveTab] = useState("overview");
   const [showBatchForm, setShowBatchForm] = useState(false);
   const [showProfileForm, setShowProfileForm] = useState(false);
+
+  const handleLogout = () => {
+    logout();
+  };
 
   // Mock data - more realistic for farmers
   const stats = {
@@ -104,10 +115,10 @@ const FarmerDashboard = () => {
   ];
 
   const quickActions = [
-    { label: "नई फसल जोड़ें", icon: Plus, action: "addBatch", color: "bg-green-500" },
-    { label: "सभी ऑर्डर देखें", icon: Eye, action: "viewOrders", color: "bg-blue-500" },
-    { label: "कटाई का समय", icon: Calendar, action: "scheduleHarvest", color: "bg-orange-500" },
-    { label: "प्रोफाइल बनाएं", icon: User, action: "editProfile", color: "bg-purple-500" }
+    { label: t('addNewCrop'), icon: Plus, action: "addBatch", color: "bg-green-500" },
+    { label: t('viewAllOrders'), icon: Eye, action: "viewOrders", color: "bg-blue-500" },
+    { label: t('harvestTime'), icon: Calendar, action: "scheduleHarvest", color: "bg-orange-500" },
+    { label: t('createProfile'), icon: User, action: "editProfile", color: "bg-purple-500" }
   ];
 
   if (showBatchForm) {
@@ -159,95 +170,87 @@ const FarmerDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-sage-50">
-      {/* Header with Back Button */}
-      <div className="bg-white border-b border-gray-200 px-4 py-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => navigate('/')}
-              className="flex items-center gap-2"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              वापस जाएं
-            </Button>
-            <div className="flex items-center space-x-2">
-              <Home className="w-5 h-5 text-sage-600" />
-              <span className="text-lg font-semibold text-gray-900">किसान डैशबोर्ड</span>
-            </div>
-          </div>
-          <div className="flex items-center space-x-3">
-            <Button 
-              onClick={() => setShowProfileForm(true)}
-              variant="outline"
-              size="sm"
-              className="flex items-center gap-2"
-            >
-              <User className="w-4 h-4" />
-              प्रोफाइल
-            </Button>
-            <Button 
-              onClick={() => navigate('/')}
-              variant="outline"
-              size="sm"
-            >
-              लॉगआउट
-            </Button>
-          </div>
-        </div>
-      </div>
-
+    <div className="min-h-screen bg-gray-50">
       <div className="py-6">
         <div className="container px-4 mx-auto sm:px-6 lg:px-8">
-          {/* Welcome Message */}
-          <div className="mb-8 text-center">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">नमस्ते! आपका स्वागत है</h1>
-            <p className="text-gray-600">अपनी फसलों को बेचें और पैसा कमाएं</p>
+          {/* Header */}
+          <div className="flex flex-col items-start justify-between mb-8 md:flex-row md:items-center">
+            <div>
+              <h1 className="mb-2 text-3xl font-bold text-gray-900">{t('farmerDashboard')}</h1>
+              <p className="text-gray-600">{t('manageFarm')}</p>
+            </div>
+            <div className="flex gap-3 mt-4 md:mt-0">
+              <LanguageSwitcher />
+              <Button
+                onClick={() => setShowProfileForm(true)}
+                variant="outline"
+                className="flex items-center gap-2"
+              >
+                <User className="w-4 h-4" />
+                {t('editProfile')}
+              </Button>
+              <Button
+                onClick={handleLogout}
+                variant="outline"
+              >
+                {t('logout')}
+              </Button>
+            </div>
           </div>
 
-          {/* Stats Overview - Simple Cards */}
-          <div className="grid grid-cols-2 gap-4 mb-8 lg:grid-cols-4">
-            <Card className="text-center p-4">
-              <div className="flex items-center justify-center mb-2">
-                <Crop className="w-8 h-8 text-green-600" />
-              </div>
-              <div className="text-2xl font-bold text-gray-900">{stats.totalBatches}</div>
-              <div className="text-sm text-gray-600">कुल फसलें</div>
+          {/* Stats Overview */}
+          <div className="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2 lg:grid-cols-4">
+            <Card className="bg-white border border-gray-200 shadow-sm">
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-sm font-medium text-gray-600">{t('totalCrops')}</CardTitle>
+                <Crop className="w-4 h-4 text-green-600" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold text-gray-900">{stats.totalBatches}</div>
+                <p className="text-xs text-green-600">+2 this week</p>
+              </CardContent>
             </Card>
 
-            <Card className="text-center p-4">
-              <div className="flex items-center justify-center mb-2">
-                <ShoppingCart className="w-8 h-8 text-blue-600" />
-              </div>
-              <div className="text-2xl font-bold text-gray-900">{stats.activeOrders}</div>
-              <div className="text-sm text-gray-600">सक्रिय ऑर्डर</div>
+            <Card className="bg-white border border-gray-200 shadow-sm">
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-sm font-medium text-gray-600">{t('activeOrders')}</CardTitle>
+                <ShoppingCart className="w-4 h-4 text-green-600" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold text-gray-900">{stats.activeOrders}</div>
+                <p className="text-xs text-green-600">+1 new</p>
+              </CardContent>
             </Card>
 
-            <Card className="text-center p-4">
-              <div className="flex items-center justify-center mb-2">
-                <Star className="w-8 h-8 text-yellow-600" />
-              </div>
-              <div className="text-2xl font-bold text-gray-900">{stats.rating}</div>
-              <div className="text-sm text-gray-600">रेटिंग</div>
+            <Card className="bg-white border border-gray-200 shadow-sm">
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-sm font-medium text-gray-600">{t('rating')}</CardTitle>
+                <Star className="w-4 h-4 text-green-600" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold text-gray-900">{stats.rating}</div>
+                <p className="text-xs text-green-600">Excellent</p>
+              </CardContent>
             </Card>
 
-            <Card className="text-center p-4">
-              <div className="flex items-center justify-center mb-2">
-                <DollarSign className="w-8 h-8 text-green-600" />
-              </div>
-              <div className="text-2xl font-bold text-gray-900">₹{stats.earnings.toLocaleString()}</div>
-              <div className="text-sm text-gray-600">कमाई</div>
+            <Card className="bg-white border border-gray-200 shadow-sm">
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-sm font-medium text-gray-600">{t('earnings')}</CardTitle>
+                <IndianRupee className="w-4 h-4 text-green-600" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold text-gray-900">₹{stats.earnings.toLocaleString()}</div>
+                <p className="text-xs text-green-600">+8% from last month</p>
+              </CardContent>
             </Card>
           </div>
 
           {/* Quick Actions */}
-          <Card className="mb-8">
+          <Card className="mb-8 bg-white border border-gray-200 shadow-sm">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-gray-900">
-                <Leaf className="w-5 h-5 text-sage-600" />
-                त्वरित कार्य
+                <Leaf className="w-5 h-5 text-green-600" />
+                {t('quickActions')}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -270,23 +273,29 @@ const FarmerDashboard = () => {
 
           {/* Main Content Tabs */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="overview">अवलोकन</TabsTrigger>
-              <TabsTrigger value="batches">मेरी फसलें</TabsTrigger>
-              <TabsTrigger value="orders">ऑर्डर</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-3 bg-white border border-gray-200">
+              <TabsTrigger value="overview" className="data-[state=active]:bg-green-50 data-[state=active]:text-green-700">
+                {t('overview')}
+              </TabsTrigger>
+              <TabsTrigger value="batches" className="data-[state=active]:bg-green-50 data-[state=active]:text-green-700">
+                {t('myCrops')}
+              </TabsTrigger>
+              <TabsTrigger value="orders" className="data-[state=active]:bg-green-50 data-[state=active]:text-green-700">
+                {t('orders')}
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="overview" className="space-y-6">
               <div className="grid gap-6 lg:grid-cols-2">
                 {/* Recent Activity */}
-                <Card>
+                <Card className="bg-white border border-gray-200 shadow-sm">
                   <CardHeader>
-                    <CardTitle className="text-gray-900">हाल की गतिविधि</CardTitle>
+                    <CardTitle className="text-gray-900">{t('recentActivity')}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
                       <div className="flex items-center space-x-3">
-                        <div className="w-2 h-2 rounded-full bg-green-500" />
+                        <div className="w-2 h-2 bg-green-500 rounded-full" />
                         <div className="flex-1">
                           <p className="text-sm font-medium text-gray-900">नया ऑर्डर मिला</p>
                           <p className="text-xs text-gray-600">राम सब्जी मंडी - 20 किलो टमाटर</p>
@@ -294,7 +303,7 @@ const FarmerDashboard = () => {
                         <span className="text-xs text-gray-600">2 घंटे पहले</span>
                       </div>
                       <div className="flex items-center space-x-3">
-                        <div className="w-2 h-2 rounded-full bg-yellow-500" />
+                        <div className="w-2 h-2 bg-yellow-500 rounded-full" />
                         <div className="flex-1">
                           <p className="text-sm font-medium text-gray-900">फसल स्थिति अपडेट</p>
                           <p className="text-xs text-gray-600">आलू - कम स्टॉक</p>
@@ -302,7 +311,7 @@ const FarmerDashboard = () => {
                         <span className="text-xs text-gray-600">5 घंटे पहले</span>
                       </div>
                       <div className="flex items-center space-x-3">
-                        <div className="w-2 h-2 rounded-full bg-blue-500" />
+                        <div className="w-2 h-2 bg-blue-500 rounded-full" />
                         <div className="flex-1">
                           <p className="text-sm font-medium text-gray-900">नई रेटिंग मिली</p>
                           <p className="text-xs text-gray-600">5 सितारे सिटी मार्केट से</p>
@@ -314,23 +323,23 @@ const FarmerDashboard = () => {
                 </Card>
 
                 {/* Tips for Farmers */}
-                <Card>
+                <Card className="bg-white border border-gray-200 shadow-sm">
                   <CardHeader>
-                    <CardTitle className="text-gray-900">किसान सुझाव</CardTitle>
+                    <CardTitle className="text-gray-900">{t('farmerTips')}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-3">
-                      <div className="p-3 bg-green-50 rounded-lg">
+                      <div className="p-3 rounded-lg bg-green-50">
                         <p className="text-sm text-green-800">
                           <strong>टिप:</strong> अपनी फसलों की तस्वीरें लें - बेहतर दाम मिलेगा
                         </p>
                       </div>
-                      <div className="p-3 bg-blue-50 rounded-lg">
+                      <div className="p-3 rounded-lg bg-blue-50">
                         <p className="text-sm text-blue-800">
                           <strong>सुझाव:</strong> नियमित रूप से कीमत अपडेट करते रहें
                         </p>
                       </div>
-                      <div className="p-3 bg-yellow-50 rounded-lg">
+                      <div className="p-3 rounded-lg bg-yellow-50">
                         <p className="text-sm text-yellow-800">
                           <strong>याद रखें:</strong> ग्राहकों से अच्छा व्यवहार करें
                         </p>
@@ -343,30 +352,30 @@ const FarmerDashboard = () => {
 
             <TabsContent value="batches" className="space-y-6">
               <div className="flex items-center justify-between">
-                <h3 className="text-xl font-semibold text-gray-900">मेरी फसलें</h3>
+                <h3 className="text-xl font-semibold text-gray-900">{t('myCrops')}</h3>
                 <Button 
                   onClick={() => setShowBatchForm(true)}
-                  className="bg-green-500 hover:bg-green-600 text-white"
+                  className="text-white bg-green-600 hover:bg-green-700"
                 >
                   <Plus className="w-4 h-4 mr-2" />
-                  नई फसल जोड़ें
+                  {t('addNewCrop')}
                 </Button>
               </div>
 
               <div className="grid gap-4">
                 {recentBatches.map((batch) => (
-                  <Card key={batch.id} className="hover:shadow-md transition-shadow">
+                  <Card key={batch.id} className="transition-shadow bg-white border border-gray-200 shadow-sm hover:shadow-md">
                     <CardContent className="p-6">
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
-                          <h4 className="mb-2 font-semibold text-gray-900 text-lg">{batch.crop}</h4>
-                          <div className="grid grid-cols-2 gap-2 text-sm text-gray-600 mb-3">
-                            <div>मात्रा: {batch.quantity}</div>
-                            <div>कीमत: {batch.price}</div>
-                            <div>गुणवत्ता: {batch.quality}</div>
-                            <div>स्थान: {batch.location}</div>
+                          <h4 className="mb-2 text-lg font-semibold text-gray-900">{batch.crop}</h4>
+                          <div className="grid grid-cols-2 gap-2 mb-3 text-sm text-gray-600">
+                            <div>{t('quantity')}: {batch.quantity}</div>
+                            <div>{t('price')}: {batch.price}</div>
+                            <div>{t('quality')}: {batch.quality}</div>
+                            <div>{t('location')}: {batch.location}</div>
                           </div>
-                          <div className="text-xs text-gray-500">जोड़ा गया: {batch.date}</div>
+                          <div className="text-xs text-gray-500">{t('addedOn')}: {batch.date}</div>
                         </div>
                         <div className="flex flex-col items-end space-y-2">
                           <Badge className={`${getStatusColor(batch.status)} flex items-center gap-1`}>
@@ -374,7 +383,7 @@ const FarmerDashboard = () => {
                             {batch.status}
                           </Badge>
                           <Button variant="outline" size="sm">
-                            संपादित करें
+                            {t('edit')}
                           </Button>
                         </div>
                       </div>
@@ -385,22 +394,25 @@ const FarmerDashboard = () => {
             </TabsContent>
 
             <TabsContent value="orders" className="space-y-6">
-              <h3 className="text-xl font-semibold text-gray-900">हाल के ऑर्डर</h3>
+              <h3 className="text-xl font-semibold text-gray-900">{t('recentOrders')}</h3>
               
               <div className="grid gap-4">
                 {recentOrders.map((order) => (
-                  <Card key={order.id} className="hover:shadow-md transition-shadow">
+                  <Card key={order.id} className="transition-shadow bg-white border border-gray-200 shadow-sm hover:shadow-md">
                     <CardContent className="p-6">
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
-                          <h4 className="mb-2 font-semibold text-gray-900 text-lg">{order.buyer}</h4>
-                          <div className="grid grid-cols-2 gap-2 text-sm text-gray-600 mb-2">
-                            <div>फसल: {order.crop}</div>
-                            <div>मात्रा: {order.quantity}</div>
-                            <div>राशि: {order.amount}</div>
-                            <div>दिनांक: {order.date}</div>
+                          <h4 className="mb-2 text-lg font-semibold text-gray-900">{order.buyer}</h4>
+                          <div className="grid grid-cols-2 gap-2 mb-2 text-sm text-gray-600">
+                            <div>{t('crop')}: {order.crop}</div>
+                            <div>{t('quantity')}: {order.quantity}</div>
+                            <div>{t('amount')}: {order.amount}</div>
+                            <div>{t('date')}: {order.date}</div>
                           </div>
-                          <div className="text-xs text-gray-500">फोन: {order.phone}</div>
+                          <div className="flex items-center gap-1 text-xs text-gray-500">
+                            <Phone className="w-3 h-3" />
+                            {order.phone}
+                          </div>
                         </div>
                         <div className="flex flex-col items-end space-y-2">
                           <Badge className={`${getStatusColor(order.status)} flex items-center gap-1`}>
@@ -408,7 +420,7 @@ const FarmerDashboard = () => {
                             {order.status}
                           </Badge>
                           <Button variant="outline" size="sm">
-                            कॉल करें
+                            {t('call')}
                           </Button>
                         </div>
                       </div>

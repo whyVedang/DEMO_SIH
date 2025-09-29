@@ -52,7 +52,7 @@ export const LandingPage = () => {
               {t('heroTitle')}
             </h1>
             <p className="text-xl md:text-2xl text-sage-100 max-w-3xl mx-auto leading-relaxed mb-8">
-              Revolutionizing agriculture with BlockChain technology and Ecosystem Transparent Approach
+              Revolutionizing Agriculture with BlockChain Technology and Ecosystem Transparent Approach
             </p>
           </div>
           
@@ -80,7 +80,7 @@ export const LandingPage = () => {
       <section id="features" className="py-24 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 ">
               {t('whyChoose')}
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">

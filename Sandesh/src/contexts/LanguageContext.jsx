@@ -13,101 +13,12 @@ export const useLanguage = () => {
 
 // Comprehensive Indian language translations
 const translations = {
-  // en: {
-  //   // Navigation
-  //   features: "Features",
-  //   contact: "Contact Us", 
-  //   login: "Login",
-  //   signup: "Sign Up",
-  //   dashboard: "Dashboard",
-  //   logout: "Logout",
-  //   welcome: "Welcome",
-    
-  //   // Landing Page
-  //   heroTitle: "SMART AGRICULTURE",
-  //   heroSubtitle: "Welcome to the Future of Farming",
-  //   getStarted: "Get Started Today",
-  //   whyChoose: "Why Choose HerbiProof?",
-  //   whyChooseDesc: "Empowering farmers with smart technology to connect directly with buyers, manage crops efficiently, and grow agricultural businesses.",
-  //   batchManagement: "Batch Management",
-  //   batchManagementDesc: "Easily track and manage your crop batches from planting to harvest. Monitor progress and maintain detailed records.",
-  //   ratingSystem: "Rating System", 
-  //   ratingSystemDesc: "Build your reputation with our transparent rating system. Quality produce leads to better ratings and more orders.",
-  //   sustainableGrowth: "Sustainable Growth",
-  //   sustainableGrowthDesc: "Promote sustainable farming practices with our eco-friendly guidelines and certification programs.",
-  //   readyToTransform: "Ready to Transform Your Farming Business?",
-  //   readyToTransformDesc: "Join thousands of farmers who are already using HerbiProof to increase their profits and streamline their operations.",
-  //   startJourney: "Start Your Journey",
-    
-  //   // Auth
-  //   loginTitle: "Welcome Back",
-  //   loginSubtitle: "Sign in to your account",
-  //   signupTitle: "Create Account", 
-  //   signupSubtitle: "Join our farming community",
-  //   email: "Email",
-  //   password: "Password",
-  //   name: "Full Name",
-  //   phone: "Phone Number",
-  //   selectRole: "Select Your Role",
-  //   farmer: "Farmer",
-  //   distributor: "Distributor",
-  //   retailer: "Retailer",
-  //   farmerDesc: "Grow and sell agricultural products",
-  //   distributorDesc: "Distribute products to retailers",
-  //   retailerDesc: "Sell products to consumers",
-  //   signIn: "Sign In",
-  //   createAccount: "Create Account",
-  //   dontHaveAccount: "Don't have an account?",
-  //   alreadyHaveAccount: "Already have an account?",
-  //   backToHome: "Back to Home"
-  // },
-  // hi: {
-  //   features: "विशेषताएं",
-  //   contact: "संपर्क करें", 
-  //   login: "लॉगिन",
-  //   signup: "साइन अप",
-  //   dashboard: "डैशबोर्ड",
-  //   logout: "लॉगआउट",
-  //   welcome: "स्वागत",
-  //   heroTitle: "स्मार्ट कृषि",
-  //   heroSubtitle: "कृषि के भविष्य में आपका स्वागत है",
-  //   getStarted: "आज ही शुरू करें",
-  //   whyChoose: "हर्बीप्रूफ क्यों चुनें?",
-  //   whyChooseDesc: "किसानों को स्मार्ट तकनीक के साथ सशक्त बनाना ताकि वे सीधे खरीदारों से जुड़ सकें।",
-  //   batchManagement: "बैच प्रबंधन",
-  //   batchManagementDesc: "रोपण से कटाई तक अपने फसल बैचों को आसानी से ट्रैक करें।",
-  //   ratingSystem: "रेटिंग सिस्टम", 
-  //   ratingSystemDesc: "हमारी पारदर्शी रेटिंग प्रणाली के साथ अपनी प्रतिष्ठा बनाएं।",
-  //   sustainableGrowth: "टिकाऊ विकास",
-  //   sustainableGrowthDesc: "पर्यावरण-अनुकूल दिशानिर्देशों के साथ टिकाऊ कृषि प्रथाओं को बढ़ावा दें।",
-  //   readyToTransform: "अपने कृषि व्यवसाय को बदलने के लिए तैयार हैं?",
-  //   readyToTransformDesc: "हजारों किसानों के साथ जुड़ें जो पहले से ही हर्बीप्रूफ का उपयोग कर रहे हैं।",
-  //   startJourney: "अपनी यात्रा शुरू करें",
-  //   loginTitle: "वापस आपका स्वागत है",
-  //   loginSubtitle: "अपने खाते में साइन इन करें",
-  //   signupTitle: "खाता बनाएं", 
-  //   signupSubtitle: "हमारे कृषि समुदाय में शामिल हों",
-  //   email: "ईमेल",
-  //   password: "पासवर्ड",
-  //   name: "पूरा नाम",
-  //   phone: "फोन नंबर",
-  //   selectRole: "अपनी भूमिका चुनें",
-  //   farmer: "किसान",
-  //   distributor: "वितरक",
-  //   retailer: "खुदरा विक्रेता",
-  //   farmerDesc: "कृषि उत्पाद उगाएं और बेचें",
-  //   distributorDesc: "खुदरा विक्रेताओं को उत्पाद वितरित करें",
-  //   retailerDesc: "उपभोक्ताओं को उत्पाद बेचें",
-  //   signIn: "साइन इन",
-  //   createAccount: "खाता बनाएं",
-  //   dontHaveAccount: "खाता नहीं है?",
-  //   alreadyHaveAccount: "पहले से खाता है?",
-  //   backToHome: "मुख्य पृष्ठ पर वापस जाएं"
-  // }
   en: {
     // Navigation
+    logoText: "HerbiProof",
+    logoDesc: "Authentic • Traceable • Pure",
     features: "Features",
-    contact: "Contact Us", 
+    contact: "Contact",
     login: "Login",
     signup: "Sign Up",
     dashboard: "Dashboard",
@@ -117,16 +28,34 @@ const translations = {
     profile: "Profile",
     edit: "Edit",
     call: "Call",
-    
+
+    // Footer
+    quickLinks: "Quick Links",
+    aboutUs: "About Us",
+    support: "Support",
+    ourServices: "Our Services",
+    batchManagement: "Batch Management",
+    kycVerification: "KYC Verification",
+    ratingSystem: "Rating System",
+    marketAnalytics: "Market Analytics",
+    paymentGateway: "Payment Gateway",
+    contactInfo: "Contact Info",
+    address: "123 Agriculture Street\nBengaluru City, FC 12345\nIndia",
+    allRightsReserved: "All rights reserved. Built with ❤️ for Ecosystem.",
+    privacyPolicy: "Privacy Policy",
+    termsOfService: "Terms of Service",
+    cookiePolicy: "Cookie Policy",
+
+
     // Dashboard common
     farmerDashboard: "Farmer Dashboard",
-    distributorDashboard: "Distributor Dashboard", 
+    distributorDashboard: "Distributor Dashboard",
     retailerDashboard: "Retailer Dashboard",
     manageFarm: "Manage your farm and crops",
     manageDistribution: "Manage distribution network",
     manageStore: "Manage your store inventory",
     editProfile: "Edit Profile",
-    
+
     // Farmer specific
     totalCrops: "Total Crops",
     activeOrders: "Active Orders",
@@ -152,7 +81,7 @@ const translations = {
     amount: "Amount",
     date: "Date",
     phone: "Phone",
-    
+
     // Distributor specific
     totalInventory: "Total Inventory",
     activeDeliveries: "Active Deliveries",
@@ -164,7 +93,7 @@ const translations = {
     addNewStock: "Add New Stock",
     retailerNetwork: "Retailer Network",
     retailerNetworkDesc: "Manage your retailer connections and partnerships",
-    
+
     // Retailer specific
     totalProducts: "Total Products",
     totalCustomers: "Total Customers",
@@ -176,7 +105,7 @@ const translations = {
     myCustomers: "My Customers",
     salesOverview: "Sales Overview",
     customerInfo: "Customer insights and analytics coming soon",
-    
+
     // Landing Page
     heroTitle: "SMART AGRICULTURE",
     heroSubtitle: "Welcome to the Future of Farming",
@@ -185,18 +114,18 @@ const translations = {
     whyChooseDesc: "Empowering farmers with smart technology to connect directly with buyers, manage crops efficiently, and grow agricultural businesses.",
     batchManagement: "Batch Management",
     batchManagementDesc: "Easily track and manage your crop batches from planting to harvest. Monitor progress and maintain detailed records.",
-    ratingSystem: "Rating System", 
+    ratingSystem: "Rating System",
     ratingSystemDesc: "Build your reputation with our transparent rating system. Quality produce leads to better ratings and more orders.",
     sustainableGrowth: "Sustainable Growth",
     sustainableGrowthDesc: "Promote sustainable farming practices with our eco-friendly guidelines and certification programs.",
     readyToTransform: "Ready to Transform Your Farming Business?",
     readyToTransformDesc: "Join thousands of farmers who are already using HerbiProof to increase their profits and streamline their operations.",
     startJourney: "Start Your Journey",
-    
+
     // Auth
     loginTitle: "Welcome Back",
     loginSubtitle: "Sign in to your account",
-    signupTitle: "Create Account", 
+    signupTitle: "Create Account",
     signupSubtitle: "Join our farming community",
     email: "Email",
     password: "Password",
@@ -217,8 +146,10 @@ const translations = {
   },
   hi: {
     // Navigation
+    logoText: "हर्बीप्रूफ",
+    logoDesc: "प्रामाणिक • पता लगाने योग्य • शुद्ध",
     features: "विशेषताएं",
-    contact: "संपर्क करें", 
+    contact: "संपर्क करें",
     login: "लॉगिन",
     signup: "साइन अप",
     dashboard: "डैशबोर्ड",
@@ -228,7 +159,24 @@ const translations = {
     profile: "प्रोफाइल",
     edit: "संपादित करें",
     call: "कॉल करें",
-    
+
+    // Footer
+    quickLinks: "त्वरित लिंक",
+    aboutUs: "हमारे बारे में",
+    support: "सहायता",
+    ourServices: "हमारी सेवाएं",
+    batchManagement: "बैच प्रबंधन",
+    kycVerification: "केवाईसी सत्यापन",
+    ratingSystem: "रेटिंग सिस्टम",
+    marketAnalytics: "बाजार विश्लेषण",
+    paymentGateway: "भुगतान गेटवे",
+    contactInfo: "संपर्क जानकारी",
+    address: "123 एग्रीकल्चर स्ट्रीट\nबेंगलुरु सिटी, FC 12345\nभारत",
+    allRightsReserved: "सभी अधिकार सुरक्षित। इकोसिस्टम के लिए ❤️ के साथ बनाया गया।",
+    privacyPolicy: "गोपनीयता नीति",
+    termsOfService: "सेवा की शर्तें",
+    cookiePolicy: "कुकी नीति",
+
     // Dashboard common
     farmerDashboard: "किसान डैशबोर्ड",
     distributorDashboard: "वितरक डैशबोर्ड",
@@ -237,7 +185,7 @@ const translations = {
     manageDistribution: "वितरण नेटवर्क का प्रबंधन करें",
     manageStore: "अपने स्टोर की इन्वेंटरी का प्रबंधन करें",
     editProfile: "प्रोफाइल संपादित करें",
-    
+
     // Farmer specific
     totalCrops: "कुल फसलें",
     activeOrders: "सक्रिय ऑर्डर",
@@ -263,7 +211,7 @@ const translations = {
     amount: "राशि",
     date: "दिनांक",
     phone: "फोन",
-    
+
     // Distributor specific
     totalInventory: "कुल इन्वेंटरी",
     activeDeliveries: "सक्रिय डिलीवरी",
@@ -275,7 +223,7 @@ const translations = {
     addNewStock: "नया स्टॉक जोड़ें",
     retailerNetwork: "खुदरा विक्रेता नेटवर्क",
     retailerNetworkDesc: "अपने खुदरा विक्रेता कनेक्शन और साझेदारी का प्रबंधन करें",
-    
+
     // Retailer specific
     totalProducts: "कुल उत्पाद",
     totalCustomers: "कुल ग्राहक",
@@ -287,7 +235,7 @@ const translations = {
     myCustomers: "मेरे ग्राहक",
     salesOverview: "बिक्री अवलोकन",
     customerInfo: "ग्राहक अंतर्दृष्टि और एनालिटिक्स जल्द आ रहे हैं",
-    
+
     // Existing translations
     heroTitle: "स्मार्ट कृषि",
     heroSubtitle: "कृषि के भविष्य में आपका स्वागत है",
@@ -296,7 +244,7 @@ const translations = {
     whyChooseDesc: "किसानों को स्मार्ट तकनीक के साथ सशक्त बनाना ताकि वे सीधे खरीदारों से जुड़ सकें।",
     batchManagement: "बैच प्रबंधन",
     batchManagementDesc: "रोपण से कटाई तक अपने फसल बैचों को आसानी से ट्रैक करें।",
-    ratingSystem: "रेटिंग सिस्टम", 
+    ratingSystem: "रेटिंग सिस्टम",
     ratingSystemDesc: "हमारी पारदर्शी रेटिंग प्रणाली के साथ अपनी प्रतिष्ठा बनाएं।",
     sustainableGrowth: "टिकाऊ विकास",
     sustainableGrowthDesc: "पर्यावरण-अनुकूल दिशानिर्देशों के साथ टिकाऊ कृषि प्रथाओं को बढ़ावा दें।",
@@ -305,7 +253,7 @@ const translations = {
     startJourney: "अपनी यात्रा शुरू करें",
     loginTitle: "वापस आपका स्वागत है",
     loginSubtitle: "अपने खाते में साइन इन करें",
-    signupTitle: "खाता बनाएं", 
+    signupTitle: "खाता बनाएं",
     signupSubtitle: "हमारे कृषि समुदाय में शामिल हों",
     email: "ईमेल",
     password: "पासवर्ड",
@@ -336,7 +284,7 @@ export const LanguageProvider = ({ children }) => {
     const savedLanguage = localStorage.getItem('herbiproof_language');
     if (savedLanguage && availableLanguages.some(lang => lang.code === savedLanguage)) {
       setCurrentLanguage(savedLanguage);
-      
+
       // Load cached API translations if available
       if (savedLanguage !== 'en') {
         const cached = localStorage.getItem(`herbiproof_api_translations_${savedLanguage}`);
@@ -390,13 +338,13 @@ export const LanguageProvider = ({ children }) => {
     if (hardcodedTranslation) {
       return hardcodedTranslation;
     }
-    
+
     // Then check API translations
     const apiTranslation = apiTranslations[key];
     if (apiTranslation) {
       return apiTranslation;
     }
-    
+
     // Fallback to English or key itself
     return translations.en[key] || key;
   };

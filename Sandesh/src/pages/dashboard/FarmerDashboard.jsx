@@ -6,12 +6,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Package, 
-  ShoppingCart, 
-  Star, 
-  User, 
-  Plus, 
+import {
+  Package,
+  ShoppingCart,
+  Star,
+  User,
+  Plus,
   Eye,
   Calendar,
   TrendingUp,
@@ -22,7 +22,8 @@ import {
   Clock,
   AlertCircle,
   Crop,
-  IndianRupee
+  IndianRupee,
+  Sprout
 } from "lucide-react";
 import { BatchForm } from "@/components/BatchForm";
 import { ProfileForm } from "@/components/ProfileForm";
@@ -49,32 +50,32 @@ const FarmerDashboard = () => {
   };
 
   const recentBatches = [
-    { 
-      id: 1, 
-      crop: "टमाटर (Tomatoes)", 
-      quantity: "50 किलो", 
-      status: "Available", 
-      price: "₹40/किलो", 
+    {
+      id: 1,
+      crop: "टमाटर (Tomatoes)",
+      quantity: "50 किलो",
+      status: "Available",
+      price: "₹40/किलो",
       date: "आज (Today)",
       quality: "A+",
       location: "खेत नंबर 1"
     },
-    { 
-      id: 2, 
-      crop: "प्याज (Onions)", 
-      quantity: "100 किलो", 
-      status: "Sold", 
-      price: "₹25/किलो", 
+    {
+      id: 2,
+      crop: "प्याज (Onions)",
+      quantity: "100 किलो",
+      status: "Sold",
+      price: "₹25/किलो",
       date: "कल (Yesterday)",
       quality: "A",
       location: "खेत नंबर 2"
     },
-    { 
-      id: 3, 
-      crop: "आलू (Potatoes)", 
-      quantity: "75 किलो", 
-      status: "Low Stock", 
-      price: "₹30/किलो", 
+    {
+      id: 3,
+      crop: "आलू (Potatoes)",
+      quantity: "75 किलो",
+      status: "Low Stock",
+      price: "₹30/किलो",
       date: "2 दिन पहले",
       quality: "B+",
       location: "खेत नंबर 1"
@@ -82,32 +83,32 @@ const FarmerDashboard = () => {
   ];
 
   const recentOrders = [
-    { 
-      id: 1, 
-      buyer: "राम सब्जी मंडी", 
-      crop: "टमाटर", 
-      quantity: "20 किलो", 
-      amount: "₹800", 
+    {
+      id: 1,
+      buyer: "राम सब्जी मंडी",
+      crop: "टमाटर",
+      quantity: "20 किलो",
+      amount: "₹800",
       status: "Confirmed",
       date: "आज",
       phone: "+91 98765 43210"
     },
-    { 
-      id: 2, 
-      buyer: "ग्रीन स्टोर", 
-      crop: "प्याज", 
-      quantity: "50 किलो", 
-      amount: "₹1,250", 
+    {
+      id: 2,
+      buyer: "ग्रीन स्टोर",
+      crop: "प्याज",
+      quantity: "50 किलो",
+      amount: "₹1,250",
       status: "Pending",
       date: "कल",
       phone: "+91 98765 43211"
     },
-    { 
-      id: 3, 
-      buyer: "सिटी मार्केट", 
-      crop: "आलू", 
-      quantity: "30 किलो", 
-      amount: "₹900", 
+    {
+      id: 3,
+      buyer: "सिटी मार्केट",
+      crop: "आलू",
+      quantity: "30 किलो",
+      amount: "₹900",
       status: "Delivered",
       date: "3 दिन पहले",
       phone: "+91 98765 43212"
@@ -118,7 +119,7 @@ const FarmerDashboard = () => {
     { label: t('addNewCrop'), icon: Plus, action: "addBatch", color: "bg-green-500" },
     { label: t('viewAllOrders'), icon: Eye, action: "viewOrders", color: "bg-blue-500" },
     { label: t('harvestTime'), icon: Calendar, action: "scheduleHarvest", color: "bg-orange-500" },
-    { label: t('createProfile'), icon: User, action: "editProfile", color: "bg-purple-500" }
+    { label: t('editProfile'), icon: User, action: "editProfile", color: "bg-purple-500" }
   ];
 
   if (showBatchForm) {
@@ -174,12 +175,29 @@ const FarmerDashboard = () => {
       <div className="py-6">
         <div className="container px-4 mx-auto sm:px-6 lg:px-8">
           {/* Header */}
-          <div className="flex flex-col items-start justify-between mb-8 md:flex-row md:items-center">
-            <div>
-              <h1 className="mb-2 text-3xl font-bold text-gray-900">{t('farmerDashboard')}</h1>
-              <p className="text-gray-600">{t('manageFarm')}</p>
+          <div className="flex flex-col items-center justify-between mb-8 md:flex-row md:items-center">
+            {/* Logo Section */}
+            <div className="flex items-center gap-3 mb-4 md:mb-0">
+              <div className="logo-section">
+                {/* Logo */}
+                <div className="logo-icon">
+                  <Sprout className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <div className="logo-text">{t('logoText')}</div>
+                  <div className="logo-tagline">{t('logoDesc')}</div>
+                </div>
+              </div>
             </div>
-            <div className="flex gap-3 mt-4 md:mt-0">
+
+            {/* Dashboard Title - Centered */}
+            <div className="flex-1 text-center mb-4 md:mb-0">
+              <h1 className="text-2xl md:text-3xl font-bold text-gray-900">{t('farmerDashboard')}</h1>
+              <p className="text-sm text-gray-600">{t('manageFarm')}</p>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex gap-3">
               <LanguageSwitcher />
               <Button
                 onClick={() => setShowProfileForm(true)}
@@ -353,7 +371,7 @@ const FarmerDashboard = () => {
             <TabsContent value="batches" className="space-y-6">
               <div className="flex items-center justify-between">
                 <h3 className="text-xl font-semibold text-gray-900">{t('myCrops')}</h3>
-                <Button 
+                <Button
                   onClick={() => setShowBatchForm(true)}
                   className="text-white bg-green-600 hover:bg-green-700"
                 >
@@ -395,7 +413,7 @@ const FarmerDashboard = () => {
 
             <TabsContent value="orders" className="space-y-6">
               <h3 className="text-xl font-semibold text-gray-900">{t('recentOrders')}</h3>
-              
+
               <div className="grid gap-4">
                 {recentOrders.map((order) => (
                   <Card key={order.id} className="transition-shadow bg-white border border-gray-200 shadow-sm hover:shadow-md">

@@ -25,12 +25,12 @@ export const Footer = () => {
                 <Sprout className="h-6 w-6 text-white" />
               </div>
               <div>
-                <span className="text-2xl font-bold bg-gradient-to-r from-white to-sage-200 bg-clip-text text-transparent">HerbiProof</span>
-                <div className="text-xs text-sage-300 font-medium">Smart Agriculture</div>
+                <span className="text-2xl font-bold bg-gradient-to-r from-white to-sage-200 bg-clip-text text-transparent"> {t('logoText')}</span>
+                <div className="text-xs text-sage-300 font-medium">{t('logoDesc')}</div>
               </div>
             </div>
             <p className="text-sage-100 leading-relaxed text-sm">
-              Empowering farmers with smart technology to connect directly with buyers, 
+              Empowering farmers with smart technology to connect directly with buyers,
               manage crops efficiently, and grow agricultural businesses.
             </p>
             <div className="flex space-x-3">
@@ -55,48 +55,48 @@ export const Footer = () => {
               >
                 <Instagram className="h-5 w-5" />
               </Button>
-              
+
             </div>
           </div>
 
           {/* Quick Links */}
           <div className="space-y-6">
-            <h3 className="text-lg font-bold text-white">Quick Links</h3>
+            <h3 className="text-lg font-bold text-white">{t('quickLinks')}</h3>
             <ul className="space-y-3">
               <li>
-                <a 
-                  href="#about" 
+                <a
+                  href="#about"
                   className="text-sage-200 hover:text-white transition-colors duration-300 flex items-center group"
                 >
                   <ArrowRight className="h-3 w-3 mr-2 group-hover:translate-x-1 transition-transform" />
-                  About Us
+                  {t('aboutUs')}
                 </a>
               </li>
               <li>
-                <a 
-                  href="#features" 
+                <a
+                  href="#features"
                   className="text-sage-200 hover:text-white transition-colors duration-300 flex items-center group"
                 >
                   <ArrowRight className="h-3 w-3 mr-2 group-hover:translate-x-1 transition-transform" />
-                  Features
+                  {t('features')}
                 </a>
               </li>
               <li>
-                <a 
-                  href="#contact" 
+                <a
+                  href="#contact"
                   className="text-sage-200 hover:text-white transition-colors duration-300 flex items-center group"
                 >
                   <ArrowRight className="h-3 w-3 mr-2 group-hover:translate-x-1 transition-transform" />
-                  Contact
+                  {t('contact')}
                 </a>
               </li>
               <li>
-                <a 
-                  href="#support" 
+                <a
+                  href="#support"
                   className="text-sage-200 hover:text-white transition-colors duration-300 flex items-center group"
                 >
                   <ArrowRight className="h-3 w-3 mr-2 group-hover:translate-x-1 transition-transform" />
-                  Support
+                  {t('support')}
                 </a>
               </li>
             </ul>
@@ -104,29 +104,27 @@ export const Footer = () => {
 
           {/* Services */}
           <div className="space-y-6">
-            <h3 className="text-lg font-bold text-white">Our Services</h3>
+            <h3 className="text-lg font-bold text-white">{t('ourServices')}</h3>
             <ul className="space-y-3">
-              <li className="text-sage-200 text-sm">Batch Management</li>
-              <li className="text-sage-200 text-sm">KYC Verification</li>
-              <li className="text-sage-200 text-sm">Rating System</li>
-              <li className="text-sage-200 text-sm">Market Analytics</li>
-              <li className="text-sage-200 text-sm">Payment Gateway</li>
+              <li className="text-sage-200 text-sm">{t('batchManagement')}</li>
+              <li className="text-sage-200 text-sm">{t('kycVerification')}</li>
+              <li className="text-sage-200 text-sm">{t('ratingSystem')}</li>
+              <li className="text-sage-200 text-sm">{t('marketAnalytics')}</li>
+              <li className="text-sage-200 text-sm">{t('paymentGateway')}</li>
             </ul>
           </div>
 
           {/* Contact Info */}
           <div className="space-y-6">
-            <h3 className="text-lg font-bold text-white">Contact Info</h3>
+            <h3 className="text-lg font-bold text-white">{t('contactInfo')}</h3>
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
                 <div className="w-8 h-8 bg-sage-700/50 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
                   <MapPin className="h-4 w-4 text-sage-300" />
                 </div>
                 <div>
-                  <span className="text-sage-200 text-sm block">
-                    123 Agriculture Street<br />
-                    Bengalurur City, FC 12345<br />
-                    India
+                  <span className="text-sage-200 text-sm block whitespace-pre-line">
+                    {t('address')}
                   </span>
                 </div>
               </div>
@@ -150,26 +148,26 @@ export const Footer = () => {
         <div className="pt-8 border-t border-sage-700/50">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-sage-300 text-sm text-center md:text-left">
-              © {currentYear} HerbiProof. All rights reserved. Built with ❤️ for Ecosystem.
+              © {currentYear} {t('logoText')}. {t('allRightsReserved')}
             </div>
             <div className="flex flex-wrap justify-center md:justify-end gap-6 text-sm">
-              <a 
-                href="#privacy" 
-                className="text-sage-300 hover:text-white transition-colors duration-300"
+              <a
+                href="#privacy"
+                className="text-sage-700 hover:text-white transition-colors duration-300"
               >
-                Privacy Policy
+                {t('privacyPolicy')}
               </a>
-              <a 
-                href="#terms" 
-                className="text-sage-300 hover:text-white transition-colors duration-300"
+              <a
+                href="#terms"
+                className="text-sage-700 hover:text-white transition-colors duration-300"
               >
-                Terms of Service
+                {t('termsOfService')}
               </a>
-              <a 
-                href="#cookies" 
-                className="text-sage-300 hover:text-white transition-colors duration-300"
+              <a
+                href="#cookies"
+                className="text-sage-700 hover:text-white transition-colors duration-300"
               >
-                Cookie Policy
+                {t('cookiePolicy')}
               </a>
             </div>
           </div>

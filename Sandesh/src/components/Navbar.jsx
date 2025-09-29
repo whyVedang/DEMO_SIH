@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Sprout, Menu, X, LayoutDashboard, LogIn, UserPlus } from "lucide-react";
+import { Sprout, Menu, X, LayoutDashboard, LogIn, UserPlus, AlignJustify, AlignHorizontalJustifyStart } from "lucide-react";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -34,8 +34,8 @@ export const Navbar = () => {
               <Sprout className="h-6 w-6 text-white" />
             </div>
             <div>
-              <div className="logo-text">HerbiProof</div>
-              <div className="logo-tagline">Smart Agriculture</div>
+              <div className="logo-text">{t('logoText')}</div>
+              <div className="logo-tagline">{t('logoDesc')}</div>
             </div>
           </div>
 

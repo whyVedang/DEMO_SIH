@@ -5,16 +5,20 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Sprout, Mail, Lock, User, Phone, Leaf, Truck, Store, ArrowLeft, Eye, EyeOff } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import { Sprout, Mail, Lock, User, Phone, Leaf, Truck, Store, ArrowLeft, Eye, EyeOff, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { KYCForm } from "@/components/KYCForm";
 
 const Signup = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [selectedRole, setSelectedRole] = useState('farmer');
   const [showPassword, setShowPassword] = useState(false);
+  const [signupStep, setSignupStep] = useState(1); // 1: Basic Info, 2: KYC, 3: Complete
+  const [userData, setUserData] = useState(null);
   const { toast } = useToast();
   const { signup } = useAuth();
   const { t } = useLanguage();
@@ -24,7 +28,7 @@ const Signup = () => {
     setIsLoading(true);
     
     const formData = new FormData(e.target);
-    const userData = {
+    const basicUserData = {
       name: formData.get('name'),
       email: formData.get('email'),
       phone: formData.get('phone'),
@@ -32,16 +36,27 @@ const Signup = () => {
       role: selectedRole
     };
     
-    console.log('Signup data:', userData); // Debug log
+    console.log('Signup data:', basicUserData); // Debug log
     
-    setTimeout(() => {
-      signup(userData);
-      toast({
-        title: "Account Created!",
-        description: `Welcome to HerbiProof as a ${selectedRole}!`,
-      });
-      setIsLoading(false);
-    }, 2000);
+    // Store user data and move to KYC step
+    setUserData(basicUserData);
+    setIsLoading(false);
+    setSignupStep(2);
+    
+    toast({
+      title: "Basic Info Complete!",
+      description: "Now let's verify your identity with KYC.",
+    });
+  };
+
+  const handleKYCComplete = () => {
+    // Complete the signup process after KYC
+    signup(userData);
+    setSignupStep(3);
+    toast({
+      title: "Account Created!",
+      description: `Welcome to HerbiProof as a ${selectedRole}!`,
+    });
   };
 
   const roleOptions = [
@@ -69,6 +84,48 @@ const Signup = () => {
   ];
 
   console.log('Current selected role:', selectedRole); // Debug log
+
+  // Show KYC form if we're on step 2
+  if (signupStep === 2) {
+    return <KYCForm onComplete={handleKYCComplete} userRole={selectedRole} />;
+  }
+
+  // Show completion screen if we're on step 3
+  if (signupStep === 3) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-sage-50 via-white to-sage-100 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23059669' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+          }}></div>
+        </div>
+
+        <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
+          <div className="w-full max-w-lg">
+            <Card className="bg-white/80 backdrop-blur-lg border-sage-200 shadow-2xl">
+              <CardContent className="p-8 text-center">
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <CheckCircle className="w-8 h-8 text-green-600" />
+                </div>
+                <h1 className="text-2xl font-bold text-gray-900 mb-4">
+                  Account Created Successfully!
+                </h1>
+                <p className="text-gray-600 mb-6">
+                  Your account has been created and verified. You can now access all features of HerbiProof.
+                </p>
+                <Button
+                  onClick={() => navigate('/')}
+                  className="w-full bg-gradient-to-r from-sage-500 to-sage-600 hover:from-sage-600 hover:to-sage-700 text-white font-semibold rounded-xl"
+                >
+                  Continue to Dashboard
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-sage-50 via-white to-sage-100 relative overflow-hidden">
@@ -101,9 +158,18 @@ const Signup = () => {
             <h1 className="text-3xl font-bold text-gray-900 mb-2">
               {t('signupTitle')}
             </h1>
-            <p className="text-gray-600">
+            <p className="text-gray-600 mb-4">
               {t('signupSubtitle')}
             </p>
+            
+            {/* Progress Indicator */}
+            <div className="bg-white/50 backdrop-blur-sm rounded-lg p-4 mb-6">
+              <div className="flex items-center justify-between text-sm text-gray-600 mb-2">
+                <span>Step 1 of 3</span>
+                <span>Basic Information</span>
+              </div>
+              <Progress value={33} className="h-2" />
+            </div>
           </div>
 
           {/* Signup Form */}

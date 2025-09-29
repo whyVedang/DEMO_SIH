@@ -1,32 +1,104 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import {
   Store, Package, ShoppingCart, Users, TrendingUp, Plus, Eye, Calendar, IndianRupee, ArrowLeft,
-  User as UserIcon, Star, Phone, CheckCircle, Clock, AlertCircle
+  User as UserIcon, Star, Phone, CheckCircle, Clock, AlertCircle, Search
 } from "lucide-react";
 import { ProfileForm } from "@/components/ProfileForm";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useToast } from "@/hooks/use-toast";
+import dataSyncService from "@/services/dataSyncService";
 
 const RetailerDashboard = () => {
   const navigate = useNavigate();
   const { t } = useLanguage();
   const { user, logout } = useAuth();
+  const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("products");
   const [showProfileForm, setShowProfileForm] = useState(false);
+  const [showBuyStockModal, setShowBuyStockModal] = useState(false);
+  const [retailerStock, setRetailerStock] = useState([]);
+  const [availableFarmerBatches, setAvailableFarmerBatches] = useState([]);
+  const [selectedBatch, setSelectedBatch] = useState(null);
+  const [orderQuantity, setOrderQuantity] = useState('');
 
   const handleLogout = () => {
     logout();
   };
 
-  // Mock Data for Retailer Dashboard
+  // Load retailer stock and available farmer batches
+  useEffect(() => {
+    loadRetailerStock();
+    loadAvailableDistributorInventory();
+  }, []);
+
+  const loadRetailerStock = () => {
+    const stock = dataSyncService.getRetailerStock();
+    setRetailerStock(stock);
+  };
+
+  const loadAvailableDistributorInventory = () => {
+    const distributorInventory = dataSyncService.getDistributorInventory();
+    // Filter only available inventory
+    const availableInventory = distributorInventory.filter(item => item.status === 'In Stock');
+    setAvailableFarmerBatches(availableInventory);
+  };
+
+  const handleBuyStock = () => {
+    if (!selectedBatch || !orderQuantity) {
+      toast({
+        title: "Error!",
+        description: "Please select a batch and enter quantity.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const quantity = parseFloat(orderQuantity);
+    const maxQuantity = parseFloat(selectedBatch.totalQuantity);
+
+    if (quantity > maxQuantity) {
+      toast({
+        title: "Error!",
+        description: `Only ${maxQuantity} ${selectedBatch.unit} available.`,
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Use data sync service to handle the transaction
+    const newStockItem = dataSyncService.syncDistributorInventoryToRetailer(
+      selectedBatch.id,
+      user?.id || 'retailer-1',
+      quantity
+    );
+
+    toast({
+      title: "Stock Purchased Successfully!",
+      description: `Added ${quantity} ${selectedBatch.unit} of ${selectedBatch.cropName} to your inventory.`,
+    });
+
+    // Reset form and reload data
+    setSelectedBatch(null);
+    setOrderQuantity('');
+    setShowBuyStockModal(false);
+    loadRetailerStock();
+    loadAvailableFarmerBatches();
+  };
+
+  // Stats based on actual data
   const retailerStats = {
-    totalProducts: 45,
+    totalProducts: retailerStock.length,
     activeOrders: 8,
     totalCustomers: 156,
     thisMonthSales: 85000,
@@ -84,9 +156,24 @@ const RetailerDashboard = () => {
         <div className="container px-4 mx-auto sm:px-6 lg:px-8">
           {/* Header */}
           <div className="flex flex-col items-start justify-between mb-8 md:flex-row md:items-center">
-            <div>
-              <h1 className="mb-2 text-3xl font-bold text-gray-900">{t('retailerDashboard')}</h1>
-              <p className="text-gray-600">{t('manageStore')}</p>
+            {/* Logo Section */}
+            <div className="flex items-center gap-3 mb-4 md:mb-0">
+              <div className="logo-section">
+                {/* Logo */}
+                <div className="logo-icon">
+                  <Store className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <div className="logo-text">{t('logoText')}</div>
+                  <div className="logo-tagline">{t('logoDesc')}</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Dashboard Title - Centered */}
+            <div className="flex-1 mb-4 text-center md:mb-0">
+              <h1 className="text-2xl font-bold text-gray-900 md:text-3xl">{t('retailerDashboard')}</h1>
+              <p className="text-sm text-gray-600">{t('manageStore')}</p>
             </div>
             <div className="flex gap-3 mt-4 md:mt-0">
               <LanguageSwitcher />
@@ -156,7 +243,7 @@ const RetailerDashboard = () => {
 
           {/* Main Content Tabs */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-4 bg-white border border-gray-200">
+            <TabsList className="grid w-full grid-cols-3 bg-white border border-gray-200">
               <TabsTrigger value="products" className="data-[state=active]:bg-purple-50 data-[state=active]:text-purple-700">
                 {t('myProducts')}
               </TabsTrigger>
@@ -166,32 +253,104 @@ const RetailerDashboard = () => {
               <TabsTrigger value="customers" className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700">
                 {t('customers')}
               </TabsTrigger>
-              <TabsTrigger value="sales" className="data-[state=active]:bg-orange-50 data-[state=active]:text-orange-700">
-                {t('sales')}
-              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="products" className="space-y-6">
               <div className="flex items-center justify-between">
                 <h3 className="text-xl font-semibold text-gray-900">{t('myProducts')}</h3>
-                <Button className="text-white bg-purple-600 hover:bg-purple-700">
-                  <Plus className="w-4 h-4 mr-2" />
-                  {t('addNewProduct')}
-                </Button>
+                <div className="flex gap-2">
+                  <Dialog open={showBuyStockModal} onOpenChange={setShowBuyStockModal}>
+                    <DialogTrigger asChild>
+                      <Button className="text-white bg-green-600 hover:bg-green-700">
+                        <ShoppingCart className="w-4 h-4 mr-2" />
+                        Buy New Stock
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-md">
+                      <DialogHeader>
+                        <DialogTitle>Buy Stock from Distributors</DialogTitle>
+                      </DialogHeader>
+                      <div className="space-y-4">
+                        <div className="space-y-2">
+                          <Label>Available Distributor Inventory</Label>
+                          <Select value={selectedBatch?.id || ''} onValueChange={(value) => {
+                            const batch = availableFarmerBatches.find(b => b.id === value);
+                            setSelectedBatch(batch);
+                          }}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select distributor inventory" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {availableFarmerBatches.map((batch) => (
+                                <SelectItem key={batch.id} value={batch.id}>
+                                  {batch.cropName} {batch.variety && `(${batch.variety})`} - 
+                                  {batch.totalQuantity} {batch.unit} @ ₹{batch.pricePerUnit}/{batch.unit}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        
+                        {selectedBatch && (
+                          <div className="p-4 rounded-lg bg-gray-50">
+                            <h4 className="mb-2 font-semibold">{selectedBatch.cropName}</h4>
+                            <div className="space-y-1 text-sm text-gray-600">
+                              <div>Available: {selectedBatch.totalQuantity} {selectedBatch.unit}</div>
+                              <div>Price: ₹{selectedBatch.pricePerUnit}/{selectedBatch.unit}</div>
+                              <div>Min Order: {selectedBatch.minOrderQuantity} {selectedBatch.unit}</div>
+                              <div>Harvest Date: {new Date(selectedBatch.harvestDate).toLocaleDateString()}</div>
+                            </div>
+                          </div>
+                        )}
+                        
+                        <div className="space-y-2">
+                          <Label htmlFor="orderQuantity">Quantity to Purchase</Label>
+                          <Input
+                            id="orderQuantity"
+                            type="number"
+                            placeholder="Enter quantity"
+                            value={orderQuantity}
+                            onChange={(e) => setOrderQuantity(e.target.value)}
+                            max={selectedBatch?.totalQuantity || ''}
+                          />
+                          {selectedBatch && (
+                            <p className="text-xs text-gray-500">
+                              Max available: {selectedBatch.totalQuantity} {selectedBatch.unit}
+                            </p>
+                          )}
+                        </div>
+                        
+                        <div className="flex gap-2">
+                          <Button variant="outline" onClick={() => setShowBuyStockModal(false)} className="flex-1">
+                            Cancel
+                          </Button>
+                          <Button onClick={handleBuyStock} className="flex-1 bg-green-600 hover:bg-green-700">
+                            Purchase Stock
+                          </Button>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                  
+                </div>
               </div>
 
               <div className="grid gap-4">
-                {currentProducts.map((product) => (
+                {/* Display purchased stock */}
+                {retailerStock.map((product) => (
                   <Card key={product.id} className="transition-shadow bg-white border border-gray-200 shadow-sm hover:shadow-md">
                     <CardContent className="p-6">
                       <div className="flex items-center justify-between">
                         <div className="flex-1">
-                          <h4 className="mb-2 text-lg font-semibold text-gray-900">{product.name}</h4>
+                          <h4 className="mb-2 text-lg font-semibold text-gray-900">
+                            {product.productName} {product.variety && `(${product.variety})`}
+                          </h4>
                           <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
-                            <div>{t('quantity')}: {product.quantity}</div>
-                            <div>{t('price')}: {product.price}</div>
-                            <div>Category: {product.category}</div>
+                            <div>{t('quantity')}: {product.quantity} {product.unit}</div>
+                            <div>Purchase Price: ₹{product.purchasePrice}/{product.unit}</div>
+                            <div>Selling Price: ₹{product.sellingPrice}/{product.unit}</div>
                             <div>Supplier: {product.supplier}</div>
+                            <div>Purchase Date: {product.purchaseDate}</div>
                             <div className="flex items-center gap-2">
                               <Badge className={`${getStatusColor(product.status)} flex items-center gap-1`}>
                                 {getStatusIcon(product.status)}
@@ -200,13 +359,37 @@ const RetailerDashboard = () => {
                             </div>
                           </div>
                         </div>
-                        <Button variant="outline" size="sm">
-                          {t('edit')}
-                        </Button>
+                        <div className="flex flex-col items-end space-y-2">
+                          <div className="text-right">
+                            <div className="text-sm font-semibold text-green-600">
+                              Profit Margin: ₹{(parseFloat(product.sellingPrice) - parseFloat(product.purchasePrice)).toFixed(2)}
+                            </div>
+                          </div>
+                          <Button variant="outline" size="sm">
+                            {t('edit')}
+                          </Button>
+                        </div>
                       </div>
                     </CardContent>
                   </Card>
                 ))}
+                
+                {retailerStock.length === 0 && (
+                  <Card className="bg-white border border-gray-200 shadow-sm">
+                    <CardContent className="p-8 text-center">
+                      <Package className="w-12 h-12 mx-auto mb-4 text-gray-400" />
+                      <h4 className="mb-2 text-lg font-semibold text-gray-900">No stock available</h4>
+                      <p className="mb-4 text-gray-600">Start by purchasing stock from farmers</p>
+                      <Button
+                        onClick={() => setShowBuyStockModal(true)}
+                        className="text-white bg-green-600 hover:bg-green-700"
+                      >
+                        <ShoppingCart className="w-4 h-4 mr-2" />
+                        Buy First Stock
+                      </Button>
+                    </CardContent>
+                  </Card>
+                )}
               </div>
             </TabsContent>
 
@@ -273,13 +456,6 @@ const RetailerDashboard = () => {
               </div>
             </TabsContent>
 
-            <TabsContent value="sales" className="space-y-6">
-              <h3 className="text-xl font-semibold text-gray-900">{t('salesOverview')}</h3>
-              <div className="py-12 text-center text-gray-500">
-                <TrendingUp className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-                <p>{t('customerInfo')}</p>
-              </div>
-            </TabsContent>
           </Tabs>
         </div>
       </div>

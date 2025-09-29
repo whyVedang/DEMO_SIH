@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
@@ -28,6 +28,7 @@ import {
 import { BatchForm } from "@/components/BatchForm";
 import { ProfileForm } from "@/components/ProfileForm";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import dataSyncService from "@/services/dataSyncService";
 
 const FarmerDashboard = () => {
   const navigate = useNavigate();
@@ -36,14 +37,32 @@ const FarmerDashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [showBatchForm, setShowBatchForm] = useState(false);
   const [showProfileForm, setShowProfileForm] = useState(false);
+  const [storedBatches, setStoredBatches] = useState([]);
 
   const handleLogout = () => {
     logout();
   };
 
-  // Mock data - more realistic for farmers
+  // Load batches from data sync service
+  const loadStoredBatches = () => {
+    const batches = dataSyncService.getFarmerBatches();
+    setStoredBatches(batches);
+  };
+
+  // Load batches when component mounts or when returning from batch form
+  useEffect(() => {
+    loadStoredBatches();
+  }, []);
+
+  // Refresh batches when showing the dashboard (when batch form closes)
+  const handleBackFromBatchForm = () => {
+    setShowBatchForm(false);
+    loadStoredBatches(); // Refresh the list
+  };
+
+  // Stats based on actual stored data
   const stats = {
-    totalBatches: 8,
+    totalBatches: storedBatches.length,
     activeOrders: 3,
     rating: 4.2,
     earnings: 12500
@@ -118,12 +137,11 @@ const FarmerDashboard = () => {
   const quickActions = [
     { label: t('addNewCrop'), icon: Plus, action: "addBatch", color: "bg-green-500" },
     { label: t('viewAllOrders'), icon: Eye, action: "viewOrders", color: "bg-blue-500" },
-    { label: t('harvestTime'), icon: Calendar, action: "scheduleHarvest", color: "bg-orange-500" },
     { label: t('editProfile'), icon: User, action: "editProfile", color: "bg-purple-500" }
   ];
 
   if (showBatchForm) {
-    return <BatchForm onBack={() => setShowBatchForm(false)} entityType="farmer" />;
+    return <BatchForm onBack={handleBackFromBatchForm} entityType="farmer" />;
   }
 
   if (showProfileForm) {
@@ -181,7 +199,7 @@ const FarmerDashboard = () => {
               <div className="logo-section">
                 {/* Logo */}
                 <div className="logo-icon">
-                  <Sprout className="h-6 w-6 text-white" />
+                  <Sprout className="w-6 h-6 text-white" />
                 </div>
                 <div>
                   <div className="logo-text">{t('logoText')}</div>
@@ -191,8 +209,8 @@ const FarmerDashboard = () => {
             </div>
 
             {/* Dashboard Title - Centered */}
-            <div className="flex-1 text-center mb-4 md:mb-0">
-              <h1 className="text-2xl md:text-3xl font-bold text-gray-900">{t('farmerDashboard')}</h1>
+            <div className="flex-1 mb-4 text-center md:mb-0">
+              <h1 className="text-2xl font-bold text-gray-900 md:text-3xl">{t('farmerDashboard')}</h1>
               <p className="text-sm text-gray-600">{t('manageFarm')}</p>
             </div>
 
@@ -381,33 +399,71 @@ const FarmerDashboard = () => {
               </div>
 
               <div className="grid gap-4">
-                {recentBatches.map((batch) => (
-                  <Card key={batch.id} className="transition-shadow bg-white border border-gray-200 shadow-sm hover:shadow-md">
-                    <CardContent className="p-6">
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <h4 className="mb-2 text-lg font-semibold text-gray-900">{batch.crop}</h4>
-                          <div className="grid grid-cols-2 gap-2 mb-3 text-sm text-gray-600">
-                            <div>{t('quantity')}: {batch.quantity}</div>
-                            <div>{t('price')}: {batch.price}</div>
-                            <div>{t('quality')}: {batch.quality}</div>
-                            <div>{t('location')}: {batch.location}</div>
-                          </div>
-                          <div className="text-xs text-gray-500">{t('addedOn')}: {batch.date}</div>
-                        </div>
-                        <div className="flex flex-col items-end space-y-2">
-                          <Badge className={`${getStatusColor(batch.status)} flex items-center gap-1`}>
-                            {getStatusIcon(batch.status)}
-                            {batch.status}
-                          </Badge>
-                          <Button variant="outline" size="sm">
-                            {t('edit')}
-                          </Button>
-                        </div>
-                      </div>
+                {storedBatches.length === 0 ? (
+                  <Card className="bg-white border border-gray-200 shadow-sm">
+                    <CardContent className="p-8 text-center">
+                      <Package className="w-12 h-12 mx-auto mb-4 text-gray-400" />
+                      <h4 className="mb-2 text-lg font-semibold text-gray-900">No crops added yet</h4>
+                      <p className="mb-4 text-gray-600">Start by adding your first crop batch</p>
+                      <Button
+                        onClick={() => setShowBatchForm(true)}
+                        className="text-white bg-green-600 hover:bg-green-700"
+                      >
+                        <Plus className="w-4 h-4 mr-2" />
+                        Add First Crop
+                      </Button>
                     </CardContent>
                   </Card>
-                ))}
+                ) : (
+                  storedBatches.map((batch) => (
+                    <Card key={batch.id} className="transition-shadow bg-white border border-gray-200 shadow-sm hover:shadow-md">
+                      <CardContent className="p-6">
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <h4 className="mb-2 text-lg font-semibold text-gray-900">
+                              {batch.cropName} {batch.variety && `(${batch.variety})`}
+                            </h4>
+                            <div className="grid grid-cols-2 gap-2 mb-3 text-sm text-gray-600">
+                              <div>{t('quantity')}: {batch.totalQuantity} {batch.unit}</div>
+                              <div>{t('price')}: ₹{batch.pricePerUnit}/{batch.unit}</div>
+                              <div>{t('quality')}: {batch.quality}</div>
+                              <div>Min Order: {batch.minOrderQuantity} {batch.unit}</div>
+                            </div>
+                            <div className="mb-2 text-sm text-gray-600">
+                              <strong>Harvest:</strong> {new Date(batch.harvestDate).toLocaleDateString()}
+                              {batch.availableUntil && (
+                                <span> | <strong>Available until:</strong> {new Date(batch.availableUntil).toLocaleDateString()}</span>
+                              )}
+                            </div>
+                            <div className="mb-2 text-sm text-gray-600">
+                              <strong>Location:</strong> {batch.location}
+                            </div>
+                            {batch.description && (
+                              <div className="mb-2 text-sm text-gray-600">
+                                <strong>Description:</strong> {batch.description}
+                              </div>
+                            )}
+                            <div className="text-xs text-gray-500">{t('addedOn')}: {batch.dateAdded}</div>
+                          </div>
+                          <div className="flex flex-col items-end space-y-2">
+                            <Badge className={`${getStatusColor(batch.status)} flex items-center gap-1`}>
+                              {getStatusIcon(batch.status)}
+                              {batch.status}
+                            </Badge>
+                            <div className="text-right">
+                              <div className="text-sm font-semibold text-green-600">
+                                Total Value: ₹{batch.totalValue}
+                              </div>
+                            </div>
+                            <Button variant="outline" size="sm">
+                              {t('edit')}
+                            </Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))
+                )}
               </div>
             </TabsContent>
 

@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [kycCompleted, setKycCompleted] = useState(false);
   const navigate = useNavigate();
 
   // Check for existing authentication on mount
@@ -22,14 +23,17 @@ export const AuthProvider = ({ children }) => {
     const checkAuth = () => {
       try {
         const storedUser = localStorage.getItem('herbiproof_user');
+        const storedKyc = localStorage.getItem('herbiproof_kyc');
         if (storedUser) {
           const userData = JSON.parse(storedUser);
           setUser(userData);
           setIsAuthenticated(true);
+          setKycCompleted(storedKyc === 'true');
         }
       } catch (error) {
         console.error('Error checking authentication:', error);
         localStorage.removeItem('herbiproof_user');
+        localStorage.removeItem('herbiproof_kyc');
       } finally {
         setIsLoading(false);
       }
@@ -57,23 +61,38 @@ export const AuthProvider = ({ children }) => {
     const userWithRole = {
       ...userData,
       role: userData.role,
-      signupTime: new Date().toISOString()
+      signupTime: new Date().toISOString(),
+      kycCompleted: true
     };
     
     console.log('Signup user data:', userWithRole); // Debug log
     
     setUser(userWithRole);
     setIsAuthenticated(true);
+    setKycCompleted(true);
     localStorage.setItem('herbiproof_user', JSON.stringify(userWithRole));
+    localStorage.setItem('herbiproof_kyc', 'true');
     
     // Auto-redirect based on role
     redirectToRoleDashboard(userWithRole.role);
   };
 
+  const completeKYC = () => {
+    setKycCompleted(true);
+    localStorage.setItem('herbiproof_kyc', 'true');
+    if (user) {
+      const updatedUser = { ...user, kycCompleted: true };
+      setUser(updatedUser);
+      localStorage.setItem('herbiproof_user', JSON.stringify(updatedUser));
+    }
+  };
+
   const logout = () => {
     setUser(null);
     setIsAuthenticated(false);
+    setKycCompleted(false);
     localStorage.removeItem('herbiproof_user');
+    localStorage.removeItem('herbiproof_kyc');
     navigate('/');
   };
 
@@ -112,10 +131,12 @@ export const AuthProvider = ({ children }) => {
     user,
     isAuthenticated,
     isLoading,
+    kycCompleted,
     login,
     signup,
     logout,
-    updateUserRole
+    updateUserRole,
+    completeKYC
   };
 
   return (

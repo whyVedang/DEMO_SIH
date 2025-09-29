@@ -7,14 +7,61 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowLeft, Package, Calendar, Upload, MapPin } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import dataSyncService from "@/services/dataSyncService";
 
 export const BatchForm = ({ onBack }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    cropName: '',
+    variety: '',
+    description: '',
+    totalQuantity: '',
+    unit: '',
+    pricePerUnit: '',
+    minOrderQuantity: '',
+    harvestDate: '',
+    availableUntil: '',
+    location: ''
+  });
   const { toast } = useToast();
+
+  const handleInputChange = (field, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
+    
+    // Validate form
+    if (!formData.cropName || !formData.totalQuantity || !formData.pricePerUnit) {
+      toast({
+        title: "Error!",
+        description: "Please fill in all required fields.",
+        variant: "destructive"
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    // Create batch object
+    const newBatch = {
+      ...formData,
+      status: 'Available',
+      quality: 'A+',
+      dateAdded: new Date().toLocaleDateString('hi-IN', {
+        year: 'numeric',
+        month: 'long', 
+        day: 'numeric'
+      }),
+      totalValue: (parseFloat(formData.totalQuantity) * parseFloat(formData.pricePerUnit)).toFixed(2)
+    };
+
+    // Add batch using data sync service
+    const addedBatch = dataSyncService.addFarmerBatch(newBatch);
     
     setTimeout(() => {
       toast({
@@ -23,7 +70,7 @@ export const BatchForm = ({ onBack }) => {
       });
       setIsLoading(false);
       onBack();
-    }, 2000);
+    }, 1000);
   };
 
   return (
@@ -67,6 +114,8 @@ export const BatchForm = ({ onBack }) => {
                       <Input 
                         id="cropName" 
                         placeholder="e.g., Organic Tomatoes" 
+                        value={formData.cropName}
+                        onChange={(e) => handleInputChange('cropName', e.target.value)}
                         required 
                       />
                     </div>
@@ -75,6 +124,8 @@ export const BatchForm = ({ onBack }) => {
                       <Input 
                         id="variety" 
                         placeholder="e.g., Cherry, Beefsteak" 
+                        value={formData.variety}
+                        onChange={(e) => handleInputChange('variety', e.target.value)}
                         required 
                       />
                     </div>
@@ -86,6 +137,8 @@ export const BatchForm = ({ onBack }) => {
                       id="description" 
                       placeholder="Describe your crop quality, farming methods, etc." 
                       rows={3}
+                      value={formData.description}
+                      onChange={(e) => handleInputChange('description', e.target.value)}
                       required 
                     />
                   </div>
@@ -104,12 +157,14 @@ export const BatchForm = ({ onBack }) => {
                         id="totalQuantity" 
                         type="number" 
                         placeholder="500" 
+                        value={formData.totalQuantity}
+                        onChange={(e) => handleInputChange('totalQuantity', e.target.value)}
                         required 
                       />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="unit">Unit</Label>
-                      <Select>
+                      <Select value={formData.unit} onValueChange={(value) => handleInputChange('unit', value)}>
                         <SelectTrigger>
                           <SelectValue placeholder="Select unit" />
                         </SelectTrigger>
@@ -127,34 +182,24 @@ export const BatchForm = ({ onBack }) => {
                         id="pricePerUnit" 
                         type="number" 
                         placeholder="60" 
+                        value={formData.pricePerUnit}
+                        onChange={(e) => handleInputChange('pricePerUnit', e.target.value)}
                         required 
                       />
                     </div>
                   </div>
 
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div className="grid md:grid-cols-1 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="minOrderQuantity">Minimum Order Quantity</Label>
                       <Input 
                         id="minOrderQuantity" 
                         type="number" 
                         placeholder="10" 
+                        value={formData.minOrderQuantity}
+                        onChange={(e) => handleInputChange('minOrderQuantity', e.target.value)}
                         required 
                       />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="packageType">Package Type</Label>
-                      <Select>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select package" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="loose">Loose</SelectItem>
-                          <SelectItem value="boxes">Boxes</SelectItem>
-                          <SelectItem value="bags">Bags</SelectItem>
-                          <SelectItem value="crates">Crates</SelectItem>
-                        </SelectContent>
-                      </Select>
                     </div>
                   </div>
                 </div>
@@ -174,6 +219,8 @@ export const BatchForm = ({ onBack }) => {
                           id="harvestDate" 
                           type="date" 
                           className="pl-10"
+                          value={formData.harvestDate}
+                          onChange={(e) => handleInputChange('harvestDate', e.target.value)}
                           required 
                         />
                       </div>
@@ -186,6 +233,8 @@ export const BatchForm = ({ onBack }) => {
                           id="availableUntil" 
                           type="date" 
                           className="pl-10"
+                          value={formData.availableUntil}
+                          onChange={(e) => handleInputChange('availableUntil', e.target.value)}
                           required 
                         />
                       </div>
@@ -201,24 +250,11 @@ export const BatchForm = ({ onBack }) => {
                         placeholder="Farm address or pickup location with landmarks" 
                         className="pl-10"
                         rows={2}
+                        value={formData.location}
+                        onChange={(e) => handleInputChange('location', e.target.value)}
                         required 
                       />
                     </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="farmingMethod">Farming Method</Label>
-                    <Select>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select farming method" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="organic">Organic</SelectItem>
-                        <SelectItem value="conventional">Conventional</SelectItem>
-                        <SelectItem value="natural">Natural</SelectItem>
-                        <SelectItem value="hydroponic">Hydroponic</SelectItem>
-                      </SelectContent>
-                    </Select>
                   </div>
                 </div>
 

@@ -12,10 +12,13 @@ import Signup from "./pages/auth/Signup";
 import FarmerDashboard from "./pages/dashboard/FarmerDashboard";
 import DistributorDashboard from "./pages/dashboard/DistributorDashboard";
 import RetailerDashboard from "./pages/dashboard/RetailerDashboard";
-// import TestDashboard from "./pages/dashboard/TestDashboard";
 import NotFound from "./pages/NotFound";
+import demoDataService from "./services/demoDataService";
 
 const queryClient = new QueryClient();
+
+// Initialize demo data when app starts
+demoDataService.initializeDemoData();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -53,14 +56,6 @@ const App = () => (
                   </ProtectedRoute>
                 } 
               />
-              {/* <Route 
-                path="/dashboard/test" 
-                element={
-                  <ProtectedRoute>
-                    <TestDashboard />
-                  </ProtectedRoute>
-                } 
-              /> */}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </AuthProvider>

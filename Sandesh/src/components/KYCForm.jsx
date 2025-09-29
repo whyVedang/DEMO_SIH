@@ -9,7 +9,7 @@ import { Progress } from "@/components/ui/progress";
 import { FileText, MapPin, User, Phone, Upload } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-export const KYCForm = ({ onComplete }) => {
+export const KYCForm = ({ onComplete, userRole = 'farmer' }) => {
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
@@ -48,7 +48,7 @@ export const KYCForm = ({ onComplete }) => {
                 Complete Your KYC Verification
               </CardTitle>
               <p className="text-muted-foreground mt-2">
-                Step {step} of {totalSteps} - Let's verify your farmer identity
+                Step {step} of {totalSteps} - Let's verify your {userRole} identity
               </p>
               <div className="mt-4">
                 <Progress value={progress} className="h-2" />
@@ -106,44 +106,128 @@ export const KYCForm = ({ onComplete }) => {
                     <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-4">
                       <MapPin className="h-8 w-8 text-success" />
                     </div>
-                    <h3 className="text-xl font-semibold text-foreground">Farm Information</h3>
-                    <p className="text-muted-foreground">Details about your farming operation</p>
+                    <h3 className="text-xl font-semibold text-foreground">
+                      {userRole === 'farmer' ? 'Farm Information' : 
+                       userRole === 'distributor' ? 'Business Information' : 
+                       'Store Information'}
+                    </h3>
+                    <p className="text-muted-foreground">
+                      {userRole === 'farmer' ? 'Details about your farming operation' :
+                       userRole === 'distributor' ? 'Details about your distribution business' :
+                       'Details about your retail store'}
+                    </p>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="farmName">Farm Name</Label>
-                    <Input id="farmName" placeholder="Green Valley Farms" required />
+                    <Label htmlFor="businessName">
+                      {userRole === 'farmer' ? 'Farm Name' : 
+                       userRole === 'distributor' ? 'Business Name' : 
+                       'Store Name'}
+                    </Label>
+                    <Input 
+                      id="businessName" 
+                      placeholder={
+                        userRole === 'farmer' ? 'Green Valley Farms' :
+                        userRole === 'distributor' ? 'ABC Distribution Co.' :
+                        'City Mart Store'
+                      } 
+                      required 
+                    />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="farmAddress">Farm Location</Label>
-                    <Textarea id="farmAddress" placeholder="Farm address with landmarks" rows={3} required />
+                    <Label htmlFor="businessAddress">
+                      {userRole === 'farmer' ? 'Farm Location' : 
+                       userRole === 'distributor' ? 'Business Address' : 
+                       'Store Address'}
+                    </Label>
+                    <Textarea 
+                      id="businessAddress" 
+                      placeholder={
+                        userRole === 'farmer' ? 'Farm address with landmarks' :
+                        userRole === 'distributor' ? 'Business address with landmarks' :
+                        'Store address with landmarks'
+                      } 
+                      rows={3} 
+                      required 
+                    />
                   </div>
 
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="farmSize">Farm Size (acres)</Label>
-                      <Input id="farmSize" type="number" placeholder="25" required />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="farmType">Farm Type</Label>
-                      <Select>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select farm type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="organic">Organic</SelectItem>
-                          <SelectItem value="conventional">Conventional</SelectItem>
-                          <SelectItem value="mixed">Mixed</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
+                  {userRole === 'farmer' && (
+                    <>
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="farmSize">Farm Size (acres)</Label>
+                          <Input id="farmSize" type="number" placeholder="25" required />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="farmType">Farm Type</Label>
+                          <Select>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select farm type" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="organic">Organic</SelectItem>
+                              <SelectItem value="conventional">Conventional</SelectItem>
+                              <SelectItem value="mixed">Mixed</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="crops">Primary Crops</Label>
-                    <Textarea id="crops" placeholder="List your main crops (e.g., Rice, Wheat, Tomatoes)" rows={3} required />
-                  </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="crops">Primary Crops</Label>
+                        <Textarea id="crops" placeholder="List your main crops (e.g., Rice, Wheat, Tomatoes)" rows={3} required />
+                      </div>
+                    </>
+                  )}
+
+                  {userRole === 'distributor' && (
+                    <>
+                      <div className="space-y-2">
+                        <Label htmlFor="businessType">Business Type</Label>
+                        <Select>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select business type" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="wholesale">Wholesale Distribution</SelectItem>
+                            <SelectItem value="retail">Retail Distribution</SelectItem>
+                            <SelectItem value="both">Both Wholesale & Retail</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="products">Products Handled</Label>
+                        <Textarea id="products" placeholder="List products you distribute (e.g., Fresh Vegetables, Grains, Spices)" rows={3} required />
+                      </div>
+                    </>
+                  )}
+
+                  {userRole === 'retailer' && (
+                    <>
+                      <div className="space-y-2">
+                        <Label htmlFor="storeType">Store Type</Label>
+                        <Select>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select store type" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="grocery">Grocery Store</SelectItem>
+                            <SelectItem value="supermarket">Supermarket</SelectItem>
+                            <SelectItem value="convenience">Convenience Store</SelectItem>
+                            <SelectItem value="specialty">Specialty Food Store</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="products">Products Sold</Label>
+                        <Textarea id="products" placeholder="List products you sell (e.g., Fresh Produce, Packaged Foods, Beverages)" rows={3} required />
+                      </div>
+                    </>
+                  )}
 
                   <div className="space-y-2">
                     <Label htmlFor="experience">Years of Experience</Label>

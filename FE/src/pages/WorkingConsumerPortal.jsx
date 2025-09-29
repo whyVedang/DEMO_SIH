@@ -286,7 +286,7 @@ const WorkingConsumerPortal = () => {
             Products
           </button>
           <button 
-            onClick={() => window.open('http://localhost:3002?auth=true', '_blank')}
+            onClick={() => window.open('http://localhost:3001?auth=true', '_blank')}
             className="nav-link bg-sage-500 text-white px-4 py-2 rounded-lg hover:bg-sage-600 transition-colors"
           >
             SELL PRODUCTS
@@ -409,7 +409,7 @@ const WorkingConsumerPortal = () => {
             Scan Product
           </button>
           <button
-            onClick={() => window.open('http://localhost:3002?auth=true', '_blank')}
+            onClick={() => window.open('http://localhost:3001?auth=true', '_blank')}
             className="btn-secondary bg-sage-600 text-white border-sage-600 hover:bg-sage-700"
           >
             <Users className="w-5 h-5" />

@@ -39,7 +39,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sage-50 via-white to-sage-100 relative overflow-hidden">
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-sage-50 via-white to-sage-100">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0" style={{
@@ -47,10 +47,10 @@ const Login = () => {
         }}></div>
       </div>
 
-      <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
+      <div className="relative z-10 flex items-center justify-center min-h-screen p-4">
         <div className="w-full max-w-md">
           {/* Header */}
-          <div className="text-center mb-8">
+          <div className="mb-8 text-center">
             <Button
               variant="ghost"
               onClick={() => navigate('/')}
@@ -61,12 +61,12 @@ const Login = () => {
             </Button>
             
             <div className="flex justify-center mb-6">
-              <div className="w-16 h-16 bg-gradient-to-br from-sage-500 to-sage-600 rounded-2xl flex items-center justify-center shadow-xl">
+              <div className="flex items-center justify-center w-16 h-16 shadow-xl bg-gradient-to-br from-sage-500 to-sage-600 rounded-2xl">
                 <Sprout className="w-8 h-8 text-white" />
               </div>
             </div>
             
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            <h1 className="mb-2 text-3xl font-bold text-gray-900">
               {t('loginTitle')}
             </h1>
             <p className="text-gray-600">
@@ -75,28 +75,28 @@ const Login = () => {
           </div>
 
           {/* Login Form */}
-          <Card className="bg-white/80 backdrop-blur-lg border-sage-200 shadow-2xl">
+          <Card className="shadow-2xl bg-white/80 backdrop-blur-lg border-sage-200">
             <CardContent className="p-8">
               <form onSubmit={handleLogin} className="space-y-6">
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="text-gray-700 font-medium">
-                    {t('email')}
+                  <Label htmlFor="email" className="font-medium text-gray-700">
+                    {t('Phone No')}
                   </Label>
                   <div className="relative">
                     <Mail className="absolute w-5 h-5 text-sage-400 left-3 top-3" />
                     <Input
                       id="email"
                       name="email"
-                      type="email"
-                      placeholder="Enter your email"
-                      className="pl-11 h-12 border-sage-200 focus:border-sage-500 focus:ring-sage-500 bg-white/90"
+                      type="number"
+                      placeholder="Enter your phone number"
+                      className="h-12 pl-11 border-sage-200 focus:border-sage-500 focus:ring-sage-500 bg-white/90"
                       required
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="password" className="text-gray-700 font-medium">
+                  <Label htmlFor="password" className="font-medium text-gray-700">
                     {t('password')}
                   </Label>
                   <div className="relative">
@@ -106,13 +106,13 @@ const Login = () => {
                       name="password"
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
-                      className="pl-11 pr-11 h-12 border-sage-200 focus:border-sage-500 focus:ring-sage-500 bg-white/90"
+                      className="h-12 pl-11 pr-11 border-sage-200 focus:border-sage-500 focus:ring-sage-500 bg-white/90"
                       required
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-3 text-sage-400 hover:text-sage-600 transition-colors"
+                      className="absolute transition-colors right-3 top-3 text-sage-400 hover:text-sage-600"
                     >
                       {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                     </button>
@@ -133,7 +133,7 @@ const Login = () => {
                   {t('dontHaveAccount')}{' '}
                   <Link 
                     to="/signup" 
-                    className="text-sage-600 hover:text-sage-700 font-semibold transition-colors"
+                    className="font-semibold transition-colors text-sage-600 hover:text-sage-700"
                   >
                     {t('signup')}
                   </Link>
@@ -144,7 +144,7 @@ const Login = () => {
 
           {/* Trust Indicators */}
           <div className="mt-8 text-center">
-            <div className="flex justify-center items-center space-x-8 text-sm text-gray-500">
+            <div className="flex items-center justify-center space-x-8 text-sm text-gray-500">
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                 <span>Secure</span>

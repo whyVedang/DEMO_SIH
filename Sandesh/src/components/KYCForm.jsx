@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Progress } from "@/components/ui/progress";
-import { FileText, MapPin, User, Phone, Upload } from "lucide-react";
+import { FileText, MapPin, User, Upload } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 export const KYCForm = ({ onComplete, userRole = 'farmer' }) => {
@@ -38,8 +38,8 @@ export const KYCForm = ({ onComplete, userRole = 'farmer' }) => {
   };
 
   return (
-    <div className="min-h-screen bg-muted/20 py-8">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-8 bg-muted/20">
+      <div className="container px-4 mx-auto sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto">
           {/* Progress Header */}
           <Card className="mb-8 bg-gradient-card border-border shadow-soft">
@@ -47,7 +47,7 @@ export const KYCForm = ({ onComplete, userRole = 'farmer' }) => {
               <CardTitle className="text-2xl font-bold text-foreground">
                 Complete Your KYC Verification
               </CardTitle>
-              <p className="text-muted-foreground mt-2">
+              <p className="mt-2 text-muted-foreground">
                 Step {step} of {totalSteps} - Let's verify your {userRole} identity
               </p>
               <div className="mt-4">
@@ -61,15 +61,15 @@ export const KYCForm = ({ onComplete, userRole = 'farmer' }) => {
             <CardContent className="p-8">
               {step === 1 && (
                 <div className="space-y-6">
-                  <div className="text-center mb-6">
-                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <User className="h-8 w-8 text-primary" />
+                  <div className="mb-6 text-center">
+                    <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10">
+                      <User className="w-8 h-8 text-primary" />
                     </div>
                     <h3 className="text-xl font-semibold text-foreground">Personal Information</h3>
                     <p className="text-muted-foreground">Tell us about yourself</p>
                   </div>
 
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div className="grid gap-4 md:grid-cols-2">
                     <div className="space-y-2">
                       <Label htmlFor="firstName">First Name</Label>
                       <Input id="firstName" placeholder="John" required />
@@ -85,13 +85,6 @@ export const KYCForm = ({ onComplete, userRole = 'farmer' }) => {
                     <Input id="dateOfBirth" type="date" required />
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Phone Number</Label>
-                    <div className="relative">
-                      <Phone className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                      <Input id="phone" type="tel" placeholder="+1 (555) 000-0000" className="pl-10" required />
-                    </div>
-                  </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="address">Complete Address</Label>
@@ -102,9 +95,9 @@ export const KYCForm = ({ onComplete, userRole = 'farmer' }) => {
 
               {step === 2 && (
                 <div className="space-y-6">
-                  <div className="text-center mb-6">
-                    <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <MapPin className="h-8 w-8 text-success" />
+                  <div className="mb-6 text-center">
+                    <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-success/10">
+                      <MapPin className="w-8 h-8 text-success" />
                     </div>
                     <h3 className="text-xl font-semibold text-foreground">
                       {userRole === 'farmer' ? 'Farm Information' : 
@@ -155,7 +148,7 @@ export const KYCForm = ({ onComplete, userRole = 'farmer' }) => {
 
                   {userRole === 'farmer' && (
                     <>
-                      <div className="grid md:grid-cols-2 gap-4">
+                      <div className="grid gap-4 md:grid-cols-2">
                         <div className="space-y-2">
                           <Label htmlFor="farmSize">Farm Size (acres)</Label>
                           <Input id="farmSize" type="number" placeholder="25" required />
@@ -248,36 +241,36 @@ export const KYCForm = ({ onComplete, userRole = 'farmer' }) => {
 
               {step === 3 && (
                 <div className="space-y-6">
-                  <div className="text-center mb-6">
-                    <div className="w-16 h-16 bg-warning/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <FileText className="h-8 w-8 text-warning" />
+                  <div className="mb-6 text-center">
+                    <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-warning/10">
+                      <FileText className="w-8 h-8 text-warning" />
                     </div>
                     <h3 className="text-xl font-semibold text-foreground">Document Verification</h3>
                     <p className="text-muted-foreground">Upload required documents for verification</p>
                   </div>
 
                   <div className="space-y-4">
-                    <div className="p-4 border-2 border-dashed border-border rounded-lg hover:border-primary/50 transition-smooth">
+                    <div className="p-4 border-2 border-dashed rounded-lg border-border hover:border-primary/50 transition-smooth">
                       <div className="text-center">
-                        <Upload className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+                        <Upload className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
                         <p className="text-sm font-medium text-foreground">Government ID (Aadhar/PAN)</p>
                         <p className="text-xs text-muted-foreground">Click to upload or drag and drop</p>
                         <Input type="file" accept=".pdf,.jpg,.png" className="mt-2" />
                       </div>
                     </div>
 
-                    <div className="p-4 border-2 border-dashed border-border rounded-lg hover:border-primary/50 transition-smooth">
+                    <div className="p-4 border-2 border-dashed rounded-lg border-border hover:border-primary/50 transition-smooth">
                       <div className="text-center">
-                        <Upload className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+                        <Upload className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
                         <p className="text-sm font-medium text-foreground">Land Ownership Certificate</p>
                         <p className="text-xs text-muted-foreground">Click to upload or drag and drop</p>
                         <Input type="file" accept=".pdf,.jpg,.png" className="mt-2" />
                       </div>
                     </div>
 
-                    <div className="p-4 border-2 border-dashed border-border rounded-lg hover:border-primary/50 transition-smooth">
+                    <div className="p-4 border-2 border-dashed rounded-lg border-border hover:border-primary/50 transition-smooth">
                       <div className="text-center">
-                        <Upload className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+                        <Upload className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
                         <p className="text-sm font-medium text-foreground">Bank Account Details</p>
                         <p className="text-xs text-muted-foreground">Click to upload or drag and drop</p>
                         <Input type="file" accept=".pdf,.jpg,.png" className="mt-2" />

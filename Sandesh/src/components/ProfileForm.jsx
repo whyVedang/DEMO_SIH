@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, User, Upload, Phone, Mail, MapPin } from "lucide-react";
+import { ArrowLeft, User, Upload, Mail, MapPin } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 export const ProfileForm = ({ onBack }) => {
@@ -27,8 +27,8 @@ export const ProfileForm = ({ onBack }) => {
   };
 
   return (
-    <div className="min-h-screen bg-muted/20 py-6">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-6 bg-muted/20">
+      <div className="container px-4 mx-auto sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto">
           {/* Header */}
           <div className="flex items-center mb-8">
@@ -37,7 +37,7 @@ export const ProfileForm = ({ onBack }) => {
               onClick={onBack}
               className="mr-4"
             >
-              <ArrowLeft className="h-4 w-4 mr-2" />
+              <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Dashboard
             </Button>
             <div>
@@ -49,7 +49,7 @@ export const ProfileForm = ({ onBack }) => {
           <Card className="bg-gradient-card border-border shadow-medium">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-foreground">
-                <User className="h-5 w-5 text-primary" />
+                <User className="w-5 h-5 text-primary" />
                 Profile Information
               </CardTitle>
             </CardHeader>
@@ -57,20 +57,20 @@ export const ProfileForm = ({ onBack }) => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Profile Picture */}
                 <div className="space-y-4">
-                  <h3 className="text-lg font-medium text-foreground border-b border-border pb-2">
+                  <h3 className="pb-2 text-lg font-medium border-b text-foreground border-border">
                     Profile Picture
                   </h3>
                   
                   <div className="flex items-center space-x-6">
-                    <div className="w-20 h-20 bg-muted rounded-full flex items-center justify-center">
-                      <User className="h-8 w-8 text-muted-foreground" />
+                    <div className="flex items-center justify-center w-20 h-20 rounded-full bg-muted">
+                      <User className="w-8 h-8 text-muted-foreground" />
                     </div>
                     <div className="flex-1">
                       <Button variant="outline" size="sm">
-                        <Upload className="h-4 w-4 mr-2" />
+                        <Upload className="w-4 h-4 mr-2" />
                         Change Picture
                       </Button>
-                      <p className="text-xs text-muted-foreground mt-1">
+                      <p className="mt-1 text-xs text-muted-foreground">
                         JPG, GIF or PNG. Max size of 2MB.
                       </p>
                     </div>
@@ -79,11 +79,11 @@ export const ProfileForm = ({ onBack }) => {
 
                 {/* Personal Information */}
                 <div className="space-y-4">
-                  <h3 className="text-lg font-medium text-foreground border-b border-border pb-2">
+                  <h3 className="pb-2 text-lg font-medium border-b text-foreground border-border">
                     Personal Information
                   </h3>
                   
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div className="grid gap-4 md:grid-cols-2">
                     <div className="space-y-2">
                       <Label htmlFor="firstName">First Name</Label>
                       <Input 
@@ -107,7 +107,7 @@ export const ProfileForm = ({ onBack }) => {
                   <div className="space-y-2">
                     <Label htmlFor="email">Email Address</Label>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Mail className="absolute w-4 h-4 left-3 top-3 text-muted-foreground" />
                       <Input 
                         id="email" 
                         type="email" 
@@ -119,23 +119,9 @@ export const ProfileForm = ({ onBack }) => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="phone">Phone Number</Label>
-                    <div className="relative">
-                      <Phone className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                      <Input 
-                        id="phone" 
-                        type="tel" 
-                        defaultValue="+91 9876543210"
-                        className="pl-10"
-                        required 
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
                     <Label htmlFor="address">Address</Label>
                     <div className="relative">
-                      <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <MapPin className="absolute w-4 h-4 left-3 top-3 text-muted-foreground" />
                       <Textarea 
                         id="address" 
                         defaultValue="Village Greenfield, Dist. Sunshine, State 123456"
@@ -149,7 +135,7 @@ export const ProfileForm = ({ onBack }) => {
 
                 {/* Farm Information */}
                 <div className="space-y-4">
-                  <h3 className="text-lg font-medium text-foreground border-b border-border pb-2">
+                  <h3 className="pb-2 text-lg font-medium border-b text-foreground border-border">
                     Farm Information
                   </h3>
                   
@@ -174,7 +160,7 @@ export const ProfileForm = ({ onBack }) => {
                     />
                   </div>
 
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div className="grid gap-4 md:grid-cols-2">
                     <div className="space-y-2">
                       <Label htmlFor="farmSize">Farm Size (acres)</Label>
                       <Input 
@@ -230,11 +216,11 @@ export const ProfileForm = ({ onBack }) => {
 
                 {/* Business Information */}
                 <div className="space-y-4">
-                  <h3 className="text-lg font-medium text-foreground border-b border-border pb-2">
+                  <h3 className="pb-2 text-lg font-medium border-b text-foreground border-border">
                     Business Information
                   </h3>
                   
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div className="grid gap-4 md:grid-cols-2">
                     <div className="space-y-2">
                       <Label htmlFor="gstNumber">GST Number (Optional)</Label>
                       <Input 
@@ -252,7 +238,7 @@ export const ProfileForm = ({ onBack }) => {
                     </div>
                   </div>
 
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div className="grid gap-4 md:grid-cols-2">
                     <div className="space-y-2">
                       <Label htmlFor="ifscCode">IFSC Code</Label>
                       <Input 
@@ -283,7 +269,7 @@ export const ProfileForm = ({ onBack }) => {
                 </div>
 
                 {/* Submit Buttons */}
-                <div className="flex justify-end space-x-4 pt-6 border-t border-border">
+                <div className="flex justify-end pt-6 space-x-4 border-t border-border">
                   <Button 
                     type="button"
                     variant="outline"
